@@ -1,0 +1,178 @@
+{
+  "skill_name": "learn",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "我完全没有 Docker 基础，但工作中需要能独立把一个小型 Web API 容器化。请给我一个 20 小时、10 次课的 80/20 学习计划，每次 2 小时。",
+      "expected_output": "A scoped 20-hour beginner plan with exactly ten 120-minute sessions, verified resources, cumulative exercises, concrete deliverables, completion criteria, five review questions plus compact answer keys per session, and a final containerization project with an evaluation rubric.",
+      "files": [],
+      "expectations": [
+        "The response explicitly limits the outcome to usable foundations rather than guaranteeing expert mastery.",
+        "There are exactly 10 sessions and each session's listed time blocks total 120 minutes.",
+        "Every session includes one learning goal, key concepts, a practical exercise, one verified resource, a concrete deliverable, a measurable completion criterion, exactly five review questions, and a compact answer key.",
+        "The sessions build toward a cumulative outcome instead of ten disconnected exercises.",
+        "The plan ends with a final Docker project, an observable evaluation rubric, likely failure points, and a recovery path.",
+        "Recommended resources are directly linked or cited, dated when checked, and tied to specific parts of the plan."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "我刚学完 Python decorators。像严格考官一样测试我，题目从简单到专家级，一次只问一题，找出我真正不会的地方。",
+      "expected_output": "The first turn of an interactive ten-question assessment that briefly states the rules and asks only Question 1 without revealing later questions or answers.",
+      "files": [],
+      "expectations": [
+        "The response asks exactly one assessment question.",
+        "The question has one primary gradable action and is not split into multiple numbered, bulleted, or parallel subquestions.",
+        "The first question is beginner-level and relevant to Python decorators.",
+        "The response does not reveal later questions, model answers, a final score, or a revision plan.",
+        "The response clearly waits for the learner's answer before continuing."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "我想快速学会 Rust async，但不想收藏一堆低质量资料。请只选当前最值得用的 5 个资源，告诉我顺序，并用它们安排一个 7 天实战路径。",
+      "expected_output": "Exactly five current, complementary Rust async resources with creators, direct sources, selection rationale, learner fit, difficulty, effective-use guidance, time and cost estimates, limitations, a ranked order, a seven-day practice path, and an explicit coverage gap.",
+      "files": [],
+      "expectations": [
+        "The response contains exactly five learning resources with direct links or citations.",
+        "Each resource includes creator, type, value, covered subtopic, learner fit, difficulty, effective use, estimated time and cost, and one limitation or warning.",
+        "The resources are current-verified with a checked date, and any unverified availability, version, price, or language detail is disclosed.",
+        "The ranked order explains dependencies or progression.",
+        "The seven-day path uses only the selected five resources and gives each day a realistic time budget, hands-on output, and completion criterion.",
+        "The response identifies at least one important topic gap not covered by the five resources."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "我会一点 Go 语法，但不会写并发程序。请给我一个从当前水平到能独立设计和排查 Go concurrency 的五级学习阶梯，不要跳过基础。",
+      "expected_output": "A five-level Go concurrency learning ladder with prerequisite ordering, observable mastery, hands-on work, measurable advancement criteria, mistake correction, a recommended starting level, and one immediate next action.",
+      "files": [],
+      "expectations": [
+        "The response uses exactly the five fixed level names from Complete Beginner through Confident Practitioner.",
+        "Each level contains understanding targets, high-leverage concepts or skills, observable mastery, one exercise or mini-project, one measurable milestone, common mistakes, corrections, and one self-check question.",
+        "The levels progress from vocabulary and intuition to independent delivery, tradeoff explanation, diagnosis, and edge-case handling.",
+        "The response identifies likely missing prerequisites and recommends a starting level based on the stated Go background.",
+        "The response ends with one concrete action that can be completed today."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "给我做一份 OAuth 2.0 的一页速查表，用于后端 API 设计评审前 5 分钟复习。重点是 Authorization Code + PKCE，不要写历史。",
+      "expected_output": "A compact, bounded OAuth 2.0 cheat sheet centered on Authorization Code with PKCE, optimized for a five-minute backend design review.",
+      "files": [],
+      "expectations": [
+        "The response states the intended scope and any relevant protocol assumptions or version boundaries.",
+        "The cheat sheet includes a one-sentence definition, a core mental model, key rules or steps, a useful visual only if warranted, three to five examples, mistakes and exceptions, a pre-use checklist, and exactly five recall questions.",
+        "The response defines important actors and security-sensitive terms instead of assuming they are obvious.",
+        "The response preserves critical OAuth security caveats while omitting history and low-value background.",
+        "The final sentence explicitly states what the cheat sheet intentionally leaves out."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "用费曼方法帮我真正理解数据库事务隔离级别。我知道 ACID 这个词，但经常混淆脏读、不可重复读和幻读。",
+      "expected_output": "The first turn of a bounded Feynman teach-back loop: a concise, accurate explanation scoped to transaction isolation, followed by exactly one request for the learner to explain it back.",
+      "files": [],
+      "expectations": [
+        "The response explicitly scopes the topic rather than attempting to teach all database concurrency control.",
+        "The explanation uses plain language, one concrete example, and one analogy while also stating where the analogy breaks down.",
+        "Unavoidable technical terms are defined when introduced and the distinctions among dirty, non-repeatable, and phantom reads are accurate.",
+        "The response asks only for one teach-back and then waits; it does not simulate the learner's answer or continue to later rounds.",
+        "The response does not claim mastery and does not exceed the three-round loop contract."
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "我有六周时间学习 Python 数据分析，每天 90 分钟，目标是独立完成一个真实销售数据分析项目。请用西蒙学习法给我计划。",
+      "expected_output": "A grounded six-week Simon-style chunked mastery plan tied to a real project, dependency-ordered chunks, deliberate practice, feedback, no-notes checkpoints, and an executable first session.",
+      "files": [],
+      "expectations": [
+        "The response defines an observable project-based performance target rather than using 'master Python data analysis' as the outcome.",
+        "The subject is decomposed into prerequisite learning chunks and the dependency order is explicit.",
+        "The plan uses worked examples, retrieval, deliberate practice, a real output, and concrete feedback sources.",
+        "Chunk progress is tracked with observable states such as unknown, recognized, explainable, applicable, and fluent.",
+        "Each phase has a checkpoint that can be passed or failed without notes, and advancement depends on checkpoint evidence.",
+        "The daily and weekly work respects the stated 90-minute constraint.",
+        "Duration estimates are presented as planning assumptions and the response does not guarantee mastery in six weeks.",
+        "The response includes one fully executable 90-minute first session and one direct action the learner can start today."
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Help me read a dense economics paper tonight. I have 90 minutes, lose focus easily, and need useful notes for a seminar tomorrow. Build one session for me.",
+      "expected_output": "An integrated 90-minute SQ3R, Pomodoro, and Cornell session with genuine breaks, closed-note retrieval, and a seminar-ready artifact.",
+      "files": [],
+      "expectations": [
+        "The response assigns SQ3R, Pomodoro, and Cornell notes distinct purposes instead of merely naming all three methods.",
+        "All setup, focus, break, retrieval, and closing blocks fit within 90 minutes, and the listed durations are arithmetically consistent.",
+        "The plan includes genuine breaks that are not filled with another cognitively demanding task.",
+        "The SQ3R questions cover the paper's research question, method, evidence, result, limitations, and implications.",
+        "The learner must close the source and recite or write answers from memory before checking and repairing gaps.",
+        "The Cornell artifact has distinct header, notes, cue-question, and memory-summary areas.",
+        "The final artifact and definition of done are concrete and useful for the seminar.",
+        "The response ends with one immediate learner action."
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "不要先靠类比糊弄我。请用第一性原理解释为什么 B+ tree 适合数据库磁盘索引：从不可再简化的事实开始，区分推导结论和工程约定，最后让我自己推导一个非显然结论。一次只问一个推导问题。",
+      "expected_output": "A first-principles reconstruction of B+ tree indexing followed by exactly one unanswered derivation challenge.",
+      "files": [],
+      "expectations": [
+        "The response identifies irreducible primitives such as page-oriented I/O, bounded page capacity, ordered keys, branching factor, and tree height.",
+        "Higher-level properties are derived step by step from the primitives rather than asserted as memorized rules.",
+        "The response includes at least two explicit counterfactual checks explaining what would break if a required primitive or relationship were false.",
+        "The response distinguishes derived properties from engineering conventions or implementation choices such as page size, node occupancy policy, or exact split strategy.",
+        "The explanation reconstructs the full indexing argument from the primitives in one compact concluding paragraph.",
+        "The response asks exactly one gradable question requiring the learner to derive a non-obvious consequence.",
+        "The answer to the derivation question is not revealed, and the response waits for the learner."
+      ]
+    },
+    {
+      "id": 10,
+      "prompt": "我今天刚学完 Git 的 commit、branch、merge 和 rebase，但很容易忘。请把它拆成可回忆的小单元，并给我 Day 1、3、7、14、30、60、120 的间隔复习计划。每天最多 20 分钟，使用 Anki 或 Markdown 都可以。",
+      "expected_output": "An executable spaced-repetition plan with atomic recall units, the complete requested cadence, bounded reviews, and failure adaptation.",
+      "files": [],
+      "expectations": [
+        "The topic is decomposed into approximately 10 to 20 atomic recall units, each with a stable identifier and one fact, distinction, command behavior, or skill to retrieve.",
+        "The schedule explicitly includes Day 1, 3, 7, 14, 30, 60, and 120.",
+        "Every scheduled review names the unit identifiers to review, the retrieval format, a time budget no greater than 20 minutes, and a measurable success criterion.",
+        "The reviews require retrieval or application rather than relying primarily on rereading or recognition.",
+        "Later reviews include comparison, error diagnosis, or transfer tasks rather than repeating identical flashcards indefinitely.",
+        "The plan states how to shorten the interval and repair the exact weak unit after failed recall.",
+        "The response provides an executable Anki tagging scheme, Markdown layout, or calendar-entry convention instead of only recommending a tool by name."
+      ]
+    },
+    {
+      "id": 11,
+      "prompt": "把 Kubernetes 中 Deployment、ReplicaSet、Pod 和 rolling update 的关系做成 Smart Summary。我只想保留真正承重的概念：给我一句话、一个 ASCII 图、少于 20 条的速查表，并说明这些心智模型什么时候适用、什么时候不适用。",
+      "expected_output": "A compact Smart Summary built from load-bearing ideas, a correct mental model, one diagram, and a non-redundant cheat sheet.",
+      "files": [],
+      "expectations": [
+        "The response identifies three to five explicitly named load-bearing ideas whose removal would materially damage the explanation.",
+        "Each load-bearing idea is organized through a named mental model or framework rather than presented as an unstructured fact list.",
+        "The response contains exactly one single-sentence summary of the topic.",
+        "The response contains one labeled ASCII diagram that correctly represents the control relationship among Deployment, ReplicaSet, and Pods and the role of a rolling update.",
+        "The cheat sheet contains fewer than 20 substantive, non-redundant bullets grouped by framework.",
+        "Each framework includes both a 'when to use' and a 'when not to use' note.",
+        "The response avoids unrelated Kubernetes concepts and does not falsely imply that Deployment directly creates or individually manages Pods."
+      ]
+    },
+    {
+      "id": 12,
+      "prompt": "我已经完成了一轮 HTTP 缓存诊断，回答如下：1）cache key 就是 URL；2）no-cache 和 no-store 完全一样，都是不缓存；3）ETag 是过期时间；4）304 会带回完整响应正文；5）不知道 Vary；6）private 主要给单个用户的缓存，public 可被共享缓存保存；7）stale-while-revalidate 可以先返回旧内容并在后台验证；8）POST 永远不能缓存。请按 Solid、Shaky、Misconception、Blind spot 诊断，并给针对性修复和 7 天后复测方案。",
+      "expected_output": "An evidence-based diagnosis of the supplied answers with precise correction, targeted practice, method routing, and a weak-area-only retest.",
+      "files": [],
+      "expectations": [
+        "Every numbered answer is mapped to a sub-area and classified as Solid, Shaky, Misconception, or Blind spot with evidence from the learner's wording.",
+        "The response recognizes answers 6 and 7 as substantially correct rather than manufacturing weaknesses.",
+        "The response identifies answer 5 as a blind spot and answers 2, 3, and 4 as misconceptions requiring correction.",
+        "The response treats answers 1 and 8 as incomplete or incorrect and explains the relevant cache-key, method, response-directive, and protocol qualifications.",
+        "Each non-Solid sub-area receives one targeted exercise and one explicitly named next learning method; a bare numeric mode reference is insufficient.",
+        "Corrections distinguish facts the learner must unlearn from details that merely need reinforcement.",
+        "The repair work is prioritized by conceptual dependency or practical risk.",
+        "The seven-day retest covers only the weak sub-areas and has observable pass criteria."
+      ]
+    }
+  ]
+}
