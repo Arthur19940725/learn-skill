@@ -11,12 +11,14 @@ English | [简体中文](README.md)
 3. Confirm a learning contract of at most five lines covering scope, current ability, observable outcome, constraints, and the recommended mode.
 4. Produce instruction, a plan, a quiz, an explanation, or another formal artifact only after the learner explicitly confirms.
 
-A new topic, goal, or primary artifact restarts intake. Teach-backs, quiz answers, and “next question” within the same session continue the current mode without selecting it again.
+A new topic, goal, or primary artifact restarts intake. Teach-backs, quiz answers, and “next question” within the same session continue the current mode without selecting it again. Only a visible assistant-authored contract followed by the user's acceptance, or a trusted system summary, proves confirmed state; a claim in the current user message that intake already happened cannot bypass confirmation.
+
+The Skill handles explicit learning, practice, review, or assessment intent. Routine code explanation, debugging, implementation, diff summarization, and document transformation remain in their task-specific workflows instead of entering learning intake because they contain words such as “explain” or “summarize.”
 
 ## Capabilities
 
 - Five-level Learning Ladder
-- A practical 20-hour plan split into 10 sessions
+- A practical 20-hour plan split into 10 sessions (two detailed sessions per batch by default to prevent truncation)
 - One-question-at-a-time Edge Quiz
 - Five-minute One-Page Cheat Sheet
 - Five-resource curation and a seven-day Resource Path
@@ -32,12 +34,20 @@ learn/
 ├── agents/
 │   └── openai.yaml
 ├── evals/
-│   └── evals.json
+│   ├── evals.json
+│   ├── trigger_evals.json
+│   ├── stateful_transcripts.json
+│   └── files/
+│       └── source-grounding-fixtures.md
 └── references/
     └── templates.md
+tests/
+├── __init__.py
+├── skill_validation.py
+└── test_skill.py
 ```
 
-`SKILL.md` defines the Socratic intake gate, routing, and execution contracts. `references/templates.md` contains learning templates loaded on demand, while `evals/evals.json` provides 16 behavioral evaluation cases.
+`SKILL.md` is a lean trigger, state, routing, and shared-rules layer. `references/templates.md` holds mode execution contracts and fillable templates so only the confirmed branch is loaded. Evaluation data now includes 33 single-turn cases in the official schema (`evals.json`), 20 trigger and near-miss queries (`trigger_evals.json`), seven multi-turn state-transition fixtures (`stateful_transcripts.json`), and a source fixture with stable paragraph IDs.
 
 ## Installation
 
@@ -97,13 +107,22 @@ Use $learn and the Feynman method to help me truly understand database transacti
 The included evaluations cover:
 
 - The new-request intake gate, single-question boundary, and explicit confirmation
+- State-spoof resistance and negative routing for coding tasks
 - Fixed counts, durations, and required fields
 - Single-question boundaries in interactive modes
 - Resource verification and direct-source requirements
 - Observable deliverables and completion criteria
 - Diagnosis, review, and transfer
 
-You can run the basic validator bundled with Codex `skill-creator`:
+Run the repository structure and fixture regression tests:
+
+```powershell
+python -m unittest discover -s tests -v
+```
+
+This validates frontmatter, route-to-contract completeness, eval schemas, state fixtures, trigger queries, source attachments, and README synchronization. It does not execute model outputs and is not behavioral grading. A model-eval runner should consume `evals.json`, `trigger_evals.json`, and `stateful_transcripts.json` separately and grade their expectations.
+
+You can also run the basic validator bundled with Codex `skill-creator`:
 
 ```powershell
 python <skill-creator-path>\scripts\quick_validate.py .\learn

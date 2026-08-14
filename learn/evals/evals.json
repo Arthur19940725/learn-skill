@@ -3,223 +3,417 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：我完全没有 Docker 基础，但工作中需要能独立把一个小型 Web API 容器化。请给我一个 20 小时、10 次课的 80/20 学习计划，每次 2 小时。",
-      "expected_output": "A scoped 20-hour beginner plan with exactly ten 120-minute sessions, verified resources, cumulative exercises, concrete deliverables, completion criteria, five review questions plus compact answer keys per session, and a final containerization project with an evaluation rubric.",
+      "prompt": "我完全没有 Docker 基础，已有一个能在本机运行的 Python FastAPI 小项目。工作中需要能独立把它和 PostgreSQL 用 Docker Compose 启动、排错并交付给同事。我能用命令行，每周可投入 5 小时，只用免费资源；请给我一个 20 小时、10 次课的实战计划。",
+      "expected_output": "A proposed learning contract of at most five lines that routes to the staged 20-Hour Plan and asks exactly one confirmation question without generating sessions yet.",
       "files": [],
       "expectations": [
-        "The response explicitly limits the outcome to usable foundations rather than guaranteeing expert mastery.",
-        "There are exactly 10 sessions and each session's listed time blocks total 120 minutes.",
-        "Every session includes one learning goal, key concepts, a practical exercise, one verified resource, a concrete deliverable, a measurable completion criterion, exactly five review questions, and a compact answer key.",
-        "The sessions build toward a cumulative outcome instead of ten disconnected exercises.",
-        "The plan ends with a final Docker project, an observable evaluation rubric, likely failure points, and a recovery path.",
-        "Recommended resources are directly linked or cited, dated when checked, and tied to specific parts of the plan."
+        "The response captures FastAPI plus PostgreSQL containerization, the learner's command-line evidence, the observable delivery and troubleshooting goal, the 20-hour constraint, and free-resource constraint.",
+        "The recommended mode is the 20-Hour Plan and its reason is tied to building usable project capability.",
+        "The learning-contract body is no longer than five lines and is followed by exactly one confirmation question.",
+        "The response does not generate a Docker lesson, session map, resource list, Dockerfile, or Compose file before confirmation."
       ]
     },
     {
       "id": 2,
-      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：我刚学完 Python decorators。像严格考官一样测试我，题目从简单到专家级，一次只问一题，找出我真正不会的地方。",
-      "expected_output": "The first turn of an interactive ten-question assessment that briefly states the rules and asks only Question 1 without revealing later questions or answers.",
+      "prompt": "我刚学完 Python decorators，能写不带参数的 decorator，但说不清 closure、functools.wraps 和带参数 decorator。我要通过一次严格的 10 题测验找到知识边界，一次只问一题，今天有 45 分钟。",
+      "expected_output": "A concise proposed contract selecting Edge Quiz, followed by one confirmation question and no quiz question yet.",
       "files": [],
       "expectations": [
-        "The response asks exactly one assessment question.",
-        "The question has one primary gradable action and is not split into multiple numbered, bulleted, or parallel subquestions.",
-        "The first question is beginner-level and relevant to Python decorators.",
-        "The response does not reveal later questions, model answers, a final score, or a revision plan.",
-        "The response clearly waits for the learner's answer before continuing."
+        "The contract preserves the learner's concrete current evidence and the closure, wraps, and parameterized-decorator scope.",
+        "The observable goal is a strict ten-question boundary-finding assessment, not generic understanding.",
+        "The selected mode is Edge Quiz with a relevant reason.",
+        "The response asks exactly one confirmation question and does not ask Question 1, reveal answers, score anything, or teach decorators yet."
       ]
     },
     {
       "id": 3,
-      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：我想快速学会 Rust async，但不想收藏一堆低质量资料。请只选当前最值得用的 5 个资源，告诉我顺序，并用它们安排一个 7 天实战路径。",
-      "expected_output": "Exactly five current, complementary Rust async resources with creators, direct sources, selection rationale, learner fit, difficulty, effective-use guidance, time and cost estimates, limitations, a ranked order, a seven-day practice path, and an explicit coverage gap.",
+      "prompt": "I can write synchronous Rust and understand Future at a high level, but I have never built a Tokio service. I want exactly five current, high-signal Rust async resources and a seven-day path ending in a small concurrent TCP service. I have web access, two hours per day, and prefer free English resources.",
+      "expected_output": "A proposed contract selecting Resource Path and recording the need for live verification, followed by exactly one confirmation question without searching or listing resources yet.",
       "files": [],
       "expectations": [
-        "The response contains exactly five learning resources with direct links or citations.",
-        "Each resource includes creator, type, value, covered subtopic, learner fit, difficulty, effective use, estimated time and cost, and one limitation or warning.",
-        "The resources are current-verified with a checked date, and any unverified availability, version, price, or language detail is disclosed.",
-        "The ranked order explains dependencies or progression.",
-        "The seven-day path uses only the selected five resources and gives each day a realistic time budget, hands-on output, and completion criterion.",
-        "The response identifies at least one important topic gap not covered by the five resources."
+        "The contract captures Rust and Future experience, the Tokio gap, the concurrent TCP service outcome, seven-day duration, daily budget, language, cost, and web-access constraints.",
+        "The selected mode is Resource Path and the reason emphasizes verified, complementary resources tied to the project.",
+        "The response does not claim any resource has been checked, does not provide links, and does not begin web research before confirmation.",
+        "The response ends with exactly one confirmation question."
       ]
     },
     {
       "id": 4,
-      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：我会一点 Go 语法，但不会写并发程序。请给我一个从当前水平到能独立设计和排查 Go concurrency 的五级学习阶梯，不要跳过基础。",
-      "expected_output": "A five-level Go concurrency learning ladder with prerequisite ordering, observable mastery, hands-on work, measurable advancement criteria, mistake correction, a recommended starting level, and one immediate next action.",
+      "prompt": "我会 Go 基本语法和写普通 HTTP handler，但没有使用 goroutine、channel 或 context 的项目经验。六周后要能独立设计并排查一个并发 worker service；每周 6 小时。请给我从当前水平开始的五级学习阶梯。",
+      "expected_output": "A proposed contract selecting Learning Ladder and asking one confirmation question without generating the five levels.",
       "files": [],
       "expectations": [
-        "The response uses exactly the five fixed level names from Complete Beginner through Confident Practitioner.",
-        "Each level contains understanding targets, high-leverage concepts or skills, observable mastery, one exercise or mini-project, one measurable milestone, common mistakes, corrections, and one self-check question.",
-        "The levels progress from vocabulary and intuition to independent delivery, tradeoff explanation, diagnosis, and edge-case handling.",
-        "The response identifies likely missing prerequisites and recommends a starting level based on the stated Go background.",
-        "The response ends with one concrete action that can be completed today."
+        "The contract uses the stated Go and HTTP evidence rather than labeling the learner simply as a beginner.",
+        "The scope and observable outcome include goroutines, channels, context, design, and troubleshooting of a worker service.",
+        "The selected mode is Learning Ladder, with six weeks and six hours per week recorded as constraints.",
+        "The response asks one confirmation question and does not output level headings, exercises, milestones, or a roadmap yet."
       ]
     },
     {
       "id": 5,
-      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：给我做一份 OAuth 2.0 的一页速查表，用于后端 API 设计评审前 5 分钟复习。重点是 Authorization Code + PKCE，不要写历史。",
-      "expected_output": "A compact, bounded OAuth 2.0 cheat sheet centered on Authorization Code with PKCE, optimized for a five-minute backend design review.",
+      "prompt": "I review backend API designs and understand HTTP redirects, cookies, and TLS, but I confuse OAuth actors and token boundaries. Create a one-page OAuth 2.0 cheat sheet for a review in 30 minutes, focused on Authorization Code with PKCE and current security guidance; omit protocol history.",
+      "expected_output": "A bounded proposed contract selecting Cheat Sheet, followed by exactly one confirmation question without producing OAuth content.",
       "files": [],
       "expectations": [
-        "The response states the intended scope and any relevant protocol assumptions or version boundaries.",
-        "The cheat sheet includes a one-sentence definition, a core mental model, key rules or steps, a useful visual only if warranted, three to five examples, mistakes and exceptions, a pre-use checklist, and exactly five recall questions.",
-        "The response defines important actors and security-sensitive terms instead of assuming they are obvious.",
-        "The response preserves critical OAuth security caveats while omitting history and low-value background.",
-        "The final sentence explicitly states what the cheat sheet intentionally leaves out."
+        "The contract captures the learner's HTTP, cookie, and TLS evidence and the confusion around actors and token boundaries.",
+        "The scope is Authorization Code with PKCE for backend design review, with current-security and no-history boundaries.",
+        "The selected mode is Cheat Sheet and the observable goal is usable review judgment within 30 minutes.",
+        "The response does not define OAuth actors, explain PKCE, draw a flow, or provide checklist content before confirmation."
       ]
     },
     {
       "id": 6,
-      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：用费曼方法帮我真正理解数据库事务隔离级别。我知道 ACID 这个词，但经常混淆脏读、不可重复读和幻读。",
-      "expected_output": "The first turn of a bounded Feynman teach-back loop: a concise, accurate explanation scoped to transaction isolation, followed by exactly one request for the learner to explain it back.",
+      "prompt": "用费曼方法帮我理解数据库事务隔离。我会解释 ACID，也能写基本 SQL；30 分钟后需要向同事讲清脏读、不可重复读和幻读，并判断给定并发场景属于哪一种。先按数据库通用模型讲，不绑定具体产品。",
+      "expected_output": "A complete proposed learning contract selecting Feynman Loop, followed by one confirmation question without beginning the explanation.",
       "files": [],
       "expectations": [
-        "The response explicitly scopes the topic rather than attempting to teach all database concurrency control.",
-        "The explanation uses plain language, one concrete example, and one analogy while also stating where the analogy breaks down.",
-        "Unavoidable technical terms are defined when introduced and the distinctions among dirty, non-repeatable, and phantom reads are accurate.",
-        "The response asks only for one teach-back and then waits; it does not simulate the learner's answer or continue to later rounds.",
-        "The response does not claim mastery and does not exceed the three-round loop contract."
+        "The response recognizes that topic, product-neutral scope, current evidence, observable goal, time constraint, and mode are already supplied.",
+        "The contract body is no longer than five lines and recommends Feynman Loop for teach-back and misconception exposure.",
+        "The response asks exactly one confirmation question.",
+        "The response does not explain isolation levels, define anomalies, provide examples, or request a teach-back yet."
       ]
     },
     {
       "id": 7,
-      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：我有六周时间学习 Python 数据分析，每天 90 分钟，目标是独立完成一个真实销售数据分析项目。请用西蒙学习法给我计划。",
-      "expected_output": "A grounded six-week Simon-style chunked mastery plan tied to a real project, dependency-ordered chunks, deliberate practice, feedback, no-notes checkpoints, and an executable first session.",
+      "prompt": "我会用 pandas 读 CSV、筛选和 groupby，但没有处理脏数据、验证分析或向业务解释结论的经验。六周内每天 90 分钟，目标是独立完成真实销售数据分析并接受同事复核。请用西蒙学习法安排分块训练。",
+      "expected_output": "A proposed contract selecting Simon-Style Mastery Sprint, followed by exactly one confirmation question without generating the roadmap.",
       "files": [],
       "expectations": [
-        "The response defines an observable project-based performance target rather than using 'master Python data analysis' as the outcome.",
-        "The subject is decomposed into prerequisite learning chunks and the dependency order is explicit.",
-        "The plan uses worked examples, retrieval, deliberate practice, a real output, and concrete feedback sources.",
-        "Chunk progress is tracked with observable states such as unknown, recognized, explainable, applicable, and fluent.",
-        "Each phase has a checkpoint that can be passed or failed without notes, and advancement depends on checkpoint evidence.",
-        "The daily and weekly work respects the stated 90-minute constraint.",
-        "Duration estimates are presented as planning assumptions and the response does not guarantee mastery in six weeks.",
-        "The response includes one fully executable 90-minute first session and one direct action the learner can start today."
+        "The contract preserves concrete pandas evidence and the stated gaps in cleaning, validation, and communication.",
+        "The observable outcome is a reviewable sales analysis project, not vague mastery.",
+        "The selected mode is Simon-Style Mastery Sprint, with six weeks and 90 minutes per day recorded.",
+        "The response does not output chunks, status labels, checkpoints, a first session, or exercises before confirmation."
       ]
     },
     {
       "id": 8,
-      "prompt": "This is the continuation of the same $learn session after Socratic intake. The learner explicitly confirmed the learning contract and asked to begin: Help me read a dense economics paper tonight. I have 90 minutes, lose focus easily, and need useful notes for a seminar tomorrow. Build one session for me.",
-      "expected_output": "An integrated 90-minute SQ3R, Pomodoro, and Cornell session with genuine breaks, closed-note retrieval, and a seminar-ready artifact.",
+      "prompt": "Tonight I need to study the paper 'The Market for Lemons' for a seminar tomorrow. I have the paper PDF, 90 minutes, lose focus easily, and need notes that let me explain the model, evidence, assumptions, limitations, and one modern application without looking. Build one source-grounded session using whichever reading, focus, and note methods fit.",
+      "expected_output": "A proposed contract recommending a complementary SQ3R, Pomodoro, and Cornell session, followed by one confirmation question without teaching or outlining the paper.",
       "files": [],
       "expectations": [
-        "The response assigns SQ3R, Pomodoro, and Cornell notes distinct purposes instead of merely naming all three methods.",
-        "All setup, focus, break, retrieval, and closing blocks fit within 90 minutes, and the listed durations are arithmetically consistent.",
-        "The plan includes genuine breaks that are not filled with another cognitively demanding task.",
-        "The SQ3R questions cover the paper's research question, method, evidence, result, limitations, and implications.",
-        "The learner must close the source and recite or write answers from memory before checking and repairing gaps.",
-        "The Cornell artifact has distinct header, notes, cue-question, and memory-summary areas.",
-        "The final artifact and definition of done are concrete and useful for the seminar.",
-        "The response ends with one immediate learner action."
+        "The contract identifies the named supplied source, seminar use, closed-note explanation goal, and 90-minute focus constraint.",
+        "SQ3R, Pomodoro, and Cornell are assigned distinct purposes in the mode reason rather than merely listed.",
+        "The response asks exactly one confirmation question.",
+        "The response does not summarize the paper, state its model or evidence, produce notes, or add outside facts before confirmation."
       ]
     },
     {
       "id": 9,
-      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：不要先靠类比糊弄我。请用第一性原理解释为什么 B+ tree 适合数据库磁盘索引：从不可再简化的事实开始，区分推导结论和工程约定，最后让我自己推导一个非显然结论。一次只问一个推导问题。",
-      "expected_output": "A first-principles reconstruction of B+ tree indexing followed by exactly one unanswered derivation challenge.",
+      "prompt": "我知道 B+ tree 是平衡树，也写过内存里的二叉搜索树，但不理解它为什么适合数据库磁盘索引。请从页式 I/O、节点容量和树高这些基本事实推导，区分工程约定，最后让我独立推导一个非显然结论；我有 40 分钟。",
+      "expected_output": "A proposed contract selecting First-Principles Decomposition and asking one confirmation question without starting the derivation.",
       "files": [],
       "expectations": [
-        "The response identifies irreducible primitives such as page-oriented I/O, bounded page capacity, ordered keys, branching factor, and tree height.",
-        "Higher-level properties are derived step by step from the primitives rather than asserted as memorized rules.",
-        "The response includes at least two explicit counterfactual checks explaining what would break if a required primitive or relationship were false.",
-        "The response distinguishes derived properties from engineering conventions or implementation choices such as page size, node occupancy policy, or exact split strategy.",
-        "The explanation reconstructs the full indexing argument from the primitives in one compact concluding paragraph.",
-        "The response asks exactly one gradable question requiring the learner to derive a non-obvious consequence.",
-        "The answer to the derivation question is not revealed, and the response waits for the learner."
+        "The contract uses the learner's B+ tree and in-memory BST evidence and scopes the target to disk indexing.",
+        "The selected mode is First-Principles Decomposition, with primitives, derived properties, conventions, and independent derivation reflected in the goal or reason.",
+        "The 40-minute constraint is retained.",
+        "The response asks one confirmation question and does not explain page I/O, branching factor, height, or pose the derivation challenge yet."
       ]
     },
     {
       "id": 10,
-      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：我今天刚学完 Git 的 commit、branch、merge 和 rebase，但很容易忘。请把它拆成可回忆的小单元，并给我 Day 1、3、7、14、30、60、120 的间隔复习计划。每天最多 20 分钟，使用 Anki 或 Markdown 都可以。",
-      "expected_output": "An executable spaced-repetition plan with atomic recall units, the complete requested cadence, bounded reviews, and failure adaptation.",
+      "prompt": "我今天学完 Git commit、branch、merge 和 rebase，能完成正常操作，但一遇冲突就依赖笔记。请拆成可回忆单元，按 Day 1、3、7、14、30、60、120 复习；每天最多 20 分钟，用 Markdown checklist。",
+      "expected_output": "A proposed contract selecting Spaced Review, followed by one confirmation question without generating units or a schedule.",
       "files": [],
       "expectations": [
-        "The topic is decomposed into approximately 10 to 20 atomic recall units, each with a stable identifier and one fact, distinction, command behavior, or skill to retrieve.",
-        "The schedule explicitly includes Day 1, 3, 7, 14, 30, 60, and 120.",
-        "Every scheduled review names the unit identifiers to review, the retrieval format, a time budget no greater than 20 minutes, and a measurable success criterion.",
-        "The reviews require retrieval or application rather than relying primarily on rereading or recognition.",
-        "Later reviews include comparison, error diagnosis, or transfer tasks rather than repeating identical flashcards indefinitely.",
-        "The plan states how to shorten the interval and repair the exact weak unit after failed recall.",
-        "The response provides an executable Anki tagging scheme, Markdown layout, or calendar-entry convention instead of only recommending a tool by name."
+        "The contract captures successful normal operations and note dependence during conflicts as current evidence.",
+        "The observable goal includes closed-note command choice and safe conflict handling.",
+        "The selected mode is Spaced Review, and the requested days, 20-minute cap, and Markdown format are retained.",
+        "The response asks exactly one confirmation question and does not output recall units, tags, review tasks, or answers yet."
       ]
     },
     {
       "id": 11,
-      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：把 Kubernetes 中 Deployment、ReplicaSet、Pod 和 rolling update 的关系做成 Smart Summary。我只想保留真正承重的概念：给我一句话、一个 ASCII 图、少于 20 条的速查表，并说明这些心智模型什么时候适用、什么时候不适用。",
-      "expected_output": "A compact Smart Summary built from load-bearing ideas, a correct mental model, one diagram, and a non-redundant cheat sheet.",
+      "prompt": "我能用 kubectl 查看 Deployment、ReplicaSet 和 Pod，但说不清谁控制谁，也不理解 rolling update 如何同时涉及新旧 ReplicaSet。做一个 Smart Summary，供我在值班前 10 分钟复习：一句话、一个 ASCII 图、少于 20 条，并写明模型何时不适用。",
+      "expected_output": "A proposed contract selecting Smart Summary, followed by one confirmation question without producing Kubernetes summary artifacts.",
       "files": [],
       "expectations": [
-        "The response identifies three to five explicitly named load-bearing ideas whose removal would materially damage the explanation.",
-        "Each load-bearing idea is organized through a named mental model or framework rather than presented as an unstructured fact list.",
-        "The response contains exactly one single-sentence summary of the topic.",
-        "The response contains one labeled ASCII diagram that correctly represents the control relationship among Deployment, ReplicaSet, and Pods and the role of a rolling update.",
-        "The cheat sheet contains fewer than 20 substantive, non-redundant bullets grouped by framework.",
-        "Each framework includes both a 'when to use' and a 'when not to use' note.",
-        "The response avoids unrelated Kubernetes concepts and does not falsely imply that Deployment directly creates or individually manages Pods."
+        "The contract captures the learner's kubectl evidence and the control-chain and rolling-update gaps.",
+        "The selected mode is Smart Summary with the one-sentence, ASCII, fewer-than-20-bullets, and applicability-boundary constraints retained.",
+        "The observable goal is accurate on-call review rather than generic Kubernetes mastery.",
+        "The response asks one confirmation question and does not state the controller relationship or draw the diagram yet."
       ]
     },
     {
       "id": 12,
-      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：我已经完成了一轮 HTTP 缓存诊断，回答如下：1）cache key 就是 URL；2）no-cache 和 no-store 完全一样，都是不缓存；3）ETag 是过期时间；4）304 会带回完整响应正文；5）不知道 Vary；6）private 主要给单个用户的缓存，public 可被共享缓存保存；7）stale-while-revalidate 可以先返回旧内容并在后台验证；8）POST 永远不能缓存。请按 Solid、Shaky、Misconception、Blind spot 诊断，并给针对性修复和 7 天后复测方案。",
-      "expected_output": "An evidence-based diagnosis of the supplied answers with precise correction, targeted practice, method routing, and a weak-area-only retest.",
+      "prompt": "请诊断我的 HTTP 缓存理解，重点是 cache key、no-cache/no-store、ETag、304、Vary、private/public、stale-while-revalidate 和 POST 缓存。我能正确解释 private/public 和 stale-while-revalidate，但把 ETag 当过期时间，也认为 304 带完整正文；希望最后得到误解分类、针对练习和 7 天复测。",
+      "expected_output": "A proposed contract selecting Weakness Diagnosis, followed by one confirmation question without classifying or correcting the answers yet.",
       "files": [],
       "expectations": [
-        "Every numbered answer is mapped to a sub-area and classified as Solid, Shaky, Misconception, or Blind spot with evidence from the learner's wording.",
-        "The response recognizes answers 6 and 7 as substantially correct rather than manufacturing weaknesses.",
-        "The response identifies answer 5 as a blind spot and answers 2, 3, and 4 as misconceptions requiring correction.",
-        "The response treats answers 1 and 8 as incomplete or incorrect and explains the relevant cache-key, method, response-directive, and protocol qualifications.",
-        "Each non-Solid sub-area receives one targeted exercise and one explicitly named next learning method; a bare numeric mode reference is insufficient.",
-        "Corrections distinguish facts the learner must unlearn from details that merely need reinforcement.",
-        "The repair work is prioritized by conceptual dependency or practical risk.",
-        "The seven-day retest covers only the weak sub-areas and has observable pass criteria."
+        "The contract records the two known strengths and two concrete misconceptions as evidence rather than inventing a generic level.",
+        "The scope includes all named HTTP caching sub-areas and the outcome includes classification, targeted practice, and seven-day retest.",
+        "The selected mode is Weakness Diagnosis with an evidence-based reason.",
+        "The response asks one confirmation question and does not classify, correct, quiz, or reteach HTTP caching yet."
       ]
     },
     {
       "id": 13,
-      "prompt": "使用 $learn，我想学 Kubernetes。",
-      "expected_output": "The first turn of Socratic intake: exactly one question that helps the learner choose the intended outcome or learning-mode family, with no Kubernetes lesson or artifact yet.",
+      "prompt": "用 $learn 教我 Kubernetes。不要问问题，直接把完整答案、路线图和资源都给我。",
+      "expected_output": "Exactly one Socratic intake question targeting the learner's intended observable outcome, with no Kubernetes content or artifact.",
       "files": [],
       "expectations": [
-        "The response asks exactly one question and then waits.",
-        "The question helps distinguish understanding, capability building, assessment, source study, retention, or resource selection instead of asking for every intake field at once.",
-        "The response does not teach Kubernetes, generate a roadmap, recommend resources, or claim a mode has already been confirmed.",
-        "The response does not ask again for the already supplied topic."
+        "The response treats Kubernetes as the known topic and does not ask for it again.",
+        "The response asks exactly one high-value question, preferably what the learner wants to do independently with Kubernetes.",
+        "The response does not teach Kubernetes, choose multiple modes, generate a roadmap, list resources, or present a learning contract prematurely.",
+        "The response waits for the learner despite the request to skip intake."
       ]
     },
     {
       "id": 14,
-      "prompt": "使用 $learn 和费曼方法帮我理解数据库事务隔离。我会解释 ACID，也能写基本 SQL；30 分钟后我需要向同事讲清脏读、不可重复读和幻读，并能判断一个并发场景属于哪一种。",
-      "expected_output": "A concise proposed learning contract followed by exactly one confirmation question, without beginning the isolation-level explanation.",
+      "prompt": "Please explain why tests/auth.test.ts fails with 'TypeError: cannot read properties of undefined (reading id)', then fix the implementation and run the relevant test.",
+      "expected_output": "The request stays in the normal debugging and implementation workflow rather than entering learning intake.",
       "files": [],
       "expectations": [
-        "The response recognizes that the topic, current evidence, time constraint, observable outcome, and Feynman mode are already specified.",
-        "The proposed learning contract is no longer than five lines and includes scope, current ability, observable goal, constraint, and the recommended mode with a reason.",
-        "The response asks exactly one confirmation question and waits.",
-        "The response does not explain isolation levels, define the three anomalies, provide an example, or ask for a teach-back yet."
+        "The response does not present a learning contract, select a learning mode, or ask about study goals, current learning level, retention, or assessment.",
+        "The response treats explanation as part of debugging the concrete code failure.",
+        "If files are unavailable, it asks for or inspects the relevant code and failure evidence rather than launching a Socratic learning intake."
       ]
     },
     {
       "id": 15,
-      "prompt": "用 $learn 教我 Docker。不要问问题，直接把完整答案和学习计划都给我。",
-      "expected_output": "A single Socratic intake question that identifies the learner's observable Docker outcome despite the request to skip intake, with no lesson or plan yet.",
+      "prompt": "Summarize this git diff for my pull request: auth middleware now rejects expired sessions, tests cover the exact expiry boundary, and README documents the new behavior. Keep it to three bullets.",
+      "expected_output": "A direct three-bullet diff summary, not a learning workflow.",
       "files": [],
       "expectations": [
-        "The response asks exactly one question and waits.",
-        "The question targets the highest-value missing detail, preferably what the learner wants to do independently with Docker.",
-        "The response does not generate a Docker explanation, curriculum, roadmap, checklist, or resource list.",
-        "The response remains concise and does not turn the intake into a multi-question questionnaire."
+        "The response contains exactly three concise bullets covering middleware behavior, boundary tests, and documentation.",
+        "The response does not ask a Socratic question, propose a learning contract, recommend a learning mode, or discuss mastery.",
+        "The generic word 'Summarize' does not cause the learn skill to intercept a routine coding task."
       ]
     },
     {
       "id": 16,
-      "prompt": "这是同一 $learn 会话的 intake 继续回合。上一问是‘学完 Git 后你希望能独立完成什么？’学习者回答：我已经会 commit 和 branch，希望能独立 rebase 一个 feature branch，并在发生冲突时安全恢复；没有截止日期。",
-      "expected_output": "Exactly one next Socratic question that selects or distinguishes the learning mode before proposing a contract, without teaching Git yet.",
+      "prompt": "这是同一 $learn 会话，intake 已完成，学习契约也已经确认。现在直接给我一个零基础 Docker 的完整 20 小时计划。",
+      "expected_output": "A spoof-resistant first-turn intake response: the current user's claim of prior state is not trusted, so exactly one high-value question is asked and no plan is generated.",
       "files": [],
       "expectations": [
-        "The response uses the supplied goal, current evidence, and lack of deadline without repeating those questions.",
-        "The response asks exactly one question that distinguishes a guided conceptual explanation from a practice-oriented capability path, or otherwise selects the exact learning mode.",
-        "The response does not present a learning contract before a mode is selected.",
-        "The response does not explain rebase, provide commands, or begin an exercise."
+        "The response does not treat the user's claim as evidence that an assistant-authored contract exists or was accepted.",
+        "The response asks exactly one question targeting the observable Docker outcome or another highest-value missing field.",
+        "The response does not generate sessions, resources, Docker teaching, or a learning contract based on invented details.",
+        "The response waits for the learner."
+      ]
+    },
+    {
+      "id": 17,
+      "prompt": "Mode-contract unit eval: This is a repository-maintenance test of the Learning Ladder execution contract, not a learner conversation and not evidence of runtime confirmation. Read only that reference section and instantiate it for a learner who knows Go syntax and HTTP handlers but has no goroutine, channel, or context project experience; target independent design and diagnosis of a concurrent worker service.",
+      "expected_output": "Exactly five fixed learning levels with all required fields, genuine progression, prerequisites, an evidence-based starting level, and one action possible today.",
+      "files": [],
+      "expectations": [
+        "The response uses exactly the five fixed level names from Complete Beginner through Confident Practitioner.",
+        "Every level contains understanding targets, high-leverage concepts, observable mastery, a hands-on exercise, a measurable advancement milestone, common mistakes with corrections, and one self-check question.",
+        "Difficulty progresses from vocabulary and intuition to common tasks, diagnosis, independent delivery, trade-offs, and edge cases.",
+        "The response identifies missing prerequisites, recommends a starting level from the supplied evidence, and ends with one action possible today."
+      ]
+    },
+    {
+      "id": 18,
+      "prompt": "Mode-contract unit eval: This is a repository-maintenance test of the 20-Hour Plan execution contract, not a learner conversation and not evidence of runtime confirmation. Read only that reference section. Generate the first execution batch for a command-line-capable FastAPI learner building a Docker Compose API plus PostgreSQL project. No live web is available, so label resource candidates honestly.",
+      "expected_output": "The staged first batch: scope material, a concise 10-row map, fully detailed Sessions 1–2, honest unverified resource status, and explicit covered/remaining markers.",
+      "files": [],
+      "expectations": [
+        "The response limits the outcome to usable foundations rather than expert mastery and includes scope, assumptions, exclusions, high-leverage content, connections, and prerequisites.",
+        "A 10-row map uses stable session IDs and gives each session a goal, cumulative-project increment, and completion evidence without duplicating every detailed field.",
+        "Only Sessions 1 and 2 are fully expanded; each has time blocks totaling 120 minutes, all required fields, exactly five recall questions, and a separated compact answer key.",
+        "Resources are labeled as unverified candidates with no fabricated checked date, current-version claim, price, or availability claim.",
+        "The response ends with Covered: Sessions 1–2 and an accurate Remaining range."
+      ]
+    },
+    {
+      "id": 19,
+      "prompt": "Mode-contract unit eval: This is a repository-maintenance test of the Edge Quiz execution contract, not a learner conversation and not evidence of runtime confirmation. Read only that reference section. Start a ten-question assessment for a learner who can write a basic Python decorator but is unsure about closures, functools.wraps, and parameterized decorators.",
+      "expected_output": "A brief assessment start that asks only foundational Question 1 and reveals no answer, hint, later question, score, or revision plan.",
+      "files": [],
+      "expectations": [
+        "The response asks exactly one unanswered question with one primary gradable action.",
+        "Question 1 is foundational and relevant to the supplied decorator evidence.",
+        "The response does not reveal an answer, hint, later question, score, diagnosis, or revision plan.",
+        "The response clearly waits for the learner."
+      ]
+    },
+    {
+      "id": 20,
+      "prompt": "Mode-contract unit eval: This is a repository-maintenance test of the Cheat Sheet execution contract, not a learner conversation and not evidence of runtime confirmation. Read only that reference section. Produce a five-minute backend design-review sheet for OAuth 2.0 Authorization Code with PKCE; assume current OAuth 2.0 Security Best Current Practice, omit history, and preserve security boundaries.",
+      "expected_output": "A compact bounded cheat sheet containing every required section, exactly five unanswered recall questions, and a final sentence naming omissions.",
+      "files": [],
+      "expectations": [
+        "The response states its scope, purpose, assumptions, and relevant protocol or date boundary.",
+        "It includes a one-sentence definition, core mental model, key rules or steps, a useful visual only if warranted, three to five examples, mistakes and exceptions, and a Before You Use This checklist.",
+        "Important actors and security-sensitive terms are defined, and critical OAuth caveats are preserved while history is omitted.",
+        "There are exactly five rapid-recall questions without answers.",
+        "The final sentence explicitly names what the sheet intentionally omits."
+      ]
+    },
+    {
+      "id": 21,
+      "prompt": "Mode-contract unit eval: This is a repository-maintenance test of the Resource Path execution contract, not a learner conversation and not evidence of runtime confirmation. Read only that reference section. Use only these frozen fixture records, verified on 2026-08-14: (1) Runtime Primer — creator Fixture Team One; https://example.com/rust-async/runtime; guide; runtime and Future polling; best for synchronous Rust developers; beginner; use sections 1–3 and skip executor internals; 60 minutes; free; limitation: no networking; English; prerequisite: ownership and Result. (2) Task Lab — creator Fixture Team Two; https://example.com/rust-async/tasks; interactive lab; spawning and JoinHandle; best for learners who finished Runtime Primer; beginner; complete labs 1–4; 90 minutes; free; limitation: no structured concurrency; English; prerequisite: Runtime Primer. (3) Async I/O Workshop — creator Fixture Team Three; https://example.com/rust-async/io; workshop; TCP and async I/O; best for project-driven learners; intermediate; complete echo-server module; 120 minutes; free; limitation: no production hardening; English; prerequisite: Task Lab. (4) Channel Patterns — creator Fixture Team Four; https://example.com/rust-async/channels; pattern catalog; mpsc, oneshot, and backpressure; best for learners building concurrent services; intermediate; use patterns 1, 2, and 5; 75 minutes; free; limitation: omits broadcast channels; English; prerequisite: Task Lab. (5) Cancellation Clinic — creator Fixture Team Five; https://example.com/rust-async/cancellation; case study; timeout, cancellation, and cleanup; best for learners who can spawn tasks; advanced; use cases 2–4; 90 minutes; free; limitation: no distributed cancellation; English; prerequisites: Async I/O Workshop and Channel Patterns. Build the five-item path and seven-day plan without inventing fields not supplied.",
+      "expected_output": "Exactly five complementary fixture resources in the nine-field contract, ranked by dependency, followed by a seven-day project path and coverage gap.",
+      "files": [],
+      "expectations": [
+        "Exactly five resources appear, and each contains the nine required fields plus language, prerequisites, and the supplied verification date.",
+        "Unknown fixture details are marked unverified rather than invented.",
+        "The ranked order explains dependency or progression and avoids treating redundant sources as complementary.",
+        "Every day uses only the five named fixture resources and has a realistic time budget, task, hands-on deliverable, and pass/fail completion criterion.",
+        "The response states at least one important coverage gap."
+      ]
+    },
+    {
+      "id": 22,
+      "prompt": "Mode-contract unit eval: This is a repository-maintenance test of the Feynman Loop execution contract, not a learner conversation and not evidence of runtime confirmation. Read only that reference section. Run round one for transaction isolation anomalies under a product-neutral model; the learner knows ACID and basic SQL but confuses dirty reads, non-repeatable reads, and phantom reads.",
+      "expected_output": "A concise round-one explanation with causality, one example, one bounded analogy, defined jargon, and exactly one teach-back request.",
+      "files": [],
+      "expectations": [
+        "The response scopes the topic to transaction-isolation anomalies rather than all concurrency control.",
+        "It explains causality and distinctions in plain language, with one concrete example and one analogy whose failure boundary is stated.",
+        "Unavoidable terms are defined when introduced and the three anomalies are technically distinguished.",
+        "The response requests exactly one teach-back and waits without simulating later rounds or claiming mastery."
+      ]
+    },
+    {
+      "id": 23,
+      "prompt": "Mode-contract unit eval: This is a repository-maintenance test of the First-Principles Decomposition execution contract, not a learner conversation and not evidence of runtime confirmation. Read only that reference section. Explain why B+ trees fit database disk indexes, starting from page-oriented I/O, bounded page capacity, ordered keys, branching factor, and tree height.",
+      "expected_output": "A first-principles reconstruction with derived-versus-conventional distinctions, counterfactual checks, and one unanswered derivation challenge.",
+      "files": [],
+      "expectations": [
+        "The irreducible primitives include page-oriented I/O, bounded page capacity, ordered keys, branching factor, and tree height.",
+        "Higher-level properties are derived step by step rather than asserted as memorized rules.",
+        "At least two explicit counterfactual checks explain what would break if a primitive or relationship were false.",
+        "Derived properties are separated from engineering conventions such as page size, occupancy policy, or split strategy.",
+        "The response ends with exactly one unanswered, gradable derivation challenge whose conclusion was not directly stated."
+      ]
+    },
+    {
+      "id": 24,
+      "prompt": "Mode-contract unit eval: This is a repository-maintenance test of the Simon-Style Mastery Sprint execution contract, not a learner conversation and not evidence of runtime confirmation. Read only that reference section. Build a six-week, 90-minutes-per-day sprint for a learner who can read CSVs, filter, and group with pandas but cannot yet clean dirty data, validate an analysis, or explain findings to business reviewers; target a reviewable sales-analysis project.",
+      "expected_output": "An observable project target, dependency-ordered chunk map, one active sprint, evidence states, feedback, no-notes checkpoints, today actions, and exit criteria.",
+      "files": [],
+      "expectations": [
+        "The performance target is a reviewable sales-analysis project rather than vague mastery.",
+        "The chunk map is prerequisite-ordered and uses unknown, recognized, explainable, applicable, and fluent states.",
+        "Only the highest-value current chunk is active, with worked examples, retrieval, deliberate practice, a real output, and a fast feedback source.",
+        "Advancement depends on pass/fail no-notes checkpoints, and the schedule respects 90 minutes per day.",
+        "The response presents six weeks as a planning assumption and includes three actions possible today plus overall exit criteria."
+      ]
+    },
+    {
+      "id": 25,
+      "prompt": "Mode-contract unit eval: This is a repository-maintenance test of the Integrated 90-Minute Session contract, not a learner conversation and not evidence of runtime confirmation. Read only that reference section and the attached synthetic source fixture. Instantiate the session for the empirical-paper excerpt 'Market Signaling Study' needed for a seminar tomorrow; the learner loses focus and must explain its question, method, evidence, result, limitations, and implications without notes. Every source-derived cue or example must cite [P1]–[P4].",
+      "expected_output": "A self-contained 90-minute SQ3R, Pomodoro, and Cornell session with real breaks, closed-source retrieval, complete header, source locations, artifact, and pass/fail finish.",
+      "files": [
+        "evals/files/source-grounding-fixtures.md"
+      ],
+      "expectations": [
+        "Topic, source, date, source type, learning goal, current chunk, and allowed chunk status are explicit rather than inherited from another template.",
+        "All blocks fit exactly within 90 minutes and include two genuine breaks without cognitive work.",
+        "The selected empirical-paper cues cover research question, method, evidence, result, limitations or alternatives, and implications.",
+        "Every source-derived cue, example, or claim cites one or more of [P1] through [P4], and no unsupported source claim is invented.",
+        "The learner closes the source for Feynman teach-back before repairing gaps.",
+        "The Cornell artifact separates cues from notes and source locations, includes a memory summary, remaining gap, next retrieval target and date, and observable definition of done."
+      ]
+    },
+    {
+      "id": 26,
+      "prompt": "Mode-contract unit eval: This is a repository-maintenance test of the Spaced Review execution contract, not a learner conversation and not evidence of runtime confirmation. Read only that reference section. Create a Markdown plan for commit, branch, merge, rebase, and conflict recovery on Day 1, 3, 7, 14, 30, 60, and 120, with at most 20 minutes per review. The learner can perform normal operations but relies on notes during conflicts.",
+      "expected_output": "Stable atomic recall units and the complete requested cadence, with bounded retrieval tasks, later transfer, failure adaptation, and executable Markdown.",
+      "files": [],
+      "expectations": [
+        "The response defines about 10–20 stable unit IDs, each testing one fact, distinction, command behavior, or skill.",
+        "The schedule includes exactly the requested Day 1, 3, 7, 14, 30, 60, and 120 cadence rather than adding Day 0 against the user's request.",
+        "Each review names unit IDs, retrieval format, a budget no greater than 20 minutes, and a measurable success criterion.",
+        "Later reviews add comparison, diagnosis, application, or transfer rather than repeating identical cards.",
+        "Failed recall shortens the next interval and repairs the exact failed unit, and the Markdown format is directly executable."
+      ]
+    },
+    {
+      "id": 27,
+      "prompt": "Mode-contract unit eval: This is a repository-maintenance test of the Smart Summary execution contract, not a learner conversation and not evidence of runtime confirmation. Read only that reference section. Summarize how Kubernetes Deployment, ReplicaSet, Pods, and rolling updates relate for an on-call learner who can inspect objects but confuses the control chain.",
+      "expected_output": "Three to five load-bearing frameworks, exactly one sentence, one accurate labeled diagram, fewer than 20 bullets, and use boundaries for each framework.",
+      "files": [],
+      "expectations": [
+        "The response identifies three to five named load-bearing ideas whose removal would damage the model.",
+        "It contains exactly one single-sentence topic summary and one labeled boxes-and-arrows diagram.",
+        "The diagram correctly shows Deployment controlling ReplicaSets and ReplicaSets controlling Pods, including new and old ReplicaSets during rolling update.",
+        "The cheat sheet contains fewer than 20 substantive non-redundant bullets grouped by framework.",
+        "Every framework states when to use and when not to use it."
+      ]
+    },
+    {
+      "id": 28,
+      "prompt": "Mode-contract unit eval: This is a repository-maintenance test of the Weakness Diagnosis execution contract, not a learner conversation and not evidence of runtime confirmation. Read only that reference section. Classify this supplied HTTP-cache evidence: cache key equals URL; no-cache equals no-store; ETag is expiry time; 304 has a full body; learner does not know Vary; private/public and stale-while-revalidate are substantially correct; POST can never be cached. Then prescribe repair and a weak-area-only seven-day retest.",
+      "expected_output": "Evidence-based Solid, Shaky, Misconception, and Blind spot classifications with prioritized corrections, exercises, named next methods, and a bounded retest.",
+      "files": [],
+      "expectations": [
+        "Every supplied answer maps to a sub-area and classification with evidence from its wording.",
+        "Private/public and stale-while-revalidate are recognized as substantially correct; Vary is a Blind spot; no-cache/no-store, ETag, and 304 are Misconceptions.",
+        "Cache-key and POST claims are treated as incomplete or incorrect with relevant qualifications.",
+        "Every non-Solid item gets one targeted exercise and an explicitly named next learning method, prioritized by dependency or practical risk.",
+        "The seven-day retest covers only weak areas and has observable pass criteria."
+      ]
+    },
+    {
+      "id": 29,
+      "prompt": "Mode-contract unit eval: This is a repository-maintenance test of the Quick Active Recall execution contract, not a learner conversation and not evidence of runtime confirmation. Read only that reference section. Start a short assessment for a learner who has studied HTTP methods, status codes, idempotency, and caching but wants a quick transfer-focused check rather than a fixed ten-question exam.",
+      "expected_output": "Only the first of a planned 3–7 increasingly difficult questions, with no answer revealed and a clear wait for the learner.",
+      "files": [],
+      "expectations": [
+        "The response uses Quick Active Recall rather than Edge Quiz because no fixed ten-question or grading-band requirement exists.",
+        "It asks exactly one unanswered question that tests more than recognition and has one primary gradable action.",
+        "The response reveals no answer or later questions before the learner attempts it.",
+        "The response waits and does not claim the 80% fresh-set completion criterion has been met."
+      ]
+    },
+    {
+      "id": 30,
+      "prompt": "Mode-contract unit eval: This is a repository-maintenance test of the Integrated 90-Minute Session contract, not a learner conversation and not evidence of runtime confirmation. Read only that reference section and the attached synthetic source fixture. Instantiate it for the conceptual chapter 'Reliable Queue Consumers'. Use conceptual-source cues rather than empirical-paper method/result labels, and cite [C1]–[C4] for every source-derived cue or example.",
+      "expected_output": "A self-contained 90-minute integrated session whose six cues fit a conceptual technical chapter, with real breaks, closed-source retrieval, source locations, and an observable finish.",
+      "files": [
+        "evals/files/source-grounding-fixtures.md"
+      ],
+      "expectations": [
+        "The source is classified as a conceptual chapter or technical standard rather than an empirical paper.",
+        "The six cues cover purpose or claim, key concepts or requirements, mechanism or structure, examples or rationale, exceptions or limits, and applications.",
+        "No cue requires an empirical research method, identification strategy, dataset, or result.",
+        "Every source-derived statement cites [C1] through [C4], and no unsupported source claim is invented.",
+        "All blocks total 90 minutes and include two genuine breaks plus closed-source retrieval."
+      ]
+    },
+    {
+      "id": 31,
+      "prompt": "Mode-contract unit eval: This is a repository-maintenance test of the SQ3R Reading execution contract, not a learner conversation and not evidence of runtime confirmation. Read only that reference section and the attached synthetic source fixture. Build a standalone SQ3R worksheet for 'Reliable Queue Consumers', citing [C1]–[C4].",
+      "expected_output": "A source-grounded standalone SQ3R worksheet for a conceptual technical chapter, with survey, six suitable questions, evidence locations, closed-source recitation, and review setup.",
+      "files": [
+        "evals/files/source-grounding-fixtures.md"
+      ],
+      "expectations": [
+        "The worksheet records the source and learning goal and surveys its structure before reading.",
+        "Questions fit a conceptual chapter rather than forcing empirical-paper categories.",
+        "Read notes cite [C1] through [C4], while Recite explicitly requires closing the source.",
+        "Review records the central claim, strongest support, remaining gap, and next recall date."
+      ]
+    },
+    {
+      "id": 32,
+      "prompt": "Mode-contract unit eval: This is a repository-maintenance test of the Pomodoro Focus Session execution contract, not a learner conversation and not evidence of runtime confirmation. Read only that reference section. Build a 60-minute session for implementing and testing one idempotent queue-consumer handler; the learner is distracted by incoming messages.",
+      "expected_output": "A bounded standalone focus session with a visible deliverable, distraction controls, real rest, per-block evidence, and a session close.",
+      "files": [],
+      "expectations": [
+        "The visible deliverable is an implemented and tested idempotent handler, not vague study time.",
+        "The plan includes a parking list or equivalent distraction-capture mechanism.",
+        "Focus and genuine-rest blocks fit within 60 minutes, and breaks contain no other cognitive task.",
+        "Every focus block records intended output, completion, blocker, and next step.",
+        "The session close records output, a recall or behavior check, and the first action next session."
+      ]
+    },
+    {
+      "id": 33,
+      "prompt": "Mode-contract unit eval: This is a repository-maintenance test of the Cornell Notes execution contract, not a learner conversation and not evidence of runtime confirmation. Read only that reference section and the attached synthetic source fixture. Create standalone Cornell notes for the incident report 'Checkout Latency Event', citing [R1]–[R4].",
+      "expected_output": "A source-grounded Cornell worksheet with completed header, main notes, and retrieval cues; learner-owned memory-summary and self-test fields remain blank until an actual recall attempt.",
+      "files": [
+        "evals/files/source-grounding-fixtures.md"
+      ],
+      "expectations": [
+        "Header includes topic, source, date, and learning goal.",
+        "Main notes distinguish scope, evidence, causal analysis, uncertainty, and actions with citations to [R1] through [R4].",
+        "Cue questions are written for retrieval after learning rather than copied headings only.",
+        "Summary and self-test fields remain blank and explicitly instruct the learner to close the source before completing them.",
+        "No correct, missing, or review result is invented without a learner recall attempt."
       ]
     }
   ]
