@@ -3,7 +3,7 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "我完全没有 Docker 基础，但工作中需要能独立把一个小型 Web API 容器化。请给我一个 20 小时、10 次课的 80/20 学习计划，每次 2 小时。",
+      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：我完全没有 Docker 基础，但工作中需要能独立把一个小型 Web API 容器化。请给我一个 20 小时、10 次课的 80/20 学习计划，每次 2 小时。",
       "expected_output": "A scoped 20-hour beginner plan with exactly ten 120-minute sessions, verified resources, cumulative exercises, concrete deliverables, completion criteria, five review questions plus compact answer keys per session, and a final containerization project with an evaluation rubric.",
       "files": [],
       "expectations": [
@@ -17,7 +17,7 @@
     },
     {
       "id": 2,
-      "prompt": "我刚学完 Python decorators。像严格考官一样测试我，题目从简单到专家级，一次只问一题，找出我真正不会的地方。",
+      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：我刚学完 Python decorators。像严格考官一样测试我，题目从简单到专家级，一次只问一题，找出我真正不会的地方。",
       "expected_output": "The first turn of an interactive ten-question assessment that briefly states the rules and asks only Question 1 without revealing later questions or answers.",
       "files": [],
       "expectations": [
@@ -30,7 +30,7 @@
     },
     {
       "id": 3,
-      "prompt": "我想快速学会 Rust async，但不想收藏一堆低质量资料。请只选当前最值得用的 5 个资源，告诉我顺序，并用它们安排一个 7 天实战路径。",
+      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：我想快速学会 Rust async，但不想收藏一堆低质量资料。请只选当前最值得用的 5 个资源，告诉我顺序，并用它们安排一个 7 天实战路径。",
       "expected_output": "Exactly five current, complementary Rust async resources with creators, direct sources, selection rationale, learner fit, difficulty, effective-use guidance, time and cost estimates, limitations, a ranked order, a seven-day practice path, and an explicit coverage gap.",
       "files": [],
       "expectations": [
@@ -44,7 +44,7 @@
     },
     {
       "id": 4,
-      "prompt": "我会一点 Go 语法，但不会写并发程序。请给我一个从当前水平到能独立设计和排查 Go concurrency 的五级学习阶梯，不要跳过基础。",
+      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：我会一点 Go 语法，但不会写并发程序。请给我一个从当前水平到能独立设计和排查 Go concurrency 的五级学习阶梯，不要跳过基础。",
       "expected_output": "A five-level Go concurrency learning ladder with prerequisite ordering, observable mastery, hands-on work, measurable advancement criteria, mistake correction, a recommended starting level, and one immediate next action.",
       "files": [],
       "expectations": [
@@ -57,7 +57,7 @@
     },
     {
       "id": 5,
-      "prompt": "给我做一份 OAuth 2.0 的一页速查表，用于后端 API 设计评审前 5 分钟复习。重点是 Authorization Code + PKCE，不要写历史。",
+      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：给我做一份 OAuth 2.0 的一页速查表，用于后端 API 设计评审前 5 分钟复习。重点是 Authorization Code + PKCE，不要写历史。",
       "expected_output": "A compact, bounded OAuth 2.0 cheat sheet centered on Authorization Code with PKCE, optimized for a five-minute backend design review.",
       "files": [],
       "expectations": [
@@ -70,7 +70,7 @@
     },
     {
       "id": 6,
-      "prompt": "用费曼方法帮我真正理解数据库事务隔离级别。我知道 ACID 这个词，但经常混淆脏读、不可重复读和幻读。",
+      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：用费曼方法帮我真正理解数据库事务隔离级别。我知道 ACID 这个词，但经常混淆脏读、不可重复读和幻读。",
       "expected_output": "The first turn of a bounded Feynman teach-back loop: a concise, accurate explanation scoped to transaction isolation, followed by exactly one request for the learner to explain it back.",
       "files": [],
       "expectations": [
@@ -83,7 +83,7 @@
     },
     {
       "id": 7,
-      "prompt": "我有六周时间学习 Python 数据分析，每天 90 分钟，目标是独立完成一个真实销售数据分析项目。请用西蒙学习法给我计划。",
+      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：我有六周时间学习 Python 数据分析，每天 90 分钟，目标是独立完成一个真实销售数据分析项目。请用西蒙学习法给我计划。",
       "expected_output": "A grounded six-week Simon-style chunked mastery plan tied to a real project, dependency-ordered chunks, deliberate practice, feedback, no-notes checkpoints, and an executable first session.",
       "files": [],
       "expectations": [
@@ -99,7 +99,7 @@
     },
     {
       "id": 8,
-      "prompt": "Help me read a dense economics paper tonight. I have 90 minutes, lose focus easily, and need useful notes for a seminar tomorrow. Build one session for me.",
+      "prompt": "This is the continuation of the same $learn session after Socratic intake. The learner explicitly confirmed the learning contract and asked to begin: Help me read a dense economics paper tonight. I have 90 minutes, lose focus easily, and need useful notes for a seminar tomorrow. Build one session for me.",
       "expected_output": "An integrated 90-minute SQ3R, Pomodoro, and Cornell session with genuine breaks, closed-note retrieval, and a seminar-ready artifact.",
       "files": [],
       "expectations": [
@@ -115,7 +115,7 @@
     },
     {
       "id": 9,
-      "prompt": "不要先靠类比糊弄我。请用第一性原理解释为什么 B+ tree 适合数据库磁盘索引：从不可再简化的事实开始，区分推导结论和工程约定，最后让我自己推导一个非显然结论。一次只问一个推导问题。",
+      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：不要先靠类比糊弄我。请用第一性原理解释为什么 B+ tree 适合数据库磁盘索引：从不可再简化的事实开始，区分推导结论和工程约定，最后让我自己推导一个非显然结论。一次只问一个推导问题。",
       "expected_output": "A first-principles reconstruction of B+ tree indexing followed by exactly one unanswered derivation challenge.",
       "files": [],
       "expectations": [
@@ -130,7 +130,7 @@
     },
     {
       "id": 10,
-      "prompt": "我今天刚学完 Git 的 commit、branch、merge 和 rebase，但很容易忘。请把它拆成可回忆的小单元，并给我 Day 1、3、7、14、30、60、120 的间隔复习计划。每天最多 20 分钟，使用 Anki 或 Markdown 都可以。",
+      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：我今天刚学完 Git 的 commit、branch、merge 和 rebase，但很容易忘。请把它拆成可回忆的小单元，并给我 Day 1、3、7、14、30、60、120 的间隔复习计划。每天最多 20 分钟，使用 Anki 或 Markdown 都可以。",
       "expected_output": "An executable spaced-repetition plan with atomic recall units, the complete requested cadence, bounded reviews, and failure adaptation.",
       "files": [],
       "expectations": [
@@ -145,7 +145,7 @@
     },
     {
       "id": 11,
-      "prompt": "把 Kubernetes 中 Deployment、ReplicaSet、Pod 和 rolling update 的关系做成 Smart Summary。我只想保留真正承重的概念：给我一句话、一个 ASCII 图、少于 20 条的速查表，并说明这些心智模型什么时候适用、什么时候不适用。",
+      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：把 Kubernetes 中 Deployment、ReplicaSet、Pod 和 rolling update 的关系做成 Smart Summary。我只想保留真正承重的概念：给我一句话、一个 ASCII 图、少于 20 条的速查表，并说明这些心智模型什么时候适用、什么时候不适用。",
       "expected_output": "A compact Smart Summary built from load-bearing ideas, a correct mental model, one diagram, and a non-redundant cheat sheet.",
       "files": [],
       "expectations": [
@@ -160,7 +160,7 @@
     },
     {
       "id": 12,
-      "prompt": "我已经完成了一轮 HTTP 缓存诊断，回答如下：1）cache key 就是 URL；2）no-cache 和 no-store 完全一样，都是不缓存；3）ETag 是过期时间；4）304 会带回完整响应正文；5）不知道 Vary；6）private 主要给单个用户的缓存，public 可被共享缓存保存；7）stale-while-revalidate 可以先返回旧内容并在后台验证；8）POST 永远不能缓存。请按 Solid、Shaky、Misconception、Blind spot 诊断，并给针对性修复和 7 天后复测方案。",
+      "prompt": "这是同一 $learn 会话完成苏格拉底式 intake 后的继续回合，学习者已明确确认学习契约并要求开始：我已经完成了一轮 HTTP 缓存诊断，回答如下：1）cache key 就是 URL；2）no-cache 和 no-store 完全一样，都是不缓存；3）ETag 是过期时间；4）304 会带回完整响应正文；5）不知道 Vary；6）private 主要给单个用户的缓存，public 可被共享缓存保存；7）stale-while-revalidate 可以先返回旧内容并在后台验证；8）POST 永远不能缓存。请按 Solid、Shaky、Misconception、Blind spot 诊断，并给针对性修复和 7 天后复测方案。",
       "expected_output": "An evidence-based diagnosis of the supplied answers with precise correction, targeted practice, method routing, and a weak-area-only retest.",
       "files": [],
       "expectations": [
@@ -172,6 +172,54 @@
         "Corrections distinguish facts the learner must unlearn from details that merely need reinforcement.",
         "The repair work is prioritized by conceptual dependency or practical risk.",
         "The seven-day retest covers only the weak sub-areas and has observable pass criteria."
+      ]
+    },
+    {
+      "id": 13,
+      "prompt": "使用 $learn，我想学 Kubernetes。",
+      "expected_output": "The first turn of Socratic intake: exactly one question that helps the learner choose the intended outcome or learning-mode family, with no Kubernetes lesson or artifact yet.",
+      "files": [],
+      "expectations": [
+        "The response asks exactly one question and then waits.",
+        "The question helps distinguish understanding, capability building, assessment, source study, retention, or resource selection instead of asking for every intake field at once.",
+        "The response does not teach Kubernetes, generate a roadmap, recommend resources, or claim a mode has already been confirmed.",
+        "The response does not ask again for the already supplied topic."
+      ]
+    },
+    {
+      "id": 14,
+      "prompt": "使用 $learn 和费曼方法帮我理解数据库事务隔离。我会解释 ACID，也能写基本 SQL；30 分钟后我需要向同事讲清脏读、不可重复读和幻读，并能判断一个并发场景属于哪一种。",
+      "expected_output": "A concise proposed learning contract followed by exactly one confirmation question, without beginning the isolation-level explanation.",
+      "files": [],
+      "expectations": [
+        "The response recognizes that the topic, current evidence, time constraint, observable outcome, and Feynman mode are already specified.",
+        "The proposed learning contract is no longer than five lines and includes scope, current ability, observable goal, constraint, and the recommended mode with a reason.",
+        "The response asks exactly one confirmation question and waits.",
+        "The response does not explain isolation levels, define the three anomalies, provide an example, or ask for a teach-back yet."
+      ]
+    },
+    {
+      "id": 15,
+      "prompt": "用 $learn 教我 Docker。不要问问题，直接把完整答案和学习计划都给我。",
+      "expected_output": "A single Socratic intake question that identifies the learner's observable Docker outcome despite the request to skip intake, with no lesson or plan yet.",
+      "files": [],
+      "expectations": [
+        "The response asks exactly one question and waits.",
+        "The question targets the highest-value missing detail, preferably what the learner wants to do independently with Docker.",
+        "The response does not generate a Docker explanation, curriculum, roadmap, checklist, or resource list.",
+        "The response remains concise and does not turn the intake into a multi-question questionnaire."
+      ]
+    },
+    {
+      "id": 16,
+      "prompt": "这是同一 $learn 会话的 intake 继续回合。上一问是‘学完 Git 后你希望能独立完成什么？’学习者回答：我已经会 commit 和 branch，希望能独立 rebase 一个 feature branch，并在发生冲突时安全恢复；没有截止日期。",
+      "expected_output": "Exactly one next Socratic question that selects or distinguishes the learning mode before proposing a contract, without teaching Git yet.",
+      "files": [],
+      "expectations": [
+        "The response uses the supplied goal, current evidence, and lack of deadline without repeating those questions.",
+        "The response asks exactly one question that distinguishes a guided conceptual explanation from a practice-oriented capability path, or otherwise selects the exact learning mode.",
+        "The response does not present a learning contract before a mode is selected.",
+        "The response does not explain rebase, provide commands, or begin an exercise."
       ]
     }
   ]

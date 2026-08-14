@@ -1,4 +1,4 @@
 interface:
   display_name: "Learn"
-  short_description: "Plan, study, recall, and master any topic."
-  default_prompt: "Use $learn to choose the right learning method and turn my topic into an active, testable study session."
+  short_description: "Choose a mode through Socratic intake, then learn."
+  default_prompt: "Use $learn to choose a learning mode through Socratic questions before teaching me my topic."

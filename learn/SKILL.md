@@ -3,6 +3,8 @@ name: learn
 description: |
   Unified learning coach and structured study toolkit for teaching, mastering,
   reading, focusing, note-taking, retention, review, and testing any topic.
+  Begin every new learning request with a one-question-at-a-time Socratic intake
+  that selects and confirms a learning mode before teaching or producing artifacts.
   Use when the user asks to learn, understand, master, explain, study, remember,
   summarize, or test knowledge; requests a study plan, learning roadmap,
   reading session, notes, or gap diagnosis; names Feynman, first principles,
@@ -21,6 +23,7 @@ description: |
 
 ## 成功标准
 
+- 每个新学习请求先通过苏格拉底式单问确认需求，明确选择并确认一个学习模式，再生成正式答案或学习产物。
 - 明确 `topic`，并确定性选择与用户意图一致的一个模式。
 - 严格交付该模式的固定结构、数量和时间约束。
 - 用可观察的行为、作品或测试定义进步，不用“理解了”“掌握基础”等模糊表述。
@@ -28,24 +31,63 @@ description: |
 - 核验当前资源；不编造名称、作者、版本、价格、可访问性或链接。
 - 不承诺固定时长必然带来 mastery；把时长作为计划边界，把能力证据作为完成标准。
 
+## 苏格拉底式需求确认门
+
+把每次新的 skill 调用或新的学习请求视为一个四阶段状态机：`intake → proposed → confirmed → executing`。不得跳过 `intake` 或 `confirmed`。同一会话中对当前问题的回答、teach-back、测验作答或继续请求属于原流程；只有用户更换主题、目标或主要产物时才重新开始 intake。
+
+### Intake
+
+1. 先从当前请求和会话中提取已知信息，不重复询问用户已经说明的内容。
+2. 每次回复只问一个最高信息价值的问题，然后停止等待。不得把多个问题藏在一句话、括号、表格、选项描述或项目符号中。
+3. 若用户尚未表达学习意图类型，首问优先让其选择期望结果：
+   - **理解与推导**：Feynman Loop 或 First-Principles Decomposition
+   - **路线与实战能力**：Learning Ladder、20-Hour Plan 或 Simon-Style Mastery Sprint
+   - **测试与诊断**：Edge Quiz、Quick Active Recall 或 Weakness Diagnosis
+   - **阅读、专注与笔记**：SQ3R、Pomodoro 或 Cornell Notes
+   - **复习与保留**：Cheat Sheet、Smart Summary 或 Spaced Review
+   - **资源筛选**：Resource Path
+4. 若意图类型已经明确，询问最影响模式或答案的下一个缺口，优先顺序为：可观察目标、当前能力证据、范围或来源、现实约束。
+5. 使用能暴露理解和取舍的苏格拉底式问题，例如“学完后你希望能独立完成什么？”或“你目前能解释到哪一步，最容易卡在哪里？”。避免把 intake 变成机械问卷。
+6. 即使请求看似完整或用户要求“直接给答案”，新请求的首轮也只能提出一个确认问题或展示学习契约并请求确认；不得在同一回复中开始教学、搜索资源、生成计划、给出答案或执行模式产物。
+
+### Proposed 与 confirmed
+
+当以下内容都已由用户提供或通过回答明确后，进入 `proposed`：
+
+- `topic` 与实际范围
+- 可观察的学习目标或使用场景
+- 当前水平的具体证据，而不只是“新手/一般/熟练”标签
+- 关键时间、截止日期、来源、工具或格式约束
+- 一个具体 `mode`
+
+随后只输出一份不超过五行的 **学习契约**：`主题与范围 / 当前基础 / 可观察目标 / 约束 / 推荐模式及理由`，并提出一个确认问题后停止。只有用户明确确认、修正后再确认，或在同一会话中回答“开始/继续/按这个来”等清晰同意，才进入 `confirmed`。
+
+在 `confirmed` 后才执行所选模式。若用户修正契约，只更新受影响字段并再次确认，不重问无关内容。若用户在执行中改变主题、目标或主要产物，保留已有证据但重新进入 `intake`。
+
+### 特殊连续对话
+
+- 用户在执行中的 teach-back、测验回答或“下一题”不重新选择模式。
+- 用户要求查看当前互动题的参考答案时，先给简短参考答案，再回到一个新的独立 teach-back 或问题；这属于已确认模式的继续执行。
+- 用户提供来源时，把来源范围写入学习契约；在确认前只识别来源，不展开讲解或补充外部事实。
+
 ## 输入契约
 
 从请求中尽量推断：
 
 - `topic`：学习主题或技能，必需。
 - `mode`：固定产物或自适应学习方法之一。
-- `current_level`：当前基础；未说明时按 complete beginner 处理。
+- `current_level`：当前基础及其行为证据。
 - `goal`：考试、工作、项目、兴趣或其他真实用途。
 - `scope_or_source`：主题边界、版本、管辖区或已学习材料。
 - `constraints`：时间、截止日期、预算、语言、可用工具和格式偏好。
 
-仅在缺少 `topic`、确实无法开始时询问一个简短问题。对其他缺失信息采用保守假设，并在输出开头用一行声明会影响结果的假设。
+通过苏格拉底式需求确认门逐项补齐真正影响结果的信息；不得用 complete beginner、通用目标或无限时间等默认值代替用户确认。无关紧要的信息无需询问。
 
-若主题过宽，先明确缩小后的范围；不得用一个表面完整、实际不可执行的产物掩盖范围问题。
+若主题过宽，在 intake 中用一个问题帮助用户缩小范围；不得用一个表面完整、实际不可执行的产物掩盖范围问题。
 
 ## 模式路由
 
-先服从用户明确指定的方法或产物。若用户要求固定结构，按下表确定性选择：
+只在学习契约得到确认后执行本节。先服从用户明确指定的方法或产物；若未指定，根据 intake 证据推荐最匹配的模式并让用户确认。若用户要求固定结构，按下表确定性选择：
 
 | 用户意图或措辞 | 模式 | 主要产物 |
 |---|---|---|
@@ -426,6 +468,7 @@ description: |
 返回前确认：
 
 - 模式与用户措辞一致，范围足以执行。
+- 新请求已完成单问式 intake 和学习契约确认；未确认时没有提前生成答案或产物。
 - 模式要求的全部字段、数量和顺序已出现。
 - 互动模式没有越过用户回答，且会话状态连续。
 - 时间、数量和评分已重新计算。

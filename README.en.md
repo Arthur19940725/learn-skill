@@ -2,7 +2,16 @@
 
 English | [简体中文](README.md)
 
-`learn` is a unified learning coach and structured study toolkit for AI coding agents. It turns “I want to learn X” into an active, testable, and reviewable process centered on observable mastery, active recall, teach-back, and real artifacts.
+`learn` is a unified learning coach and structured study toolkit for AI coding agents. Every new learning request starts with a one-question-at-a-time Socratic intake that selects a learning mode and confirms a learning contract before turning “I want to learn X” into an active, testable, and reviewable process. It centers learning on observable mastery, active recall, teach-back, and real artifacts.
+
+## Invocation flow
+
+1. Extract the topic, current ability, goal, and constraints already present in the request.
+2. Ask one highest-value question at a time to select or calibrate the learning mode.
+3. Confirm a learning contract of at most five lines covering scope, current ability, observable outcome, constraints, and the recommended mode.
+4. Produce instruction, a plan, a quiz, an explanation, or another formal artifact only after the learner explicitly confirms.
+
+A new topic, goal, or primary artifact restarts intake. Teach-backs, quiz answers, and “next question” within the same session continue the current mode without selecting it again.
 
 ## Capabilities
 
@@ -28,7 +37,7 @@ learn/
     └── templates.md
 ```
 
-`SKILL.md` defines routing and execution contracts. `references/templates.md` contains learning templates loaded on demand, while `evals/evals.json` provides 12 behavioral evaluation cases.
+`SKILL.md` defines the Socratic intake gate, routing, and execution contracts. `references/templates.md` contains learning templates loaded on demand, while `evals/evals.json` provides 16 behavioral evaluation cases.
 
 ## Installation
 
@@ -59,6 +68,8 @@ Restart the client or open a new session so it can rediscover the skill.
 Use $learn to build a five-level learning ladder for Go concurrency from beginner to independent problem solving.
 ```
 
+The skill first confirms what the learner wants to do independently after the session instead of immediately generating the ladder.
+
 ```text
 Use $learn to test my understanding of Python decorators like a strict examiner, one question at a time.
 ```
@@ -73,6 +84,8 @@ Use $learn and the Feynman method to help me truly understand database transacti
 
 ## Design principles
 
+- Select a mode and confirm a learning contract before producing a formal answer or artifact for every new learning request.
+- Ask exactly one Socratic intake question at a time without repeating information the learner already supplied.
 - Define progress through behavior, artifacts, or tests instead of vague claims of understanding.
 - Advance only one question or teach-back step at a time in interactive modes.
 - Treat fixed durations as planning boundaries, never as guarantees of mastery.
@@ -83,6 +96,7 @@ Use $learn and the Feynman method to help me truly understand database transacti
 
 The included evaluations cover:
 
+- The new-request intake gate, single-question boundary, and explicit confirmation
 - Fixed counts, durations, and required fields
 - Single-question boundaries in interactive modes
 - Resource verification and direct-source requirements
