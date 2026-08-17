@@ -35,6 +35,7 @@ learn/
 │   └── openai.yaml
 ├── evals/
 │   ├── evals.json
+│   ├── contract_evals.json
 │   ├── trigger_evals.json
 │   ├── stateful_transcripts.json
 │   └── files/
@@ -44,10 +45,11 @@ learn/
 tests/
 ├── __init__.py
 ├── skill_validation.py
-└── test_skill.py
+├── test_skill.py
+└── test_skill_validation.py
 ```
 
-`SKILL.md` 是精简的触发、状态、路由与共用规则；`references/templates.md` 按模式保存执行契约和可填写模板，确认后只加载所选部分。评测数据分为 33 组官方 schema 单轮评测（`evals.json`）、20 组触发/近邻负向查询（`trigger_evals.json`）、7 组多轮状态转换 fixture（`stateful_transcripts.json`），以及带稳定段落标识的来源 fixture。
+`SKILL.md` 是精简的触发、状态、路由与共用规则；`references/templates.md` 按模式保存执行契约和可填写模板，确认后只加载所选部分。评测数据分为 16 组 runtime 单轮评测（`evals.json`）、17 组隔离的 reference-contract 评测（`contract_evals.json`）、20 组触发/近邻负向查询（`trigger_evals.json`）、8 组多轮状态转换 fixture（`stateful_transcripts.json`），以及带稳定段落标识的来源 fixture。reference-contract runner 只加载指定参考章节，不调用 runtime skill，因此不会绕过 intake 与确认状态机。
 
 ## 安装
 
@@ -120,7 +122,7 @@ Skill 会先确认“完成这次学习后，你希望能独立做到什么”�
 python -m unittest discover -s tests -v
 ```
 
-此命令验证 frontmatter、路由到模式契约的完整性、eval schema、状态 fixture、触发查询、来源附件和 README 同步；它不会执行模型输出（does not execute model outputs），也不等同于行为评分。模型行为评估应由 agent runner 分别消费 `evals.json`、`trigger_evals.json` 和 `stateful_transcripts.json`，并按各自 expectations 评分。
+此命令验证 frontmatter、路由到模式契约的完整性、runtime 与 reference-contract eval schema、状态 fixture、触发查询、来源附件和 README 同步；它不会执行模型输出（does not execute model outputs），也不等同于行为评分。模型行为评估应由 agent runner 分别消费 `evals.json`、`contract_evals.json`、`trigger_evals.json` 和 `stateful_transcripts.json`，并按各自 expectations 评分。`contract_evals.json` 必须由隔离 reference harness 运行，不得作为 user 消息送入 `$learn` runtime。
 
 也可使用 Codex `skill-creator` 附带的验证脚本检查基本结构：
 

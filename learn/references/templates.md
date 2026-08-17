@@ -247,7 +247,7 @@ Classify the source, then select six cue categories:
 - **Conceptual chapter or technical standard**: purpose or central claim, key concepts or requirements, mechanism or structure, examples or rationale, exceptions or limits, applications.
 - **Report or case study**: scope, system or context, timeline/evidence, causal analysis, uncertainties/limitations, decisions or actions.
 
-Distinguish source statements, deductions, and supplemental background.
+Distinguish source statements, deductions, and supplemental background. When producing a worksheet before the learner performs retrieval, fill source-grounded Survey, Questions, and Read scaffolding only; leave Recite and learner-owned Review fields blank. Record the main argument, strongest evidence, remaining gap, and next recall date only after the learner supplies an actual closed-source attempt.
 
 ### SQ3R worksheet
 
@@ -280,7 +280,7 @@ Selected cue categories: [list six source-type labels]
 2. Remove likely distractions and capture intrusive ideas in a parking list.
 3. Default to `25 minutes focus + 5 minutes genuine rest`.
 4. After four blocks, use a 15–30 minute long rest.
-5. Record output, blocker, and next step after every block.
+5. After every completed block, record output, blocker, and next step. When generating a future session, leave completion, blocker, output-produced, recall-result, and next-step evidence fields blank until the learner reports actual execution.
 
 Adapt intervals for task and accessibility while preserving bounded focus, real rest, and concrete output. Do not fill breaks with another high-cognitive-load task.
 
@@ -380,7 +380,7 @@ Classify the source before scheduling. Choose six cue categories for the source 
 - **Conceptual chapter or technical standard**: purpose or central claim, key concepts or requirements, mechanism or structure, examples or rationale, exceptions or limits, applications.
 - **Report or case study**: scope, system or context, timeline/evidence, causal analysis, uncertainties/limitations, decisions or actions.
 
-Preserve the six-slot structure while replacing labels with the selected source-type categories.
+Preserve the six-slot structure while replacing labels with the selected source-type categories. When generating the session before it is performed, fill only source-grounded schedule, cues, and main-note scaffolding; leave learner-owned retrieval fields blank. Never predict the memory summary, remaining gap, retrieval result, next target/date, or updated chunk status. Fill those only after the learner supplies actual closed-source evidence.
 
 ```markdown
 # Topic / Source / Date
@@ -414,8 +414,8 @@ Chunk status: unknown / recognized / explainable / applicable / fluent
 
 ## 80–90 minutes: Cornell close and retrieval setup
 - Put six questions and weak-point prompts in cue column.
-- Write summary from memory.
-- Record remaining gap, next retrieval target, next recall date, and updated chunk status.
+- Close the source, then have the learner write the summary from memory.
+- After the learner attempts retrieval, record the evidenced gap, next target, next recall date, and updated chunk status.
 
 ## Required Cornell artifact
 Selected cue categories: [list six source-type labels]
@@ -429,9 +429,9 @@ Selected cue categories: [list six source-type labels]
 | Cue 5: [source-specific label] | |
 | Cue 6: [source-specific label] | |
 
-Summary from memory:
-Remaining gap:
-Next retrieval target and date:
+Summary from memory: [learner fills after closing source]
+Remaining gap: [record only after learner attempt]
+Next retrieval target and date: [record only after learner attempt]
 
 ## Definition of done
 - Explain core idea without notes.

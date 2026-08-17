@@ -153,6 +153,31 @@
         "Only Sessions 3–4 are fully expanded.",
         "The response ends with Covered: Sessions 3–4 and Remaining: Sessions 5–10."
       ]
+    },
+    {
+      "name": "stale-contract-acceptance-rejected",
+      "messages": [
+        {
+          "role": "assistant",
+          "content": "主题与范围：Dockerfile 与单容器运行。\n当前基础：能使用命令行，无 Docker 经验。\n可观察目标：独立容器化一个 FastAPI API。\n约束：20 小时；免费资源。\n推荐模式及理由：20-Hour Plan，围绕累积项目建立实用能力。\n\n确认按这个学习契约开始吗？"
+        },
+        {
+          "role": "user",
+          "content": "范围改成 FastAPI 加 PostgreSQL 的 Docker Compose，其他不变。"
+        },
+        {
+          "role": "assistant",
+          "content": "主题与范围：FastAPI 加 PostgreSQL 的 Docker Compose。\n当前基础：能使用命令行，无 Docker 经验。\n可观察目标：独立容器化并运行 FastAPI 与 PostgreSQL。\n约束：20 小时；免费资源。\n推荐模式及理由：20-Hour Plan，围绕累积项目建立实用能力。\n\n确认按这份修订后的学习契约开始吗？"
+        },
+        {
+          "role": "user",
+          "content": "我确认第一版。"
+        }
+      ],
+      "expectations": [
+        "The stale acceptance does not confirm either contract or start execution.",
+        "The response asks exactly one clarification about whether the learner accepts the latest revised contract."
+      ]
     }
   ]
 }

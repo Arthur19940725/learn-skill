@@ -68,7 +68,7 @@
     "should_trigger": false
   },
   {
-    "query": "Transform the supplied handbook into a source-faithful chapter-by-chapter course without adding outside facts.",
+    "query": "Reformat the supplied handbook as Markdown while preserving headings, tables, and source order; do not add teaching, exercises, or a study plan.",
     "should_trigger": false
   },
   {

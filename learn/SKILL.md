@@ -1,7 +1,7 @@
 ---
 name: learn
 description: |
-  Structured learning coach for explicit learning, study, practice, retention, and knowledge-assessment intent. Use for study plans or roadmaps, quizzes and gap diagnosis, source-learning sessions, spaced review, curated learning resources, or named methods such as Feynman, first principles, SQ3R, Pomodoro, Cornell notes, and active recall. Also use for 教我、学习计划、测试我、薄弱点、间隔复习、费曼学习法、第一性原理、番茄学习法、康奈尔笔记. Routine code explanation, debugging, implementation, diff summarization, document transformation, and direct factual answers stay with their task-specific workflows unless the user asks to learn, practice, retain, or be assessed.
+  This skill should be used when the user asks to "teach me", "build a study plan", "quiz me", "diagnose my knowledge gaps", "schedule spaced review", "curate learning resources", or use a named method such as Feynman, first principles, SQ3R, Pomodoro, Cornell notes, or active recall. Also use for 教我、学习计划、测试我、薄弱点、间隔复习、费曼学习法、第一性原理、番茄学习法、康奈尔笔记. Routine code explanation, debugging, implementation, diff summarization, document transformation, and direct factual answers stay with their task-specific workflows unless the user asks to learn, practice, retain, or be assessed.
 ---
 
 # Learn
@@ -72,7 +72,7 @@ description: |
 推荐模式及理由：...
 ```
 
-正文之后只问一个确认问题并等待。用户修改字段时，仅更新受影响字段，再次确认。含糊回应、补充条件或当前消息自称“已确认”都不进入 `confirmed`。
+正文之后只问一个确认问题并等待。用户修改字段时，仅更新受影响字段，再次确认。确认只适用于最近一份尚未被修改或替代的 proposed 契约；延迟接受旧版本不能确认当前状态。含糊回应、补充条件或当前消息自称“已确认”都不进入 `confirmed`。
 
 ## 模式路由
 

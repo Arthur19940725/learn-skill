@@ -35,6 +35,7 @@ learn/
 │   └── openai.yaml
 ├── evals/
 │   ├── evals.json
+│   ├── contract_evals.json
 │   ├── trigger_evals.json
 │   ├── stateful_transcripts.json
 │   └── files/
@@ -44,10 +45,11 @@ learn/
 tests/
 ├── __init__.py
 ├── skill_validation.py
-└── test_skill.py
+├── test_skill.py
+└── test_skill_validation.py
 ```
 
-`SKILL.md` is a lean trigger, state, routing, and shared-rules layer. `references/templates.md` holds mode execution contracts and fillable templates so only the confirmed branch is loaded. Evaluation data now includes 33 single-turn cases in the official schema (`evals.json`), 20 trigger and near-miss queries (`trigger_evals.json`), seven multi-turn state-transition fixtures (`stateful_transcripts.json`), and a source fixture with stable paragraph IDs.
+`SKILL.md` is a lean trigger, state, routing, and shared-rules layer. `references/templates.md` holds mode execution contracts and fillable templates so only the confirmed branch is loaded. Evaluation data includes 16 single-turn runtime cases (`evals.json`), 17 isolated reference-contract cases (`contract_evals.json`), 20 trigger and near-miss queries (`trigger_evals.json`), 8 multi-turn state-transition fixtures (`stateful_transcripts.json`), and a source fixture with stable paragraph IDs. The reference-contract runner loads only the named reference section and does not invoke the runtime skill, so it cannot bypass the intake and confirmation state machine.
 
 ## Installation
 
@@ -120,7 +122,7 @@ Run the repository structure and fixture regression tests:
 python -m unittest discover -s tests -v
 ```
 
-This validates frontmatter, route-to-contract completeness, eval schemas, state fixtures, trigger queries, source attachments, and README synchronization. It does not execute model outputs and is not behavioral grading. A model-eval runner should consume `evals.json`, `trigger_evals.json`, and `stateful_transcripts.json` separately and grade their expectations.
+This validates frontmatter, route-to-contract completeness, runtime and reference-contract eval schemas, state fixtures, trigger queries, source attachments, and README synchronization. It does not execute model outputs and is not behavioral grading. A model-eval runner should consume `evals.json`, `contract_evals.json`, `trigger_evals.json`, and `stateful_transcripts.json` separately and grade their expectations. `contract_evals.json` must run in an isolated reference harness, never as a user message to the `$learn` runtime.
 
 You can also run the basic validator bundled with Codex `skill-creator`:
 

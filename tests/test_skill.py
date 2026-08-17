@@ -5,9 +5,12 @@ import unittest
 from pathlib import Path
 
 from tests.skill_validation import (
+    MAX_DESCRIPTION_LENGTH,
+    MAX_NAME_LENGTH,
     load_json_strict,
     parse_frontmatter,
     validate_behavior_evals,
+    validate_contract_evals,
     validate_stateful_evals,
     validate_trigger_evals,
 )
@@ -17,6 +20,7 @@ SKILL_ROOT = ROOT / "learn"
 SKILL_PATH = SKILL_ROOT / "SKILL.md"
 REFERENCE_PATH = SKILL_ROOT / "references" / "templates.md"
 EVALS_PATH = SKILL_ROOT / "evals" / "evals.json"
+CONTRACT_EVALS_PATH = SKILL_ROOT / "evals" / "contract_evals.json"
 STATEFUL_EVALS_PATH = SKILL_ROOT / "evals" / "stateful_transcripts.json"
 TRIGGER_EVALS_PATH = SKILL_ROOT / "evals" / "trigger_evals.json"
 README_PATHS = (ROOT / "README.md", ROOT / "README.en.md")
@@ -45,6 +49,7 @@ class SkillStructureTests(unittest.TestCase):
         cls.reference_text = read_text(REFERENCE_PATH)
         cls.metadata, cls.skill_body = parse_frontmatter(cls.skill_text)
         cls.evals = load_json_strict(EVALS_PATH)
+        cls.contract_evals = load_json_strict(CONTRACT_EVALS_PATH)
         cls.trigger_evals = load_json_strict(TRIGGER_EVALS_PATH)
         cls.stateful_evals = load_json_strict(STATEFUL_EVALS_PATH)
 
@@ -54,60 +59,10 @@ class SkillStructureTests(unittest.TestCase):
 
         self.assertEqual(name, SKILL_ROOT.name)
         self.assertRegex(name, r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-        self.assertLessEqual(len(name), 64)
+        self.assertLessEqual(len(name), MAX_NAME_LENGTH)
         self.assertTrue(description)
-        self.assertLessEqual(len(description), 1024)
-
-    def test_frontmatter_rejects_duplicate_and_malformed_yaml(self) -> None:
-        duplicate = "---\nname: learn\nname: other\ndescription: test\n---\nBody"
-        malformed = "---\nname: [learn\ndescription: test\n---\nBody"
-        with self.assertRaises(ValueError):
-            parse_frontmatter(duplicate)
-        with self.assertRaises(ValueError):
-            parse_frontmatter(malformed)
-
-    def test_json_loader_rejects_duplicate_keys(self) -> None:
-        duplicate_path = ROOT / "tests" / "duplicate-key.json"
-        duplicate_path.write_text('{"key": 1, "key": 2}', encoding="utf-8")
-        self.addCleanup(duplicate_path.unlink, missing_ok=True)
-        with self.assertRaises(ValueError):
-            load_json_strict(duplicate_path)
-
-    def test_eval_validators_reject_bad_types_and_paths(self) -> None:
-        bad_behavior = {
-            "skill_name": "learn",
-            "evals": [
-                {
-                    "id": 1,
-                    "prompt": 42,
-                    "expected_output": "output",
-                    "files": ["../escape.md"],
-                    "expectations": ["expectation"],
-                }
-            ],
-        }
-        bad_triggers = [{"query": "query", "should_trigger": "yes"}]
-        bad_stateful = {
-            "format": "v1",
-            "purpose": "test",
-            "cases": [
-                {
-                    "name": "case",
-                    "messages": [
-                        {"role": "user", "content": "one"},
-                        {"role": "assistant", "content": "two"},
-                    ],
-                    "expectations": ["expectation"],
-                }
-            ],
-        }
-
-        with self.assertRaises(ValueError):
-            validate_behavior_evals(bad_behavior, SKILL_ROOT)
-        with self.assertRaises(ValueError):
-            validate_trigger_evals(bad_triggers)
-        with self.assertRaises(ValueError):
-            validate_stateful_evals(bad_stateful)
+        self.assertLessEqual(len(description), MAX_DESCRIPTION_LENGTH)
+        self.assertTrue(description.startswith("This skill should be used when"))
 
     def test_skill_is_a_lean_router(self) -> None:
         self.assertLess(len(self.skill_text.splitlines()), 250)
@@ -150,7 +105,12 @@ class SkillStructureTests(unittest.TestCase):
         ids = [case["id"] for case in evals]
 
         self.assertEqual(self.evals["skill_name"], self.metadata["name"])
-        self.assertEqual(ids, list(range(1, 34)))
+        self.assertEqual(ids, list(range(1, 17)))
+
+    def test_contract_eval_schema_and_ids_are_stable(self) -> None:
+        validate_contract_evals(self.contract_evals, SKILL_ROOT)
+        ids = [case["id"] for case in self.contract_evals["evals"]]
+        self.assertEqual(ids, list(range(17, 34)))
 
     def test_learner_evals_do_not_launder_confirmation(self) -> None:
         learner_cases = {case["id"]: case for case in self.evals["evals"][:16]}
@@ -174,7 +134,7 @@ class SkillStructureTests(unittest.TestCase):
         self.assertIn("not a learning workflow", cases[15]["expected_output"])
 
     def test_mode_contract_unit_evals_are_explicit_and_complete(self) -> None:
-        cases = self.evals["evals"][16:]
+        cases = self.contract_evals["evals"]
         contract_modes = set(
             re.findall(r"^- \[([^\]]+)\]\(#[^)]+\)$", self.reference_text, re.MULTILINE)
         )
@@ -182,9 +142,9 @@ class SkillStructureTests(unittest.TestCase):
 
         for case in cases:
             prompt = case["prompt"]
-            self.assertTrue(prompt.startswith("Mode-contract unit eval:"))
-            self.assertIn("not a learner conversation", prompt)
-            self.assertIn("not evidence of runtime confirmation", prompt)
+            self.assertTrue(prompt.startswith("Reference-contract eval:"))
+            self.assertIn("isolated reference harness", prompt)
+            self.assertIn("Runtime skill intake and confirmation are outside", prompt)
             matching_modes = {mode for mode in contract_modes if mode in prompt}
             self.assertEqual(len(matching_modes), 1, (case["id"], matching_modes))
             covered_modes.update(matching_modes)
@@ -213,6 +173,20 @@ class SkillStructureTests(unittest.TestCase):
         self.assertIn(
             "Only verified records receive a verification date", self.reference_text
         )
+        self.assertIn("leave learner-owned retrieval fields blank", self.reference_text)
+        self.assertIn(
+            "leave Recite and learner-owned Review fields blank", self.reference_text
+        )
+        integrated_cases = {case["id"]: case for case in self.contract_evals["evals"]}
+        for case_id in (25, 30):
+            serialized = " ".join(
+                [
+                    integrated_cases[case_id]["prompt"],
+                    integrated_cases[case_id]["expected_output"],
+                    *integrated_cases[case_id]["expectations"],
+                ]
+            )
+            self.assertNotIn("Feynman", serialized)
 
     def test_trigger_description_and_suite_cover_aliases_and_near_misses(self) -> None:
         for alias in ("第一性原理", "番茄学习法", "康奈尔笔记"):
@@ -238,9 +212,16 @@ class SkillStructureTests(unittest.TestCase):
             "edge-quiz-terminal-follow-up",
             "feynman-completion",
             "twenty-hour-next-batch",
+            "stale-contract-acceptance-rejected",
         }
         names = {case["name"] for case in suite["cases"]}
         self.assertTrue(required_names.issubset(names), required_names - names)
+        continuation_cases = {
+            "topic-change-restarts-intake",
+            "edge-quiz-terminal-follow-up",
+            "feynman-completion",
+            "twenty-hour-next-batch",
+        }
         for case in suite["cases"]:
             self.assertGreaterEqual(len(case["messages"]), 2)
             self.assertTrue(case["expectations"])
@@ -250,9 +231,12 @@ class SkillStructureTests(unittest.TestCase):
                     for message in case["messages"]
                 )
             )
+            if case["name"] in continuation_cases:
+                self.assertIn(case["messages"][0]["role"], {"developer", "system"})
+                self.assertIn("Trusted state summary:", case["messages"][0]["content"])
 
     def test_source_grounding_eval_attaches_a_real_fixture(self) -> None:
-        cases = {case["id"]: case for case in self.evals["evals"]}
+        cases = {case["id"]: case for case in self.contract_evals["evals"]}
         source_case = cases[25]
         self.assertEqual(
             source_case["files"], ["evals/files/source-grounding-fixtures.md"]
@@ -264,7 +248,7 @@ class SkillStructureTests(unittest.TestCase):
         self.assertIn("[P4]", fixture_text)
 
     def test_resource_path_unit_eval_uses_complete_fixture_records(self) -> None:
-        cases = {case["id"]: case for case in self.evals["evals"]}
+        cases = {case["id"]: case for case in self.contract_evals["evals"]}
         prompt = cases[21]["prompt"]
         for slug in ("runtime", "tasks", "io", "channels", "cancellation"):
             self.assertIn(f"https://example.com/rust-async/{slug}", prompt)
@@ -273,9 +257,10 @@ class SkillStructureTests(unittest.TestCase):
     def test_readmes_report_current_structure_and_eval_count(self) -> None:
         for path in README_PATHS:
             text = read_text(path)
-            self.assertIn("33", text, path.name)
-            self.assertIn("trigger_evals.json", text, path.name)
-            self.assertIn("stateful_transcripts.json", text, path.name)
+            self.assertRegex(text, r"16[^\n]*evals\.json")
+            self.assertRegex(text, r"17[^\n]*contract_evals\.json")
+            self.assertRegex(text, r"20[^\n]*trigger_evals\.json")
+            self.assertRegex(text, r"8[^\n]*stateful_transcripts\.json")
             self.assertIn("does not execute model", text.lower(), path.name)
 
 
