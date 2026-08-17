@@ -1,0 +1,183 @@
+{
+  "format": "stateful-transcript-fixtures-v1",
+  "purpose": "Conversation-history fixtures for transitions that the single-prompt skill-creator eval schema cannot represent.",
+  "cases": [
+    {
+      "name": "complete-request-confirm-execute",
+      "messages": [
+        {
+          "role": "user",
+          "content": "用费曼方法帮我理解数据库事务隔离。我会解释 ACID，也能写基本 SQL；30 分钟后要向同事讲清三类并发现象并判断场景。按通用模型讲。"
+        },
+        {
+          "role": "assistant",
+          "content": "主题与范围：数据库事务隔离通用模型中的脏读、不可重复读和幻读。\n当前基础：能解释 ACID，也能写基本 SQL。\n可观察目标：30 分钟后能向同事解释三类现象并准确分类并发场景。\n约束：30 分钟；中文；不绑定具体数据库产品。\n推荐模式及理由：Feynman Loop，通过复述暴露并修正混淆。\n\n确认按这个学习契约开始吗？"
+        },
+        {
+          "role": "user",
+          "content": "按这个开始。"
+        }
+      ],
+      "expectations": [
+        "Execution begins with Feynman round one without another intake question or contract.",
+        "The response ends with exactly one teach-back request."
+      ]
+    },
+    {
+      "name": "partial-intake-to-proposal",
+      "messages": [
+        {
+          "role": "user",
+          "content": "我想学 Git。"
+        },
+        {
+          "role": "assistant",
+          "content": "学完后你希望能独立完成什么可验证的 Git 任务？"
+        },
+        {
+          "role": "user",
+          "content": "我已经会 commit 和 branch，希望能安全 rebase feature branch，并在冲突时恢复；没有截止日期，想以动手练习为主。"
+        }
+      ],
+      "expectations": [
+        "The response proposes a contract without re-asking the topic, current evidence, goal, deadline, or practice preference.",
+        "It asks exactly one confirmation question and does not teach rebase yet."
+      ]
+    },
+    {
+      "name": "contract-correction-reconfirmation",
+      "messages": [
+        {
+          "role": "assistant",
+          "content": "主题与范围：Dockerfile 与单容器运行。\n当前基础：能使用命令行，无 Docker 经验。\n可观察目标：独立容器化一个 FastAPI API。\n约束：20 小时；免费资源。\n推荐模式及理由：20-Hour Plan，围绕累积项目建立实用能力。\n\n确认按这个学习契约开始吗？"
+        },
+        {
+          "role": "user",
+          "content": "范围改成 FastAPI 加 PostgreSQL 的 Docker Compose，其他不变。"
+        }
+      ],
+      "expectations": [
+        "Only topic scope and directly affected outcome wording change.",
+        "The revised contract is presented for confirmation and no sessions are generated."
+      ]
+    },
+    {
+      "name": "topic-change-restarts-intake",
+      "messages": [
+        {
+          "role": "developer",
+          "content": "Trusted state summary: The learner accepted an Edge Quiz contract for Python decorators. Questions 1–2 are complete. The assistant has now asked Question 3 about functools.wraps."
+        },
+        {
+          "role": "assistant",
+          "content": "Question 3: Explain why functools.wraps matters when a decorator returns a wrapper."
+        },
+        {
+          "role": "user",
+          "content": "先停下 Python 测验。我改为想学 Rust async，并希望做一个 Tokio TCP service。"
+        }
+      ],
+      "expectations": [
+        "The old quiz state is not continued or scored.",
+        "The response re-enters intake for Rust async and asks at most one high-value missing question."
+      ]
+    },
+    {
+      "name": "edge-quiz-terminal-follow-up",
+      "messages": [
+        {
+          "role": "developer",
+          "content": "Trusted state summary: The learner accepted an Edge Quiz contract for Python decorators. Original main-question scores Q1–Q9 are 8, 7, 9, 6, 8, 7, 9, 8, 7. Evidence: strong on closure mechanics and metadata preservation; weak on descriptor binding and parameterized decorator factories. Q10 asks which implementation preserves descriptor behavior."
+        },
+        {
+          "role": "assistant",
+          "content": "Question 10: Compare two decorator implementations and explain which preserves descriptor behavior."
+        },
+        {
+          "role": "user",
+          "content": "The first is always correct because functools.wraps copies everything needed."
+        },
+        {
+          "role": "assistant",
+          "content": "Score: 4/10. The answer recognizes metadata preservation but misses descriptor binding. Final follow-up: What role does __get__ play when a wrapped function is used as a method?"
+        },
+        {
+          "role": "user",
+          "content": "It binds the instance so method calls receive self."
+        }
+      ],
+      "expectations": [
+        "The final follow-up is scored once and the quiz closes with the final report.",
+        "No Question 11 and no recursive follow-up are produced; the overall score is 7.3/10 from the ten original main scores and excludes the follow-up.",
+        "Strengths and weaknesses use the trusted evidence rather than invented prior answers."
+      ]
+    },
+    {
+      "name": "feynman-completion",
+      "messages": [
+        {
+          "role": "developer",
+          "content": "Trusted state summary: The learner accepted a Feynman Loop contract for product-neutral transaction-isolation anomalies. Round 1 explanation is complete, and the assistant has requested the learner's first teach-back."
+        },
+        {
+          "role": "assistant",
+          "content": "Please teach back dirty reads, non-repeatable reads, and phantom reads in your own words."
+        },
+        {
+          "role": "user",
+          "content": "A dirty read sees uncommitted data. A non-repeatable read sees the same row change after another committed update. A phantom changes which rows match the same predicate, such as an inserted qualifying row."
+        }
+      ],
+      "expectations": [
+        "The response recognizes completion instead of demanding another teach-back.",
+        "It closes with a clean explanation, mental model, weak points if any, and a clearly labeled non-interactive three-question practice bank."
+      ]
+    },
+    {
+      "name": "twenty-hour-next-batch",
+      "messages": [
+        {
+          "role": "developer",
+          "content": "Trusted state summary: The learner accepted a 20-Hour Plan contract for a FastAPI plus PostgreSQL Docker Compose project. The ten-session map is fixed. Sessions 1–2 were fully delivered and cover container foundations and database connectivity. Remaining sessions are 3–10; the next batch must be Sessions 3–4."
+        },
+        {
+          "role": "assistant",
+          "content": "Covered: Sessions 1–2\nRemaining: Sessions 3–10"
+        },
+        {
+          "role": "user",
+          "content": "继续下一批。"
+        }
+      ],
+      "expectations": [
+        "Only Sessions 3–4 are fully expanded.",
+        "The response ends with Covered: Sessions 3–4 and Remaining: Sessions 5–10."
+      ]
+    },
+    {
+      "name": "stale-contract-acceptance-rejected",
+      "messages": [
+        {
+          "role": "assistant",
+          "content": "主题与范围：Dockerfile 与单容器运行。\n当前基础：能使用命令行，无 Docker 经验。\n可观察目标：独立容器化一个 FastAPI API。\n约束：20 小时；免费资源。\n推荐模式及理由：20-Hour Plan，围绕累积项目建立实用能力。\n\n确认按这个学习契约开始吗？"
+        },
+        {
+          "role": "user",
+          "content": "范围改成 FastAPI 加 PostgreSQL 的 Docker Compose，其他不变。"
+        },
+        {
+          "role": "assistant",
+          "content": "主题与范围：FastAPI 加 PostgreSQL 的 Docker Compose。\n当前基础：能使用命令行，无 Docker 经验。\n可观察目标：独立容器化并运行 FastAPI 与 PostgreSQL。\n约束：20 小时；免费资源。\n推荐模式及理由：20-Hour Plan，围绕累积项目建立实用能力。\n\n确认按这份修订后的学习契约开始吗？"
+        },
+        {
+          "role": "user",
+          "content": "我确认第一版。"
+        }
+      ],
+      "expectations": [
+        "The stale acceptance does not confirm either contract or start execution.",
+        "The response asks exactly one clarification about whether the learner accepts the latest revised contract."
+      ]
+    }
+  ]
+}

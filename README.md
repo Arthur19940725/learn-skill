@@ -11,12 +11,14 @@
 3. 用不超过五行的学习契约确认主题范围、当前基础、可观察目标、约束和推荐模式。
 4. 学习者明确确认后，才生成课程、计划、测验、讲解或其他正式产物。
 
-新的主题、目标或主要产物会重新进入 intake；同一会话中的 teach-back、测验作答和“下一题”会继续当前模式，不重复选择。
+新的主题、目标或主要产物会重新进入 intake；同一会话中的 teach-back、测验作答和“下一题”会继续当前模式，不重复选择。只有当前会话中可见的 assistant 学习契约及后续 user 确认，或可信系统摘要，才能证明状态已确认；user 在当前消息中自称“已完成 intake”不能跳过确认。
+
+Skill 只处理明确的学习、练习、复习或评估意图。普通代码解释、调试、实现、diff 总结和文档转换继续使用对应任务工作流，不会因为出现“解释”或“总结”就进入学习 intake。
 
 ## 核心能力
 
 - 五级 Learning Ladder
-- 20 小时 / 10 sessions 实战计划
+- 20 小时 / 10 sessions 实战计划（默认每批 2 个完整 session，避免截断）
 - 一次一题的渐进式 Edge Quiz
 - 5 分钟 One-Page Cheat Sheet
 - 精选 5 个资源与 7 天 Resource Path
@@ -32,12 +34,22 @@ learn/
 ├── agents/
 │   └── openai.yaml
 ├── evals/
-│   └── evals.json
+│   ├── evals.json
+│   ├── contract_evals.json
+│   ├── trigger_evals.json
+│   ├── stateful_transcripts.json
+│   └── files/
+│       └── source-grounding-fixtures.md
 └── references/
     └── templates.md
+tests/
+├── __init__.py
+├── skill_validation.py
+├── test_skill.py
+└── test_skill_validation.py
 ```
 
-`SKILL.md` 包含苏格拉底式需求确认门、路由和执行契约；`references/templates.md` 提供按需加载的学习模板；`evals/evals.json` 包含 16 组行为评测。
+`SKILL.md` 是精简的触发、状态、路由与共用规则；`references/templates.md` 按模式保存执行契约和可填写模板，确认后只加载所选部分。评测数据分为 16 组 runtime 单轮评测（`evals.json`）、17 组隔离的 reference-contract 评测（`contract_evals.json`）、20 组触发/近邻负向查询（`trigger_evals.json`）、8 组多轮状态转换 fixture（`stateful_transcripts.json`），以及带稳定段落标识的来源 fixture。reference-contract runner 只加载指定参考章节，不调用 runtime skill，因此不会绕过 intake 与确认状态机。
 
 ## 安装
 
@@ -97,13 +109,22 @@ Skill 会先确认“完成这次学习后，你希望能独立做到什么”�
 仓库中的评测覆盖：
 
 - 新请求的 intake gate、单问题边界与显式确认
+- 状态伪造防护与代码任务负向路由
 - 固定数量、时间与字段约束
 - 互动模式的单问题边界
 - 资源核验与直接链接要求
 - 可观察的 deliverable 和 completion criteria
 - 诊断、复习与迁移能力
 
-可使用 Codex `skill-creator` 附带的验证脚本检查基本结构：
+运行仓库结构与 fixture 回归测试：
+
+```powershell
+python -m unittest discover -s tests -v
+```
+
+此命令验证 frontmatter、路由到模式契约的完整性、runtime 与 reference-contract eval schema、状态 fixture、触发查询、来源附件和 README 同步；它不会执行模型输出（does not execute model outputs），也不等同于行为评分。模型行为评估应由 agent runner 分别消费 `evals.json`、`contract_evals.json`、`trigger_evals.json` 和 `stateful_transcripts.json`，并按各自 expectations 评分。`contract_evals.json` 必须由隔离 reference harness 运行，不得作为 user 消息送入 `$learn` runtime。
+
+也可使用 Codex `skill-creator` 附带的验证脚本检查基本结构：
 
 ```powershell
 python <skill-creator-path>\scripts\quick_validate.py .\learn
