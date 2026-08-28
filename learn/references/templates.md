@@ -21,6 +21,37 @@ Read only the contract selected by the router in `SKILL.md`.
 - [Weakness Diagnosis](#weakness-diagnosis)
 - [Integrated Learning Loop](#integrated-learning-loop)
 - [Integrated 90-Minute Session](#integrated-90-minute-session)
+- [Completion Gates for Independent-Capability Goals](#completion-gates-for-independent-capability-goals)
+
+## Completion Gates for Independent-Capability Goals
+
+Load this section when the confirmed requirement card claims independent capability or includes an independently delivered project / cumulative project. A lesson mini-project, practice artifact, static explanation, quiz, cheat sheet, resource path, or source-reading session does not make the project gate applicable by itself.
+
+### Applicability and evidence scope
+
+1. Set `project_required = true` only when the confirmed goal or scope explicitly requires an independent project or cumulative project. For a no-project goal, record `Project gate: N/A`; do not invent a project, variation, or project rubric.
+2. Distinguish a formative **chunk checkpoint** from final-scope completion. A chunk checkpoint may sample one or more suitable categories, use the local mode rubric, and advance the chunk only when learner evidence meets its stated criterion. A chunk pass never proves final mastery.
+3. For an independent-capability goal without a project, retain the final test gate but keep the project gate `N/A`; use the selected mode's required deliverable as the other completion evidence.
+4. If the goal does not claim independent capability, use the selected mode's own observable definition of done and do not add a final test or project gate merely because this section exists.
+
+### Final test gate
+
+1. Run only after the final learning chunk, with materials closed and unseen items or scenarios. Declare the item format, score, threshold, and misconception rule before the attempt. If the confirmed requirement card specifies another valid rubric, preserve it explicitly; otherwise use this default.
+2. Use eight items: exactly two each for `recall`, `application`, `error diagnosis`, and `transfer`. Score every item from 0–2: `2` = correct, complete, and free of dangerous misconception; `1` = partially correct but safe and directionally usable; `0` = incorrect, unsafe, or materially misleading.
+3. Maximum score is `16`. Pass requires total `>=13/16` (at least 80%), at least `2/4` points in every category, and no critical misconception that could cause practical misuse. Do not reuse checkpoint questions or average old and fresh attempts.
+
+### Project gate
+
+Run this gate only when `project_required = true`. The learner must independently deliver a reproducible target project under the confirmed inputs, constraints, and acceptance rubric, including a meaningful variation not copied from an exercise, and explain design trade-offs, failure recovery, and boundary conditions.
+
+Score five criteria from 0–2: (1) core behavior works and is reproducible; (2) declared constraints and acceptance criteria are met; (3) the learner handles the novel variation; (4) the learner explains key design choices and trade-offs; (5) the learner handles failure recovery and boundary conditions. Pass requires `>=8/10`, no zero on core behavior, declared acceptance, or safety-critical behavior, actual execution / reproduction evidence, and a learner-owned explanation. A project not attempted is `pending`, not passed.
+
+### Decision and repair
+
+- For a project goal, completion is `test gate PASS AND project gate PASS`; never average the gates or let one offset the other.
+- For an independent-capability goal without a project, completion requires the final test gate and the selected mode's required deliverable; `project gate = N/A` is not a pass.
+- Any failed or pending required gate is `not yet complete`. Repair only the smallest evidenced gap, then run a wholly fresh test or revised project gate as appropriate.
+- After all applicable gates pass, declare completion only within the confirmed topic, inputs, constraints, and rubric, and record evidence plus remaining limitations.
 
 ## Learning Ladder
 
@@ -48,11 +79,12 @@ Increase difficulty from vocabulary and intuition, through common tasks, to diag
 
 Frame 20 hours as a usable-foundations target, not expert mastery. Start with scope, assumptions, exclusions, high-leverage content, concept connections, and prerequisites.
 
-Create exactly 10 sessions of 120 minutes around one cumulative project. Keep delivery bounded:
+Create exactly 10 sessions of 120 minutes. Use one cumulative project when the confirmed goal includes independent delivery; otherwise use a cumulative practical outcome without inventing a project gate. Keep delivery bounded:
 
 - First execution turn: provide the scope sections, a 10-row session map, then full details for Sessions 1–2.
 - Each later `continue` turn: provide the next two full sessions.
-- Final turn: provide Sessions 9–10, final project, rubric, failure recovery, one shallow-understanding edge case, and post-plan direction.
+- Final turn: for a project goal, provide Sessions 9–10, the independent final project, rubric, failure recovery, one shallow-understanding edge case, and post-plan direction; for a no-project goal, provide the final practical outcome and its mode-specific completion criterion without inventing a project.
+- For an independent-capability goal, load **Completion Gates for Independent-Capability Goals** before final acceptance. Session recall banks are formative checkpoints, not final test-gate evidence; a static plan records the final test gate and, when applicable, project gate as `pending` and cannot claim either applicable gate has passed.
 - End every batch with `Covered: Sessions X–Y` and `Remaining: Sessions ...`.
 - If the user explicitly requires one complete file and output capacity is sufficient, combine the same batches into that file without dropping fields.
 
@@ -201,7 +233,7 @@ Wait for the learner after the challenge. Complete when the learner independentl
 
 ## Simon-Style Mastery Sprint
 
-Use for a broad field, multi-week plan, or real project. Treat duration as a planning assumption.
+Use for a broad field, multi-week plan, or real project. Treat duration as a planning assumption. For independent-capability or project targets, load **Completion Gates for Independent-Capability Goals**; chunk checkpoints are formative and do not replace final gates.
 
 1. Define an observable performance target.
 2. Build a prerequisite-ordered chunk map.
@@ -375,14 +407,15 @@ For every non-Solid item, cite answer evidence, prescribe one targeted exercise,
 
 Use for sustained coaching from a broad skill map to an independently delivered outcome. Treat this as one self-contained mode. Do not load or concatenate other mode sections.
 
-Advance through `Map → Focus → Practice → Test → Repair → Capture`, one state at a time:
+Advance through `Map → Focus → Practice → Test → Repair → Capture → Ship`, one state at a time:
 
 1. **Map**: create a concise five-level route from complete beginner to confident independent delivery. For each level give the capability boundary, prerequisite, observable milestone, and representative artifact. Recommend a starting level from learner evidence.
 2. **Focus**: select the current level's high-leverage minority. Write `Learn now / Defer / Why`; use 80/20 as a prioritization heuristic, never as a fabricated exact percentage.
 3. **Practice**: choose one smallest complete chunk. Before teaching, define one visible deliverable and a pass criterion that can fail. Give only the explanation and exercise needed for that chunk.
-4. **Test**: require closed-source recall, application, transfer, or error diagnosis. Ask one unanswered question per response and reveal no answer before the learner attempts it.
+4. **Test**: run a formative closed-source chunk check using one or more suitable categories from recall, application, error diagnosis, and transfer. Ask one unanswered question per response and reveal no answer before the learner attempts it. For final-scope completion, load **Completion Gates for Independent-Capability Goals** and use its fresh eight-item check covering all four categories.
 5. **Repair**: when the attempt is wrong, vague, or only repeats terminology, identify the exact evidenced gap and reteach only that gap with plain language and one concrete example. Ask for one revised teach-back or transfer attempt, then wait.
-6. **Capture**: only after the chunk meets its pass criterion, update the compact Learning Ledger and choose whether to advance, re-test, or remain on the current level.
+6. **Capture**: only after the chunk meets its pass criterion, update the compact Learning Ledger and choose whether to advance, re-test, or remain on the current level. Do not treat this formative record as final gate evidence.
+7. **Ship**: when an independent project is in scope, require the learner to deliver it independently under the confirmed rubric, then assess the separate project gate. When no project is in scope, record `Project gate: N/A` and apply the no-project completion rule.
 
 First execution turn after confirmation:
 
@@ -409,7 +442,7 @@ Maintain one cumulative, approximately one-page checkpoint instead of repeating 
 
 The Ledger never replaces testing. Do not mark a chunk complete, applicable, or fluent without learner evidence that meets the stated pass criterion. If a chunk has not passed, record only the evidenced gap and next repair action.
 
-Stop the overall loop when the confirmed independent project or performance target meets its rubric and the learner passes one unfamiliar transfer or failure-recovery check. Otherwise expose the next smallest weak chunk.
+For final-scope completion, apply **Completion Gates for Independent-Capability Goals**. If `project_required = true`, stop only when both the final test gate and project gate pass; if no project is in scope, use the final test gate plus the mode deliverable and record `Project gate: N/A`. Otherwise expose the next smallest evidenced weak chunk. Never infer final completion from one passed chunk or one successful artifact.
 
 ## Integrated 90-Minute Session
 

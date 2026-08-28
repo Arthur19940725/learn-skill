@@ -1,7 +1,7 @@
 ---
 name: learn
 description: |
-  This skill should be used when the user asks to "teach me", "build a study plan", "quiz me", "diagnose my knowledge gaps", "schedule spaced review", "curate learning resources", run an end-to-end learning loop, or use a named method such as Feynman, first principles, SQ3R, Pomodoro, Cornell notes, or active recall. Also use for 教我、学习计划、测试我、薄弱点、错题本、间隔复习、费曼学习法、第一性原理、番茄学习法、康奈尔笔记. Routine code explanation, debugging, implementation, diff summarization, document transformation, and direct factual answers stay with their task-specific workflows unless the user asks to learn, practice, retain, or be assessed.
+  This skill should be used when the user asks to "teach me", "build a study plan", "quiz me", "diagnose my knowledge gaps", "schedule spaced review", or "curate learning resources"; asks to learn through Feynman, first principles, SQ3R, Pomodoro, Cornell notes, active recall, spaced review, a five-level ladder, a 20-hour 80/20 plan, a one-page cheat sheet, five resources, or an independent project; or invokes `/learn` or `$learn`. Also use for 教我、学习计划、测试我、薄弱点、错题本、间隔复习、费曼学习法、第一性原理、番茄学习法、康奈尔笔记. Routine code explanation, debugging, implementation, diff summarization, document transformation, and direct factual answers stay with their task-specific workflows unless the user asks to learn, practice, retain, or be assessed.
 ---
 
 # Learn
@@ -22,6 +22,7 @@ description: |
 - 每轮 intake、teach-back 或互动测验最多提出一个问题，然后等待。
 - 用行为、作品或可失败的测试定义进步。
 - 固定时长只定义计划边界，不保证 mastery。
+- 当确认的 goal 或 scope 声称 independent capability，或包含 independent project / cumulative project 时，使用 fresh `test gate`；只有确认目标包含独立项目时才增加 `project gate`。无项目目标记录 `project gate = N/A`。详细 protocol 见 [references/templates.md](references/templates.md) 的 **Completion Gates for Independent-Capability Goals**。
 - 不编造资源、链接、作者、版本、价格、可访问性或核验日期。
 - 首次出现术语时简短定义；类比必须说明失效边界。
 - 医疗、法律和金融主题区分教学信息与个性化专业建议，并提示必要核验。
@@ -103,7 +104,7 @@ description: |
 
 进入 `confirmed` 后：
 
-1. 在 [references/templates.md](references/templates.md) 中定位所选模式标题，只读取该模式直到下一个同级标题；需要可填写 worksheet 时再读取对应模板。若 SQ3R、Pomodoro 与 Cornell 组合成一个 90 分钟来源学习 session，只读取自包含的 **Integrated 90-Minute Session**，不重复加载三个独立模式。
+1. 在 [references/templates.md](references/templates.md) 中定位所选模式标题，只读取该模式直到下一个同级标题；若确认的 goal 或 scope 声称 independent capability，或包含 independent project / cumulative project，再读取同文件的 **Completion Gates for Independent-Capability Goals**；需要可填写 worksheet 时再读取对应模板。若 SQ3R、Pomodoro 与 Cornell 组合成一个 90 分钟来源学习 session，只读取自包含的 **Integrated 90-Minute Session**，不重复加载三个独立模式。
 2. 严格执行该模式的字段、数量、顺序、交互边界和停止条件。
 3. 默认只使用一个 primary method。Integrated Learning Loop 作为一个自包含模式执行其状态机；其他组合仅在用户明确要求时使用，并确保每种方法解决不同瓶颈，先交付静态产物，再启动互动环节。
 4. 每个阶段要求 learner output：解释、解题、比较、构建或真实使用。
@@ -139,5 +140,6 @@ description: |
 - 时间、数量、评分和 covered/remaining 范围已重算；
 - 资源状态与实际工具能力一致；
 - completion criterion 可观察且可能失败；
+- gate 适用性来自已确认的 requirement card；独立能力目标必须分别记录 `test gate`，项目目标还必须记录 `project gate`，任一必需 gate 失败或 pending 都是 `not yet complete`，无项目目标记录 `project gate = N/A`；
 - Integrated Learning Loop 每次只推进一个状态，Learning Ledger 只记录 learner evidence 支持的错误和完成状态；
 - 来源、专业建议和适用边界表达准确。

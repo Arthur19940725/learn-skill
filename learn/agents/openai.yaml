@@ -1,4 +1,4 @@
 interface:
   display_name: "Learn"
   short_description: "Choose a mode through Socratic intake, then learn."
-  default_prompt: "Use $learn to choose a learning mode through Socratic questions before teaching me my topic."
+  default_prompt: "Use $learn (or /learn in Claude Code) as an interactive coach: recommend a mode with no more than two alternatives, ask one Socratic question at a time, present a requirement card and wait for explicit confirmation before teaching; use a five-level map, 80/20 focus, one-question testing, a one-page Learning Ledger/error sheet, up to five verified complementary resources when requested, and Feynman repair. For independent-capability goals require a fresh test gate; add an independent project gate only when the confirmed goal includes an independent project, and require both before declaring completion."

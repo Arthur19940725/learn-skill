@@ -25,7 +25,8 @@
         "A 10-row map uses stable session IDs and gives each session a goal, cumulative-project increment, and completion evidence without duplicating every detailed field.",
         "Only Sessions 1 and 2 are fully expanded; each has time blocks totaling 120 minutes, all required fields, exactly five recall questions, and a separated compact answer key.",
         "Resources are labeled as unverified candidates with no fabricated checked date, current-version claim, price, or availability claim.",
-        "The response ends with Covered: Sessions 1–2 and an accurate Remaining range."
+        "The response ends with Covered: Sessions 1–2 and an accurate Remaining range.",
+        "When the confirmed goal includes an independent cumulative project, the response defines separate final test and project gates through the shared gate protocol; session recall questions are formative, and this planning response does not claim either gate has passed."
       ]
     },
     {
@@ -101,7 +102,8 @@
         "The chunk map is prerequisite-ordered and uses unknown, recognized, explainable, applicable, and fluent states.",
         "Only the highest-value current chunk is active, with worked examples, retrieval, deliberate practice, a real output, and a fast feedback source.",
         "Advancement depends on pass/fail no-notes checkpoints, and the schedule respects 90 minutes per day.",
-        "The response presents six weeks as a planning assumption and includes three actions possible today plus overall exit criteria."
+        "The response presents six weeks as a planning assumption and includes three actions possible today plus overall exit criteria.",
+        "Because the target is an independently reviewable sales-analysis project, the response defines separate fresh test gate and project gate evidence, keeps their pass/fail status independent, and does not treat chunk checkpoints as final completion."
       ]
     },
     {
@@ -239,7 +241,8 @@
         "The recommended starting level is justified by the supplied syntax-only evidence rather than assuming a complete beginner or advanced learner.",
         "The current focus explicitly separates Learn now, Defer, and Why without claiming that an exact measured 20 percent guarantees most results.",
         "The first chunk has one visible deliverable and a pass criterion that can fail, followed by exactly one immediate learner action.",
-        "The response does not simulate practice completion, ask and answer a quiz, perform a repair, populate unearned Ledger results, or dump the entire six-week curriculum."
+        "The response does not simulate practice completion, ask and answer a quiz, perform a repair, populate unearned Ledger results, or dump the entire six-week curriculum.",
+        "Because an independent CLI project is in the confirmed goal, the response identifies both gates as applicable and points to their separate criteria, while leaving them unassessed rather than claiming completion in this first turn."
       ]
     }
   ]

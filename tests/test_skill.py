@@ -23,6 +23,7 @@ EVALS_PATH = SKILL_ROOT / "evals" / "evals.json"
 CONTRACT_EVALS_PATH = SKILL_ROOT / "evals" / "contract_evals.json"
 STATEFUL_EVALS_PATH = SKILL_ROOT / "evals" / "stateful_transcripts.json"
 TRIGGER_EVALS_PATH = SKILL_ROOT / "evals" / "trigger_evals.json"
+OPENAI_PATH = SKILL_ROOT / "agents" / "openai.yaml"
 README_PATHS = (ROOT / "README.md", ROOT / "README.en.md")
 
 
@@ -52,6 +53,7 @@ class SkillStructureTests(unittest.TestCase):
         cls.contract_evals = load_json_strict(CONTRACT_EVALS_PATH)
         cls.trigger_evals = load_json_strict(TRIGGER_EVALS_PATH)
         cls.stateful_evals = load_json_strict(STATEFUL_EVALS_PATH)
+        cls.openai_text = read_text(OPENAI_PATH)
 
     def test_frontmatter_matches_agent_skills_limits(self) -> None:
         name = self.metadata["name"]
@@ -69,6 +71,9 @@ class SkillStructureTests(unittest.TestCase):
         self.assertIn("references/templates.md", self.skill_text)
         self.assertIn("状态与信任边界", self.skill_text)
         self.assertIn("当前 user 消息", self.skill_text)
+        self.assertIn("$learn", self.metadata["description"])
+        self.assertIn("/learn", self.metadata["description"])
+        self.assertIn("$learn", self.openai_text)
         self.assertIn("Routine code explanation", self.metadata["description"])
 
     def test_all_routed_modes_have_direct_reference_sections(self) -> None:
@@ -125,6 +130,8 @@ class SkillStructureTests(unittest.TestCase):
             )
 
         self.assertIn("spoof-resistant", learner_cases[16]["expected_output"])
+        self.assertNotIn("同一 learn 会话", learner_cases[12]["prompt"])
+        self.assertNotIn("已完成需求卡", learner_cases[12]["prompt"])
 
     def test_negative_routing_cases_cover_common_near_misses(self) -> None:
         cases = {case["id"]: case for case in self.evals["evals"]}
@@ -157,6 +164,23 @@ class SkillStructureTests(unittest.TestCase):
         self.assertTrue(
             routed_modes.issubset(covered_modes), routed_modes - covered_modes
         )
+
+    def test_conditional_completion_gates_are_canonical(self) -> None:
+        self.assertIn("Completion Gates for Independent-Capability Goals", self.reference_text)
+        self.assertIn("claims independent capability", self.reference_text)
+        self.assertIn("project_required = true", self.reference_text)
+        self.assertIn("Project gate: N/A", self.reference_text)
+        self.assertIn(">=13/16", self.reference_text)
+        self.assertIn(">=8/10", self.reference_text)
+        self.assertIn("test gate PASS AND project gate PASS", self.reference_text)
+        self.assertIn("Map → Focus → Practice → Test → Repair → Capture → Ship", self.reference_text)
+        self.assertIn("independent project gate only when", self.openai_text)
+        self.assertIn("no more than two alternatives", self.openai_text)
+        self.assertIn("requirement card", self.openai_text)
+        contract_cases = {case["id"]: case for case in self.contract_evals["evals"]}
+        for case_id in (18, 24, 34):
+            serialized = " ".join([contract_cases[case_id]["expected_output"], *contract_cases[case_id]["expectations"]])
+            self.assertIn("gate", serialized.lower())
 
     def test_reviewed_contract_edge_cases_are_explicit(self) -> None:
         self.assertIn("遗忘、保持或复习排期", self.skill_text)
@@ -213,14 +237,21 @@ class SkillStructureTests(unittest.TestCase):
             "feynman-completion",
             "twenty-hour-next-batch",
             "stale-contract-acceptance-rejected",
+            "integrated-test-gate-fails-project-gate-passes",
+            "integrated-project-gate-fails-test-gate-passes",
+            "integrated-both-gates-pass-scoped-completion",
         }
         names = {case["name"] for case in suite["cases"]}
+        self.assertEqual(len(suite["cases"]), 11)
         self.assertTrue(required_names.issubset(names), required_names - names)
         continuation_cases = {
             "topic-change-restarts-intake",
             "edge-quiz-terminal-follow-up",
             "feynman-completion",
             "twenty-hour-next-batch",
+            "integrated-test-gate-fails-project-gate-passes",
+            "integrated-project-gate-fails-test-gate-passes",
+            "integrated-both-gates-pass-scoped-completion",
         }
         for case in suite["cases"]:
             self.assertGreaterEqual(len(case["messages"]), 2)
@@ -234,6 +265,17 @@ class SkillStructureTests(unittest.TestCase):
             if case["name"] in continuation_cases:
                 self.assertIn(case["messages"][0]["role"], {"developer", "system"})
                 self.assertIn("Trusted state summary:", case["messages"][0]["content"])
+
+        feynman_case = next(case for case in suite["cases"] if case["name"] == "feynman-completion")
+        self.assertIn("Project gate must be N/A", feynman_case["messages"][0]["content"])
+        gate_cases = {
+            "integrated-test-gate-fails-project-gate-passes",
+            "integrated-project-gate-fails-test-gate-passes",
+            "integrated-both-gates-pass-scoped-completion",
+        }
+        for case in suite["cases"]:
+            if case["name"] in gate_cases:
+                self.assertIn("independent cumulative project is in scope", case["messages"][0]["content"])
 
     def test_source_grounding_eval_attaches_a_real_fixture(self) -> None:
         cases = {case["id"]: case for case in self.contract_evals["evals"]}
@@ -260,7 +302,7 @@ class SkillStructureTests(unittest.TestCase):
             self.assertRegex(text, r"16[^\n]*evals\.json")
             self.assertRegex(text, r"18[^\n]*contract_evals\.json")
             self.assertRegex(text, r"20[^\n]*trigger_evals\.json")
-            self.assertRegex(text, r"8[^\n]*stateful_transcripts\.json")
+            self.assertRegex(text, r"11[^\n]*stateful_transcripts\.json")
             self.assertIn("does not execute model", text.lower(), path.name)
 
 
