@@ -6,7 +6,8 @@ from pathlib import Path
 from typing import Any
 
 FRONTMATTER_BOUNDARY = "---"
-ALLOWED_FRONTMATTER_FIELDS = {"name", "description"}
+REQUIRED_FRONTMATTER_FIELDS = {"name", "description"}
+ALLOWED_FRONTMATTER_FIELDS = REQUIRED_FRONTMATTER_FIELDS | {"disable-model-invocation"}
 BEHAVIOR_EVAL_FIELDS = {
     "id",
     "prompt",
@@ -44,7 +45,7 @@ def _require_string_list(
     return value
 
 
-def parse_frontmatter(text: str) -> tuple[dict[str, str], str]:
+def parse_frontmatter(text: str) -> tuple[dict[str, Any], str]:
     lines = text.splitlines()
     if not lines or lines[0] != FRONTMATTER_BOUNDARY:
         raise ValueError("SKILL.md must start with a frontmatter boundary")
@@ -55,7 +56,7 @@ def parse_frontmatter(text: str) -> tuple[dict[str, str], str]:
         raise ValueError("SKILL.md frontmatter is not closed") from error
 
     frontmatter_lines = lines[1:end_index]
-    metadata: dict[str, str] = {}
+    metadata: dict[str, Any] = {}
     index = 0
     while index < len(frontmatter_lines):
         line = frontmatter_lines[index]
@@ -68,6 +69,13 @@ def parse_frontmatter(text: str) -> tuple[dict[str, str], str]:
             raise ValueError(f"unsupported frontmatter field: {key}")
         if key in metadata:
             raise ValueError(f"duplicate frontmatter field: {key}")
+
+        if key == "disable-model-invocation":
+            if raw_value != "true":
+                raise ValueError("disable-model-invocation must be the unquoted scalar true")
+            metadata[key] = True
+            index += 1
+            continue
 
         if raw_value == "|":
             if key != "description":
@@ -103,8 +111,8 @@ def parse_frontmatter(text: str) -> tuple[dict[str, str], str]:
         metadata[key] = normalized_name
         index += 1
 
-    if set(metadata) != ALLOWED_FRONTMATTER_FIELDS:
-        missing = sorted(ALLOWED_FRONTMATTER_FIELDS - set(metadata))
+    if not REQUIRED_FRONTMATTER_FIELDS.issubset(metadata):
+        missing = sorted(REQUIRED_FRONTMATTER_FIELDS - set(metadata))
         raise ValueError(f"missing frontmatter fields: {missing}")
 
     body = "\n".join(lines[end_index + 1 :])

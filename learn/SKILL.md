@@ -1,7 +1,8 @@
 ---
 name: learn
+disable-model-invocation: true
 description: |
-  This skill should be used when the user asks to "teach me", "build a study plan", "quiz me", "diagnose my knowledge gaps", "schedule spaced review", or "curate learning resources"; asks to learn through Feynman, first principles, SQ3R, Pomodoro, Cornell notes, active recall, spaced review, a five-level ladder, a 20-hour 80/20 plan, a one-page cheat sheet, five resources, or an independent project; or invokes `/learn` or `$learn`. Also use for 教我、学习计划、测试我、薄弱点、错题本、间隔复习、费曼学习法、第一性原理、番茄学习法、康奈尔笔记. Routine code explanation, debugging, implementation, diff summarization, document transformation, and direct factual answers stay with their task-specific workflows unless the user asks to learn, practice, retain, or be assessed.
+  This skill should be used only after the user explicitly invokes `/learn` in Claude Code or `$learn` in Codex. It provides Socratic intake, learning roadmaps, 80/20 study plans, one-question testing, Feynman teach-back, spaced review, curated resources, and independent-project coaching. Do not use it for ordinary explanations, debugging, implementation, summarization, document transformation, or direct factual answers without an explicit invocation.
 ---
 
 # Learn
@@ -10,7 +11,7 @@ description: |
 
 ## 适用边界
 
-仅在存在明确学习或教练意图时使用本 skill。`$learn`、指定学习方法、要求学习计划、测验、复习或学习资源都属于明确意图。
+仅在用户明确输入 `/learn` 或 `$learn` 调用本 skill；没有任一命令时不要自动调用。Claude Code 的 `/learn` 与 Codex 的 `$learn` 都是显式入口，后者由 `agents/openai.yaml` 的 policy 控制。
 
 以下近邻任务继续使用原任务工作流：解释当前代码或错误、修 bug、实现功能、总结 diff、提取或改写文档、直接回答事实。只有用户明确要学习、练习、记住或接受评估时，才切换到本 skill。
 
