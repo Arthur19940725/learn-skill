@@ -228,6 +228,19 @@
         "Summary and self-test fields remain blank and explicitly instruct the learner to close the source before completing them.",
         "No correct, missing, or review result is invented without a learner recall attempt."
       ]
+    },
+    {
+      "id": 34,
+      "prompt": "Reference-contract eval: In an isolated reference harness, test the Integrated Learning Loop execution contract. Runtime skill intake and confirmation are outside this harness. Read only that reference section. Start the first execution turn for a learner who knows Python syntax but has never shipped a command-line tool; the confirmed goal is to independently build, test, package, and diagnose a small CLI in six weeks, with 90 minutes available per day.",
+      "expected_output": "The first bounded loop turn: a five-level map, an evidence-based starting level, a high-leverage focus boundary, and one first-chunk action with an observable deliverable and pass criterion.",
+      "files": [],
+      "expectations": [
+        "The response creates a concise five-level route whose milestones progress to independent CLI delivery, testing, packaging, trade-offs, and diagnosis.",
+        "The recommended starting level is justified by the supplied syntax-only evidence rather than assuming a complete beginner or advanced learner.",
+        "The current focus explicitly separates Learn now, Defer, and Why without claiming that an exact measured 20 percent guarantees most results.",
+        "The first chunk has one visible deliverable and a pass criterion that can fail, followed by exactly one immediate learner action.",
+        "The response does not simulate practice completion, ask and answer a quiz, perform a repair, populate unearned Ledger results, or dump the entire six-week curriculum."
+      ]
     }
   ]
 }

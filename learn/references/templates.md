@@ -19,6 +19,7 @@ Read only the contract selected by the router in `SKILL.md`.
 - [Spaced Review](#spaced-review)
 - [Smart Summary](#smart-summary)
 - [Weakness Diagnosis](#weakness-diagnosis)
+- [Integrated Learning Loop](#integrated-learning-loop)
 - [Integrated 90-Minute Session](#integrated-90-minute-session)
 
 ## Learning Ladder
@@ -369,6 +370,46 @@ After enough evidence, classify each sub-area:
 - `Blind spot`: learner did not recognize the sub-area.
 
 For every non-Solid item, cite answer evidence, prescribe one targeted exercise, and name the next learning method. Prioritize by conceptual dependency or practical risk. Re-test only weak sub-areas after seven days, with observable pass criteria. Stop when every area is Solid or has an exercise and scheduled re-test.
+
+## Integrated Learning Loop
+
+Use for sustained coaching from a broad skill map to an independently delivered outcome. Treat this as one self-contained mode. Do not load or concatenate other mode sections.
+
+Advance through `Map → Focus → Practice → Test → Repair → Capture`, one state at a time:
+
+1. **Map**: create a concise five-level route from complete beginner to confident independent delivery. For each level give the capability boundary, prerequisite, observable milestone, and representative artifact. Recommend a starting level from learner evidence.
+2. **Focus**: select the current level's high-leverage minority. Write `Learn now / Defer / Why`; use 80/20 as a prioritization heuristic, never as a fabricated exact percentage.
+3. **Practice**: choose one smallest complete chunk. Before teaching, define one visible deliverable and a pass criterion that can fail. Give only the explanation and exercise needed for that chunk.
+4. **Test**: require closed-source recall, application, transfer, or error diagnosis. Ask one unanswered question per response and reveal no answer before the learner attempts it.
+5. **Repair**: when the attempt is wrong, vague, or only repeats terminology, identify the exact evidenced gap and reteach only that gap with plain language and one concrete example. Ask for one revised teach-back or transfer attempt, then wait.
+6. **Capture**: only after the chunk meets its pass criterion, update the compact Learning Ledger and choose whether to advance, re-test, or remain on the current level.
+
+First execution turn after confirmation:
+
+- output the five-level map;
+- show the current `Learn now / Defer / Why` focus;
+- define the first chunk, visible deliverable, and pass criterion;
+- end with exactly one immediate learner action, then wait.
+
+Later turns perform only the next state justified by learner evidence. Never simulate completion of practice, a quiz answer, or teach-back. Do not produce the whole loop in one response.
+
+Use current resources only when the chunk lacks necessary material or the learner explicitly asks. Keep at most five complementary resources, identify the exact part to use and skip, and apply the runtime verification rules from `SKILL.md`.
+
+### Learning Ledger
+
+Maintain one cumulative, approximately one-page checkpoint instead of repeating a chat summary. Update existing entries rather than appending duplicates:
+
+- **One-sentence mental model**
+- **3–5 load-bearing concepts or relationships**
+- **One real example the learner completed or can reproduce**
+- **Evidenced error and corrected model**; if no error was observed, write `No evidenced error yet` instead of inventing one
+- **One transfer prompt** that changes the situation
+- **Next recall time or trigger**
+- **Chunk status**: `unknown / recognized / explainable / applicable / fluent`, supported by the learner's output
+
+The Ledger never replaces testing. Do not mark a chunk complete, applicable, or fluent without learner evidence that meets the stated pass criterion. If a chunk has not passed, record only the evidenced gap and next repair action.
+
+Stop the overall loop when the confirmed independent project or performance target meets its rubric and the learner passes one unfamiliar transfer or failure-recovery check. Otherwise expose the next smallest weak chunk.
 
 ## Integrated 90-Minute Session
 

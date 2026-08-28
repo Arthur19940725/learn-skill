@@ -110,7 +110,7 @@ class SkillStructureTests(unittest.TestCase):
     def test_contract_eval_schema_and_ids_are_stable(self) -> None:
         validate_contract_evals(self.contract_evals, SKILL_ROOT)
         ids = [case["id"] for case in self.contract_evals["evals"]]
-        self.assertEqual(ids, list(range(17, 34)))
+        self.assertEqual(ids, list(range(17, 35)))
 
     def test_learner_evals_do_not_launder_confirmation(self) -> None:
         learner_cases = {case["id"]: case for case in self.evals["evals"][:16]}
@@ -258,7 +258,7 @@ class SkillStructureTests(unittest.TestCase):
         for path in README_PATHS:
             text = read_text(path)
             self.assertRegex(text, r"16[^\n]*evals\.json")
-            self.assertRegex(text, r"17[^\n]*contract_evals\.json")
+            self.assertRegex(text, r"18[^\n]*contract_evals\.json")
             self.assertRegex(text, r"20[^\n]*trigger_evals\.json")
             self.assertRegex(text, r"8[^\n]*stateful_transcripts\.json")
             self.assertIn("does not execute model", text.lower(), path.name)

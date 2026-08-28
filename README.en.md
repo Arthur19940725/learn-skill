@@ -23,6 +23,7 @@ The Skill handles explicit learning, practice, review, or assessment intent. Rou
 - Five-minute One-Page Cheat Sheet
 - Five-resource curation and a seven-day Resource Path
 - A bounded, three-round Feynman teach-back loop
+- Integrated Learning Loop: map → high-leverage focus → practice → test → repair → Learning Ledger
 - First Principles, Simon-Style Mastery, SQ3R, Pomodoro, and Cornell Notes
 - Spaced Review, Quick Active Recall, Smart Summary, and Weakness Diagnosis
 
@@ -49,7 +50,7 @@ tests/
 └── test_skill_validation.py
 ```
 
-`SKILL.md` is a lean trigger, state, routing, and shared-rules layer. `references/templates.md` holds mode execution contracts and fillable templates so only the confirmed branch is loaded. Evaluation data includes 16 single-turn runtime cases (`evals.json`), 17 isolated reference-contract cases (`contract_evals.json`), 20 trigger and near-miss queries (`trigger_evals.json`), 8 multi-turn state-transition fixtures (`stateful_transcripts.json`), and a source fixture with stable paragraph IDs. The reference-contract runner loads only the named reference section and does not invoke the runtime skill, so it cannot bypass the intake and confirmation state machine.
+`SKILL.md` is a lean trigger, state, routing, and shared-rules layer. `references/templates.md` holds mode execution contracts and fillable templates so only the confirmed branch is loaded. Evaluation data includes 16 single-turn runtime cases (`evals.json`), 18 isolated reference-contract cases (`contract_evals.json`), 20 trigger and near-miss queries (`trigger_evals.json`), 8 multi-turn state-transition fixtures (`stateful_transcripts.json`), and a source fixture with stable paragraph IDs. The reference-contract runner loads only the named reference section and does not invoke the runtime skill, so it cannot bypass the intake and confirmation state machine.
 
 ## Installation
 
@@ -94,6 +95,10 @@ Use $learn to create a practical 20-hour plan for learning how to containerize a
 Use $learn and the Feynman method to help me truly understand database transaction isolation levels.
 ```
 
+```text
+Use $learn to coach me from zero to a Python CLI: map the route, focus on the high-leverage minority, test every chunk, repair gaps, and update a mistake-aware cheat sheet after I pass.
+```
+
 ## Design principles
 
 - Select a mode and confirm a learning contract before producing a formal answer or artifact for every new learning request.
@@ -103,6 +108,7 @@ Use $learn and the Feynman method to help me truly understand database transacti
 - Treat fixed durations as planning boundaries, never as guarantees of mastery.
 - Verify current resources and label anything unverifiable as `unverified`.
 - Choose one primary method by default and combine methods only when they address distinct bottlenecks.
+- Advance only one end-to-end loop state at a time, and ground mistake or completion records in actual learner output.
 
 ## Validation
 

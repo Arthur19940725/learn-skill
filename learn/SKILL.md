@@ -1,7 +1,7 @@
 ---
 name: learn
 description: |
-  This skill should be used when the user asks to "teach me", "build a study plan", "quiz me", "diagnose my knowledge gaps", "schedule spaced review", "curate learning resources", or use a named method such as Feynman, first principles, SQ3R, Pomodoro, Cornell notes, or active recall. Also use for 教我、学习计划、测试我、薄弱点、间隔复习、费曼学习法、第一性原理、番茄学习法、康奈尔笔记. Routine code explanation, debugging, implementation, diff summarization, document transformation, and direct factual answers stay with their task-specific workflows unless the user asks to learn, practice, retain, or be assessed.
+  This skill should be used when the user asks to "teach me", "build a study plan", "quiz me", "diagnose my knowledge gaps", "schedule spaced review", "curate learning resources", run an end-to-end learning loop, or use a named method such as Feynman, first principles, SQ3R, Pomodoro, Cornell notes, or active recall. Also use for 教我、学习计划、测试我、薄弱点、错题本、间隔复习、费曼学习法、第一性原理、番茄学习法、康奈尔笔记. Routine code explanation, debugging, implementation, diff summarization, document transformation, and direct factual answers stay with their task-specific workflows unless the user asks to learn, practice, retain, or be assessed.
 ---
 
 # Learn
@@ -86,6 +86,7 @@ description: |
 | 一页、5 分钟复习、速查表 | Cheat Sheet |
 | 精选 5 个当前资源、7 天路径 | Resource Path |
 | Feynman、朴素解释、复述 | Feynman Loop |
+| 持续带学、从零到独立项目、每阶段检验与错题沉淀 | Integrated Learning Loop |
 | 为什么成立、基本假设、第一性原理 | First-Principles Decomposition |
 | 宽领域、多周项目、分块训练 | Simon-Style Mastery Sprint |
 | 阅读 chapter、paper 或 report | SQ3R Reading |
@@ -96,7 +97,7 @@ description: |
 | 提炼框架、心智模型 | Smart Summary |
 | 找误解、薄弱点或盲区 | Weakness Diagnosis |
 
-只说“我想学 X”时：窄概念推荐 Feynman Loop；宽技能推荐 Learning Ladder。已学内容的主要瓶颈是遗忘、保持或复习排期时推荐 Spaced Review；不确定理解、错误或未知缺口时推荐 Weakness Diagnosis。推荐仍需写入契约并获得确认。
+只说“我想学 X”时：窄概念推荐 Feynman Loop；宽技能推荐 Learning Ladder。已学内容的主要瓶颈是遗忘、保持或复习排期时推荐 Spaced Review；不确定理解、错误或未知缺口时推荐 Weakness Diagnosis。用户要求从路线到独立产出的持续带学，并希望每个阶段都练习、检验、修补和沉淀时，推荐 Integrated Learning Loop。推荐仍需写入契约并获得确认。
 
 ## 执行
 
@@ -104,7 +105,7 @@ description: |
 
 1. 在 [references/templates.md](references/templates.md) 中定位所选模式标题，只读取该模式直到下一个同级标题；需要可填写 worksheet 时再读取对应模板。若 SQ3R、Pomodoro 与 Cornell 组合成一个 90 分钟来源学习 session，只读取自包含的 **Integrated 90-Minute Session**，不重复加载三个独立模式。
 2. 严格执行该模式的字段、数量、顺序、交互边界和停止条件。
-3. 默认只使用一个 primary method。用户明确组合方法时，确保每种方法解决不同瓶颈；先交付静态产物，再启动互动环节。
+3. 默认只使用一个 primary method。Integrated Learning Loop 作为一个自包含模式执行其状态机；其他组合仅在用户明确要求时使用，并确保每种方法解决不同瓶颈，先交付静态产物，再启动互动环节。
 4. 每个阶段要求 learner output：解释、解题、比较、构建或真实使用。
 5. 结束于完整静态产物、一个可立即执行的动作，或一个等待用户回答的问题。
 
@@ -138,4 +139,5 @@ description: |
 - 时间、数量、评分和 covered/remaining 范围已重算；
 - 资源状态与实际工具能力一致；
 - completion criterion 可观察且可能失败；
+- Integrated Learning Loop 每次只推进一个状态，Learning Ledger 只记录 learner evidence 支持的错误和完成状态；
 - 来源、专业建议和适用边界表达准确。

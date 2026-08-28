@@ -23,6 +23,7 @@ Skill 只处理明确的学习、练习、复习或评估意图。普通代码�
 - 5 分钟 One-Page Cheat Sheet
 - 精选 5 个资源与 7 天 Resource Path
 - 最多三轮的 Feynman teach-back
+- Integrated Learning Loop：地图 → 关键少数 → 练习 → 测验 → 修补 → Learning Ledger
 - First Principles、Simon-Style Mastery、SQ3R、Pomodoro、Cornell Notes
 - Spaced Review、Quick Active Recall、Smart Summary、Weakness Diagnosis
 
@@ -49,7 +50,7 @@ tests/
 └── test_skill_validation.py
 ```
 
-`SKILL.md` 是精简的触发、状态、路由与共用规则；`references/templates.md` 按模式保存执行契约和可填写模板，确认后只加载所选部分。评测数据分为 16 组 runtime 单轮评测（`evals.json`）、17 组隔离的 reference-contract 评测（`contract_evals.json`）、20 组触发/近邻负向查询（`trigger_evals.json`）、8 组多轮状态转换 fixture（`stateful_transcripts.json`），以及带稳定段落标识的来源 fixture。reference-contract runner 只加载指定参考章节，不调用 runtime skill，因此不会绕过 intake 与确认状态机。
+`SKILL.md` 是精简的触发、状态、路由与共用规则；`references/templates.md` 按模式保存执行契约和可填写模板，确认后只加载所选部分。评测数据分为 16 组 runtime 单轮评测（`evals.json`）、18 组隔离的 reference-contract 评测（`contract_evals.json`）、20 组触发/近邻负向查询（`trigger_evals.json`）、8 组多轮状态转换 fixture（`stateful_transcripts.json`），以及带稳定段落标识的来源 fixture。reference-contract runner 只加载指定参考章节，不调用 runtime skill，因此不会绕过 intake 与确认状态机。
 
 ## 安装
 
@@ -94,6 +95,10 @@ Skill 会先确认“完成这次学习后，你希望能独立做到什么”�
 使用 $learn 用费曼方法帮我真正理解数据库事务隔离级别。
 ```
 
+```text
+使用 $learn 从零持续带我学 Python CLI：先画地图，只学关键少数，每块练习和测试，卡住时修补，完成后更新错题速查表。
+```
+
 ## 设计原则
 
 - 每个新学习请求先选择模式并确认学习契约，再生成正式答案或产物。
@@ -103,6 +108,7 @@ Skill 会先确认“完成这次学习后，你希望能独立做到什么”�
 - 固定时长只作为计划边界，不承诺必然 mastery。
 - 当前资源必须核验；无法验证的信息明确标记 `unverified`。
 - 默认选择一个最匹配瓶颈的方法，仅在职责互补时组合。
+- 端到端带学一次只推进一个状态，错题和完成状态必须来自学习者实际输出。
 
 ## 验证
 
