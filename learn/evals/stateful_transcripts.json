@@ -117,7 +117,7 @@
       "messages": [
         {
           "role": "developer",
-          "content": "Trusted state summary: The learner accepted a Feynman Loop contract for product-neutral transaction-isolation anomalies. Round 1 explanation is complete, and the assistant has requested the learner's first teach-back."
+          "content": "Trusted state summary: The learner accepted a Feynman Loop contract for product-neutral transaction-isolation anomalies. The confirmed goal is explanation and scenario classification only; no independently delivered project or cumulative project is in scope, so Project gate must be N/A. Round 1 explanation is complete, and the assistant has requested the learner's first teach-back."
         },
         {
           "role": "assistant",
@@ -130,7 +130,8 @@
       ],
       "expectations": [
         "The response recognizes completion instead of demanding another teach-back.",
-        "It closes with a clean explanation, mental model, weak points if any, and a clearly labeled non-interactive three-question practice bank."
+        "It closes with a clean explanation, mental model, weak points if any, and a clearly labeled non-interactive three-question practice bank.",
+        "Because no independent project is in scope, the response records Project gate: N/A and does not invent, demand, or fail a project gate."
       ]
     },
     {
@@ -177,6 +178,75 @@
       "expectations": [
         "The stale acceptance does not confirm either contract or start execution.",
         "The response asks exactly one clarification about whether the learner accepts the latest revised contract."
+      ]
+    },
+    {
+      "name": "integrated-test-gate-fails-project-gate-passes",
+      "messages": [
+        {
+          "role": "developer",
+          "content": "Trusted state summary: The learner accepted an Integrated Learning Loop contract for a Python CLI, and an independent cumulative project is in scope. The declared final test rubric was eight unseen closed-material items, exactly two each for recall, application, error diagnosis, and transfer, scored 0–2; pass is >=13/16, >=2/4 in every category, with no critical misconception. The learner's category scores are recall 4/4, application 3/4, error diagnosis 3/4, transfer 2/4, total 12/16; a critical misconception could cause practical misuse, so Test gate evidence is FAIL. The learner independently delivered a reproducible project under the confirmed inputs, constraints, and rubric, added a meaningful non-copied variation, and explained trade-offs, failure recovery, and boundary conditions; Project gate evidence is PASS."
+        },
+        {
+          "role": "assistant",
+          "content": "Gate evidence is recorded; the next response must make the separate completion decision and route any failed gate to repair."
+        },
+        {
+          "role": "user",
+          "content": "请分别记录两个 gate 并给出下一步；不要因为项目通过就宣布本次学习完成。"
+        }
+      ],
+      "expectations": [
+        "The response marks the overall status as not yet complete and does not claim mastery.",
+        "It records Test gate as failed from the 12/16 result and critical misconception while preserving Project gate as passed.",
+        "It routes only the test evidence to targeted Repair followed by a wholly fresh test, without averaging or offsetting the gates.",
+        "It does not invent additional project failures or unsupported learner weaknesses."
+      ]
+    },
+    {
+      "name": "integrated-project-gate-fails-test-gate-passes",
+      "messages": [
+        {
+          "role": "developer",
+          "content": "Trusted state summary: The learner accepted an Integrated Learning Loop contract for a Python CLI, and an independent cumulative project is in scope. The declared final test rubric was eight unseen closed-material items, exactly two each for recall, application, error diagnosis, and transfer, scored 0–2; pass is >=13/16, >=2/4 in every category, with no critical misconception. The learner's category scores are recall 4/4, application 3/4, error diagnosis 3/4, transfer 3/4, total 13/16; no critical misconception was observed, so Test gate evidence is PASS. The submitted project is only a copy of the exercise: it has no independent variation, and the learner cannot explain design trade-offs, failure recovery, or boundary conditions; Project gate evidence is FAIL."
+        },
+        {
+          "role": "assistant",
+          "content": "Gate evidence is recorded; the next response must make the separate completion decision and route any failed gate to repair."
+        },
+        {
+          "role": "user",
+          "content": "请分别记录两个 gate 并给出下一步；不要因为测试通过就宣布本次学习完成。"
+        }
+      ],
+      "expectations": [
+        "The response marks the overall status as not yet complete and does not claim mastery.",
+        "It records Test gate as passed at the inclusive 13/16 threshold and Project gate as failed because independent variation and the required explanation evidence are missing.",
+        "It routes only the project evidence to a revised independent project, retaining the passed test evidence.",
+        "It does not invent test errors or downgrade the supplied test evidence without a stated reason."
+      ]
+    },
+    {
+      "name": "integrated-both-gates-pass-scoped-completion",
+      "messages": [
+        {
+          "role": "developer",
+          "content": "Trusted state summary: The learner accepted an Integrated Learning Loop contract for a Python CLI, and an independent cumulative project is in scope. The declared final test rubric was eight unseen closed-material items, exactly two each for recall, application, error diagnosis, and transfer, scored 0–2; pass is >=13/16, >=2/4 in every category, with no critical misconception. The learner's category scores are recall 4/4, application 3/4, error diagnosis 3/4, transfer 3/4, total 13/16; no critical misconception was observed, so Test gate evidence is PASS. The learner independently delivered a reproducible target project under the confirmed inputs, constraints, and rubric, added a meaningful non-copied variation, and explained design trade-offs, failure recovery, and boundary conditions; Project gate evidence is PASS."
+        },
+        {
+          "role": "assistant",
+          "content": "Both gate evidence records are available for the final scoped decision."
+        },
+        {
+          "role": "user",
+          "content": "请分别判定两个 gate，并只在证据足够时给出范围受限的最终状态，同时记录剩余限制。"
+        }
+      ],
+      "expectations": [
+        "The response separately records Test gate PASS at the inclusive 13/16 threshold and Project gate PASS using the supplied independent-delivery evidence.",
+        "Only after both applicable gates pass does it declare completion, scoped to the confirmed topic, inputs, constraints, and rubric.",
+        "It records supporting evidence and at least one remaining limitation rather than claiming unlimited mastery.",
+        "It does not invent failed evidence or simulate a new learner answer."
       ]
     }
   ]

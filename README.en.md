@@ -2,7 +2,7 @@
 
 English | [简体中文](README.md)
 
-`learn` is a unified learning coach and structured study toolkit for AI coding agents. Every new learning request starts with a one-question-at-a-time Socratic intake that selects a learning mode and confirms a learning contract before turning “I want to learn X” into an active, testable, and reviewable process. It centers learning on observable mastery, active recall, teach-back, and real artifacts.
+`learn` is a unified learning coach and structured study toolkit for AI coding agents. Invoke it as `$learn` in Codex or `/learn` in Claude Code; every new learning request then starts with a one-question-at-a-time Socratic intake that selects a learning mode and confirms a learning contract before turning “I want to learn X” into an active, testable, and reviewable process. It centers learning on observable mastery, active recall, teach-back, and real artifacts.
 
 ## Invocation flow
 
@@ -23,7 +23,7 @@ The Skill handles explicit learning, practice, review, or assessment intent. Rou
 - Five-minute One-Page Cheat Sheet
 - Five-resource curation and a seven-day Resource Path
 - A bounded, three-round Feynman teach-back loop
-- Integrated Learning Loop: map → high-leverage focus → practice → test → repair → Learning Ledger
+- Integrated Learning Loop: map → high-leverage focus → practice → test → repair → Learning Ledger → Ship; project goals use separate test/project gates
 - First Principles, Simon-Style Mastery, SQ3R, Pomodoro, and Cornell Notes
 - Spaced Review, Quick Active Recall, Smart Summary, and Weakness Diagnosis
 
@@ -50,7 +50,7 @@ tests/
 └── test_skill_validation.py
 ```
 
-`SKILL.md` is a lean trigger, state, routing, and shared-rules layer. `references/templates.md` holds mode execution contracts and fillable templates so only the confirmed branch is loaded. Evaluation data includes 16 single-turn runtime cases (`evals.json`), 18 isolated reference-contract cases (`contract_evals.json`), 20 trigger and near-miss queries (`trigger_evals.json`), 8 multi-turn state-transition fixtures (`stateful_transcripts.json`), and a source fixture with stable paragraph IDs. The reference-contract runner loads only the named reference section and does not invoke the runtime skill, so it cannot bypass the intake and confirmation state machine.
+`SKILL.md` is a lean trigger, state, routing, and shared-rules layer. `references/templates.md` holds mode execution contracts and fillable templates so only the confirmed branch is loaded. Evaluation data includes 16 single-turn runtime cases (`evals.json`), 18 isolated reference-contract cases (`contract_evals.json`), 20 trigger and near-miss queries (`trigger_evals.json`), 11 multi-turn state-transition fixtures (`stateful_transcripts.json`), and a source fixture with stable paragraph IDs. The reference-contract runner loads only the named reference section and does not invoke the runtime skill, so it cannot bypass the intake and confirmation state machine.
 
 ## Installation
 
@@ -109,6 +109,7 @@ Use $learn to coach me from zero to a Python CLI: map the route, focus on the hi
 - Verify current resources and label anything unverifiable as `unverified`.
 - Choose one primary method by default and combine methods only when they address distinct bottlenecks.
 - Advance only one end-to-end loop state at a time, and ground mistake or completion records in actual learner output.
+- Apply the project gate only when the confirmed goal includes an independent project; project goals require both a fresh test gate and an independent project gate, while no-project goals record `Project gate: N/A`.
 
 ## Validation
 
