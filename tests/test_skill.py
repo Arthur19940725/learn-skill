@@ -10,19 +10,14 @@ from tests.skill_validation import (
     load_json_strict,
     parse_frontmatter,
     validate_behavior_evals,
-    validate_contract_evals,
-    validate_stateful_evals,
-    validate_trigger_evals,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILL_ROOT = ROOT / "learn"
 SKILL_PATH = SKILL_ROOT / "SKILL.md"
-REFERENCE_PATH = SKILL_ROOT / "references" / "templates.md"
+CORE_PATH = SKILL_ROOT / "references" / "core-workflows.md"
+SUPPLEMENTAL_PATH = SKILL_ROOT / "references" / "supplemental-methods.md"
 EVALS_PATH = SKILL_ROOT / "evals" / "evals.json"
-CONTRACT_EVALS_PATH = SKILL_ROOT / "evals" / "contract_evals.json"
-STATEFUL_EVALS_PATH = SKILL_ROOT / "evals" / "stateful_transcripts.json"
-TRIGGER_EVALS_PATH = SKILL_ROOT / "evals" / "trigger_evals.json"
 OPENAI_PATH = SKILL_ROOT / "agents" / "openai.yaml"
 README_PATHS = (ROOT / "README.md", ROOT / "README.en.md")
 
@@ -32,70 +27,98 @@ def read_text(path: Path) -> str:
 
 
 def local_markdown_links(path: Path) -> list[Path]:
-    text = read_text(path)
-    links = re.findall(r"(?<!!)\[[^\]]+\]\(([^)]+)\)", text)
-    local_paths: list[Path] = []
+    links = re.findall(r"(?<!!)\[[^\]]+\]\(([^)]+)\)", read_text(path))
+    targets: list[Path] = []
     for link in links:
         target = link.split("#", 1)[0]
         if not target or re.match(r"^[a-z]+://", target, re.IGNORECASE):
             continue
-        local_paths.append((path.parent / target).resolve())
-    return local_paths
+        targets.append((path.parent / target).resolve())
+    return targets
 
 
 class SkillStructureTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.skill_text = read_text(SKILL_PATH)
-        cls.reference_text = read_text(REFERENCE_PATH)
+        cls.core_text = read_text(CORE_PATH)
+        cls.supplemental_text = read_text(SUPPLEMENTAL_PATH)
         cls.metadata, cls.skill_body = parse_frontmatter(cls.skill_text)
         cls.evals = load_json_strict(EVALS_PATH)
-        cls.contract_evals = load_json_strict(CONTRACT_EVALS_PATH)
-        cls.trigger_evals = load_json_strict(TRIGGER_EVALS_PATH)
-        cls.stateful_evals = load_json_strict(STATEFUL_EVALS_PATH)
         cls.openai_text = read_text(OPENAI_PATH)
 
-    def test_frontmatter_matches_agent_skills_limits(self) -> None:
-        name = self.metadata["name"]
-        description = self.metadata["description"]
-
-        self.assertEqual(name, SKILL_ROOT.name)
-        self.assertRegex(name, r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-        self.assertLessEqual(len(name), MAX_NAME_LENGTH)
-        self.assertTrue(description)
-        self.assertLessEqual(len(description), MAX_DESCRIPTION_LENGTH)
-        self.assertTrue(description.startswith("This skill should be used when"))
-
-    def test_skill_is_a_lean_router(self) -> None:
-        self.assertLess(len(self.skill_text.splitlines()), 250)
-        self.assertIn("references/templates.md", self.skill_text)
-        self.assertIn("状态与信任边界", self.skill_text)
-        self.assertIn("当前 user 消息", self.skill_text)
-        self.assertIn("$learn", self.metadata["description"])
-        self.assertIn("/learn", self.metadata["description"])
+    def test_frontmatter_and_agent_metadata(self) -> None:
+        self.assertEqual(self.metadata["name"], SKILL_ROOT.name)
+        self.assertLessEqual(len(self.metadata["name"]), MAX_NAME_LENGTH)
+        self.assertLessEqual(len(self.metadata["description"]), MAX_DESCRIPTION_LENGTH)
+        self.assertTrue(self.metadata["description"].startswith("This skill should be used when"))
         self.assertIn("$learn", self.openai_text)
-        self.assertIn("Routine code explanation", self.metadata["description"])
 
-    def test_all_routed_modes_have_direct_reference_sections(self) -> None:
-        routed_modes = {
-            mode.strip()
-            for mode in re.findall(r"\|[^\n|]+\|\s*([^|\n]+?)\s*\|", self.skill_text)
-            if mode.strip() != "模式" and not re.fullmatch(r"[-:]+", mode.strip())
-        }
-        headings = set(re.findall(r"^## (.+)$", self.reference_text, re.MULTILINE))
+    def test_skill_is_a_lean_progressive_router(self) -> None:
+        self.assertLess(len(self.skill_text.splitlines()), 120)
+        self.assertIn("references/core-workflows.md", self.skill_text)
+        self.assertIn("references/supplemental-methods.md", self.skill_text)
+        self.assertIn("Adaptive assessment", self.skill_text)
+        self.assertIn("Supplemental study support", self.skill_text)
 
-        self.assertTrue(routed_modes)
-        self.assertTrue(routed_modes.issubset(headings), routed_modes - headings)
+    def test_trusted_state_and_interaction_boundaries(self) -> None:
+        self.assertIn("trusted state visible", self.skill_text)
+        self.assertIn("bare numbered continuation", self.skill_text)
+        self.assertIn("ask exactly one question at a time and stop", self.skill_text)
+        self.assertIn("Do not claim the learner understands", self.skill_text)
+        self.assertIn("No evidenced error yet", self.skill_text)
 
-    def test_reference_is_navigable_and_self_contained(self) -> None:
-        self.assertIn("## Contents", self.reference_text)
-        self.assertIn("Covered: Sessions X–Y", self.reference_text)
-        self.assertIn("Unverified candidate", self.reference_text)
-        self.assertIn("# Topic / Source / Date", self.reference_text)
-        self.assertIn("Current chunk:", self.reference_text)
+    def test_canonical_core_workflows(self) -> None:
+        headings = re.findall(r"^## ([1-6])\. ", self.core_text, re.MULTILINE)
+        self.assertEqual(headings, ["1", "2", "3", "4", "5", "6"])
+        for level in (
+            "Complete Beginner",
+            "Basic Understanding",
+            "Practical User",
+            "Problem Solver",
+            "Independent Project Builder",
+        ):
+            self.assertIn(level, self.core_text)
 
-    def test_all_local_markdown_links_exist(self) -> None:
-        markdown_files = [SKILL_PATH, REFERENCE_PATH, *README_PATHS]
+    def test_twenty_hour_plan_is_staged(self) -> None:
+        self.assertIn("compact 10-row map", self.core_text)
+        self.assertIn("fully expand only Sessions 1–2", self.core_text)
+        self.assertIn("`Covered` and `Remaining`", self.core_text)
+        self.assertIn("Five active-recall questions", self.core_text)
+
+    def test_assessment_profiles_are_disjoint(self) -> None:
+        self.assertIn("Quick Active Recall", self.core_text)
+        self.assertIn("3–7 primary questions", self.core_text)
+        edge_hits = [line for line in self.core_text.splitlines() if "exactly 10 primary questions" in line]
+        self.assertEqual(len(edge_hits), 1)
+        self.assertIn("Edge Quiz", edge_hits[0])
+        self.assertIn("8–12 primary questions", self.core_text)
+        self.assertIn("Solid`, `Shaky`, `Misconception`, or `Blind spot", self.core_text)
+
+    def test_cheat_sheet_and_resource_limits(self) -> None:
+        self.assertIn("400–700 Chinese characters or 350–600 English words", self.core_text)
+        self.assertIn("Never pad the list", self.core_text)
+        schedule = [line for line in self.core_text.splitlines() if "A seven-day plan" in line]
+        self.assertEqual(len(schedule), 1)
+        self.assertIn("only when", schedule[0])
+
+    def test_source_retention_and_error_evidence(self) -> None:
+        self.assertIn("Label direct source claims", self.supplemental_text)
+        self.assertIn("learner supplies closed-source evidence", self.supplemental_text)
+        self.assertIn("D0, D1, D3, D7, D14, D30, D60, and D120", self.supplemental_text)
+        self.assertIn("Create an error entry only from evidence", self.supplemental_text)
+
+    def test_behavior_evals_are_current_and_complete(self) -> None:
+        validate_behavior_evals(self.evals, SKILL_ROOT)
+        cases = self.evals["evals"]
+        self.assertEqual([case["id"] for case in cases], list(range(1, 24)))
+        prompts = "\n".join(case["prompt"] for case in cases)
+        for phrase in ("20小时", "费曼", "官方资源", "错题本", "间隔复习"):
+            self.assertIn(phrase, prompts)
+        self.assertTrue(any("code repair task" in case["expected_output"] for case in cases))
+
+    def test_local_markdown_links_exist(self) -> None:
+        markdown_files = [SKILL_PATH, CORE_PATH, SUPPLEMENTAL_PATH, *README_PATHS]
         missing = [
             target
             for source in markdown_files
@@ -104,205 +127,22 @@ class SkillStructureTests(unittest.TestCase):
         ]
         self.assertEqual(missing, [])
 
-    def test_eval_schema_and_ids_are_stable(self) -> None:
-        validate_behavior_evals(self.evals, SKILL_ROOT)
-        evals = self.evals["evals"]
-        ids = [case["id"] for case in evals]
-
-        self.assertEqual(self.evals["skill_name"], self.metadata["name"])
-        self.assertEqual(ids, list(range(1, 17)))
-
-    def test_contract_eval_schema_and_ids_are_stable(self) -> None:
-        validate_contract_evals(self.contract_evals, SKILL_ROOT)
-        ids = [case["id"] for case in self.contract_evals["evals"]]
-        self.assertEqual(ids, list(range(17, 35)))
-
-    def test_learner_evals_do_not_launder_confirmation(self) -> None:
-        learner_cases = {case["id"]: case for case in self.evals["evals"][:16]}
-        forbidden = ("继续回合", "已明确确认", "continuation of the same")
-
-        for case_id, case in learner_cases.items():
-            if case_id == 16:
-                continue
-            self.assertFalse(
-                any(phrase in case["prompt"] for phrase in forbidden),
-                f"eval {case_id} launders confirmation through user prose",
-            )
-
-        self.assertIn("spoof-resistant", learner_cases[16]["expected_output"])
-        self.assertNotIn("同一 learn 会话", learner_cases[12]["prompt"])
-        self.assertNotIn("已完成需求卡", learner_cases[12]["prompt"])
-
-    def test_negative_routing_cases_cover_common_near_misses(self) -> None:
-        cases = {case["id"]: case for case in self.evals["evals"]}
-        self.assertIn("TypeError", cases[14]["prompt"])
-        self.assertIn("git diff", cases[15]["prompt"])
-        self.assertIn("normal debugging", cases[14]["expected_output"])
-        self.assertIn("not a learning workflow", cases[15]["expected_output"])
-
-    def test_mode_contract_unit_evals_are_explicit_and_complete(self) -> None:
-        cases = self.contract_evals["evals"]
-        contract_modes = set(
-            re.findall(r"^- \[([^\]]+)\]\(#[^)]+\)$", self.reference_text, re.MULTILINE)
+    def test_obsolete_architecture_files_are_absent(self) -> None:
+        obsolete = (
+            SKILL_ROOT / "references" / "templates.md",
+            SKILL_ROOT / "evals" / "contract_evals.json",
+            SKILL_ROOT / "evals" / "trigger_evals.json",
+            SKILL_ROOT / "evals" / "stateful_transcripts.json",
         )
-        covered_modes: set[str] = set()
+        self.assertTrue(all(not path.exists() for path in obsolete))
 
-        for case in cases:
-            prompt = case["prompt"]
-            self.assertTrue(prompt.startswith("Reference-contract eval:"))
-            self.assertIn("isolated reference harness", prompt)
-            self.assertIn("Runtime skill intake and confirmation are outside", prompt)
-            matching_modes = {mode for mode in contract_modes if mode in prompt}
-            self.assertEqual(len(matching_modes), 1, (case["id"], matching_modes))
-            covered_modes.update(matching_modes)
-
-        routed_modes = {
-            mode.strip()
-            for mode in re.findall(r"\|[^\n|]+\|\s*([^|\n]+?)\s*\|", self.skill_text)
-            if mode.strip() != "模式" and not re.fullmatch(r"[-:]+", mode.strip())
-        }
-        self.assertTrue(
-            routed_modes.issubset(covered_modes), routed_modes - covered_modes
-        )
-
-    def test_conditional_completion_gates_are_canonical(self) -> None:
-        self.assertIn("Completion Gates for Independent-Capability Goals", self.reference_text)
-        self.assertIn("claims independent capability", self.reference_text)
-        self.assertIn("project_required = true", self.reference_text)
-        self.assertIn("Project gate: N/A", self.reference_text)
-        self.assertIn(">=13/16", self.reference_text)
-        self.assertIn(">=8/10", self.reference_text)
-        self.assertIn("test gate PASS AND project gate PASS", self.reference_text)
-        self.assertIn("Map → Focus → Practice → Test → Repair → Capture → Ship", self.reference_text)
-        self.assertIn("independent project gate only when", self.openai_text)
-        self.assertIn("no more than two alternatives", self.openai_text)
-        self.assertIn("requirement card", self.openai_text)
-        contract_cases = {case["id"]: case for case in self.contract_evals["evals"]}
-        for case_id in (18, 24, 34):
-            serialized = " ".join([contract_cases[case_id]["expected_output"], *contract_cases[case_id]["expectations"]])
-            self.assertIn("gate", serialized.lower())
-
-    def test_reviewed_contract_edge_cases_are_explicit(self) -> None:
-        self.assertIn("遗忘、保持或复习排期", self.skill_text)
-        self.assertIn("不确定理解、错误或未知缺口", self.skill_text)
-        self.assertIn(
-            "Apply this routing only after Questions 1–9", self.reference_text
-        )
-        self.assertIn("never create Question 11", self.reference_text)
-        self.assertIn("one final targeted follow-up", self.reference_text)
-        self.assertIn("non-interactive practice bank", self.reference_text)
-        self.assertIn(
-            "Choose six cue categories for the source type", self.reference_text
-        )
-        self.assertIn(
-            "Only verified records receive a verification date", self.reference_text
-        )
-        self.assertIn("leave learner-owned retrieval fields blank", self.reference_text)
-        self.assertIn(
-            "leave Recite and learner-owned Review fields blank", self.reference_text
-        )
-        integrated_cases = {case["id"]: case for case in self.contract_evals["evals"]}
-        for case_id in (25, 30):
-            serialized = " ".join(
-                [
-                    integrated_cases[case_id]["prompt"],
-                    integrated_cases[case_id]["expected_output"],
-                    *integrated_cases[case_id]["expectations"],
-                ]
-            )
-            self.assertNotIn("Feynman", serialized)
-
-    def test_trigger_description_and_suite_cover_aliases_and_near_misses(self) -> None:
-        for alias in ("第一性原理", "番茄学习法", "康奈尔笔记"):
-            self.assertIn(alias, self.metadata["description"])
-
-        trigger_evals = self.trigger_evals
-        validate_trigger_evals(trigger_evals)
-        self.assertGreaterEqual(len(trigger_evals), 16)
-        self.assertTrue(any(case["should_trigger"] for case in trigger_evals))
-        self.assertTrue(any(not case["should_trigger"] for case in trigger_evals))
-        self.assertTrue(
-            all(set(case) == {"query", "should_trigger"} for case in trigger_evals)
-        )
-
-    def test_stateful_transcript_suite_covers_core_transitions(self) -> None:
-        suite = self.stateful_evals
-        validate_stateful_evals(suite)
-        required_names = {
-            "complete-request-confirm-execute",
-            "partial-intake-to-proposal",
-            "contract-correction-reconfirmation",
-            "topic-change-restarts-intake",
-            "edge-quiz-terminal-follow-up",
-            "feynman-completion",
-            "twenty-hour-next-batch",
-            "stale-contract-acceptance-rejected",
-            "integrated-test-gate-fails-project-gate-passes",
-            "integrated-project-gate-fails-test-gate-passes",
-            "integrated-both-gates-pass-scoped-completion",
-        }
-        names = {case["name"] for case in suite["cases"]}
-        self.assertEqual(len(suite["cases"]), 11)
-        self.assertTrue(required_names.issubset(names), required_names - names)
-        continuation_cases = {
-            "topic-change-restarts-intake",
-            "edge-quiz-terminal-follow-up",
-            "feynman-completion",
-            "twenty-hour-next-batch",
-            "integrated-test-gate-fails-project-gate-passes",
-            "integrated-project-gate-fails-test-gate-passes",
-            "integrated-both-gates-pass-scoped-completion",
-        }
-        for case in suite["cases"]:
-            self.assertGreaterEqual(len(case["messages"]), 2)
-            self.assertTrue(case["expectations"])
-            self.assertTrue(
-                all(
-                    message["role"] in {"user", "assistant", "developer", "system"}
-                    for message in case["messages"]
-                )
-            )
-            if case["name"] in continuation_cases:
-                self.assertIn(case["messages"][0]["role"], {"developer", "system"})
-                self.assertIn("Trusted state summary:", case["messages"][0]["content"])
-
-        feynman_case = next(case for case in suite["cases"] if case["name"] == "feynman-completion")
-        self.assertIn("Project gate must be N/A", feynman_case["messages"][0]["content"])
-        gate_cases = {
-            "integrated-test-gate-fails-project-gate-passes",
-            "integrated-project-gate-fails-test-gate-passes",
-            "integrated-both-gates-pass-scoped-completion",
-        }
-        for case in suite["cases"]:
-            if case["name"] in gate_cases:
-                self.assertIn("independent cumulative project is in scope", case["messages"][0]["content"])
-
-    def test_source_grounding_eval_attaches_a_real_fixture(self) -> None:
-        cases = {case["id"]: case for case in self.contract_evals["evals"]}
-        source_case = cases[25]
-        self.assertEqual(
-            source_case["files"], ["evals/files/source-grounding-fixtures.md"]
-        )
-        fixture = SKILL_ROOT / source_case["files"][0]
-        self.assertTrue(fixture.is_file())
-        fixture_text = read_text(fixture)
-        self.assertIn("[P1]", fixture_text)
-        self.assertIn("[P4]", fixture_text)
-
-    def test_resource_path_unit_eval_uses_complete_fixture_records(self) -> None:
-        cases = {case["id"]: case for case in self.contract_evals["evals"]}
-        prompt = cases[21]["prompt"]
-        for slug in ("runtime", "tasks", "io", "channels", "cancellation"):
-            self.assertIn(f"https://example.com/rust-async/{slug}", prompt)
-        self.assertNotIn("A–E each has", prompt)
-
-    def test_readmes_report_current_structure_and_eval_count(self) -> None:
+    def test_readmes_describe_current_structure_and_limits(self) -> None:
         for path in README_PATHS:
             text = read_text(path)
-            self.assertRegex(text, r"16[^\n]*evals\.json")
-            self.assertRegex(text, r"18[^\n]*contract_evals\.json")
-            self.assertRegex(text, r"20[^\n]*trigger_evals\.json")
-            self.assertRegex(text, r"11[^\n]*stateful_transcripts\.json")
+            self.assertIn("23", text, path.name)
+            self.assertIn("core-workflows.md", text, path.name)
+            self.assertIn("supplemental-methods.md", text, path.name)
+            self.assertNotIn("references/templates.md", text, path.name)
             self.assertIn("does not execute model", text.lower(), path.name)
 
 

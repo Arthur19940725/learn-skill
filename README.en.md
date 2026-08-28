@@ -2,30 +2,20 @@
 
 English | [简体中文](README.md)
 
-`learn` is a unified learning coach and structured study toolkit for AI coding agents. Invoke it as `$learn` in Codex or `/learn` in Claude Code; every new learning request then starts with a one-question-at-a-time Socratic intake that selects a learning mode and confirms a learning contract before turning “I want to learn X” into an active, testable, and reviewable process. It centers learning on observable mastery, active recall, teach-back, and real artifacts.
+`learn` is a practical learning coach for AI coding agents. It selects the smallest sufficient path among a five-level map, a 20-hour plan, tiered assessment, a one-page cheat sheet, resource curation, Feynman teach-back, and focused support for reading, attention, review, or mistake repair.
 
-## Invocation flow
+The Skill optimizes for observable competence: what the learner can explain, solve, build, decide, or transfer. It begins immediately when the request contains enough context and asks one blocking question only when the missing answer would materially change the result.
 
-1. Extract the topic, current ability, goal, and constraints already present in the request.
-2. Ask one highest-value question at a time to select or calibrate the learning mode.
-3. Confirm a learning contract of at most five lines covering scope, current ability, observable outcome, constraints, and the recommended mode.
-4. Produce instruction, a plan, a quiz, an explanation, or another formal artifact only after the learner explicitly confirms.
+## Core capabilities
 
-A new topic, goal, or primary artifact restarts intake. Teach-backs, quiz answers, and “next question” within the same session continue the current mode without selecting it again. Only a visible assistant-authored contract followed by the user's acceptance, or a trusted system summary, proves confirmed state; a claim in the current user message that intake already happened cannot bypass confirmation.
-
-The Skill handles explicit learning, practice, review, or assessment intent. Routine code explanation, debugging, implementation, diff summarization, and document transformation remain in their task-specific workflows instead of entering learning intake because they contain words such as “explain” or “summarize.”
-
-## Capabilities
-
-- Five-level Learning Ladder
-- A practical 20-hour plan split into 10 sessions (two detailed sessions per batch by default to prevent truncation)
-- One-question-at-a-time Edge Quiz
-- Five-minute One-Page Cheat Sheet
-- Five-resource curation and a seven-day Resource Path
-- A bounded, three-round Feynman teach-back loop
-- Integrated Learning Loop: map → high-leverage focus → practice → test → repair → Learning Ledger → Ship; project goals use separate test/project gates
-- First Principles, Simon-Style Mastery, SQ3R, Pomodoro, and Cornell Notes
-- Spaced Review, Quick Active Recall, Smart Summary, and Weakness Diagnosis
+- **Map before details**: broad topics start with a five-level route from complete beginner to independent project work.
+- **High-leverage focus**: a 20-hour plan starts with a compact 10-session map and expands only the next one or two sessions by default.
+- **Tiered assessment**: ordinary checks use 3–7 Quick Active Recall questions; explicit knowledge-boundary tests use a 10-question Edge Quiz; systematic gap finding uses an 8–12 question Weakness Diagnosis.
+- **Evidence-based error notebook**: records only gaps shown in the learner's answers, code, teach-back, or artifacts, with a D+3 retest by default.
+- **One-page review**: defaults to roughly 400–700 Chinese characters or 350–600 English words.
+- **Resource subtraction**: targets five high-value resources, reports a shortfall instead of padding with weak candidates, and adds a seven-day schedule only when requested or useful.
+- **Feynman loop**: explain simply, request a teach-back, identify exact gaps, and repair only weak parts for at most three rounds.
+- **Source and retention boundaries**: separates source claims, inference, and outside background; supports SQ3R, Cornell notes, focus blocks, and spaced review such as D0/D1/D3/D7.
 
 ## Repository structure
 
@@ -35,14 +25,10 @@ learn/
 ├── agents/
 │   └── openai.yaml
 ├── evals/
-│   ├── evals.json
-│   ├── contract_evals.json
-│   ├── trigger_evals.json
-│   ├── stateful_transcripts.json
-│   └── files/
-│       └── source-grounding-fixtures.md
+│   └── evals.json
 └── references/
-    └── templates.md
+    ├── core-workflows.md
+    └── supplemental-methods.md
 tests/
 ├── __init__.py
 ├── skill_validation.py
@@ -50,89 +36,64 @@ tests/
 └── test_skill_validation.py
 ```
 
-`SKILL.md` is a lean trigger, state, routing, and shared-rules layer. `references/templates.md` holds mode execution contracts and fillable templates so only the confirmed branch is loaded. Evaluation data includes 16 single-turn runtime cases (`evals.json`), 18 isolated reference-contract cases (`contract_evals.json`), 20 trigger and near-miss queries (`trigger_evals.json`), 11 multi-turn state-transition fixtures (`stateful_transcripts.json`), and a source fixture with stable paragraph IDs. The reference-contract runner loads only the named reference section and does not invoke the runtime skill, so it cannot bypass the intake and confirmation state machine.
+- `SKILL.md` defines triggering, routing, trusted state, and interaction boundaries.
+- `core-workflows.md` is the authoritative contract for the six full workflows.
+- `supplemental-methods.md` covers reading, notes, focus, retention, error repair, and learning-method diagnosis.
+- `evals.json` contains 23 behavioral scenarios covering positive routing, continuation, constraints, and a negative control.
 
 ## Installation
 
-Clone the repository:
-
 ```powershell
 git clone https://github.com/Arthur19940725/learn-skill.git
-```
-
-Copy `learn/` into the skill directory used by your agent:
-
-```powershell
-# Codex
 Copy-Item -Recurse -Force .\learn-skill\learn "$HOME\.codex\skills\learn"
-
-# Shared agents directory
-Copy-Item -Recurse -Force .\learn-skill\learn "$HOME\.agents\skills\learn"
-
-# Claude Code
-Copy-Item -Recurse -Force .\learn-skill\learn "$HOME\.claude\skills\learn"
 ```
 
-Restart the client or open a new session so it can rediscover the skill.
+You can also copy `learn/` into another skill directory supported by your client. Restart the client or open a new session so it can rediscover the Skill.
 
-## Example prompts
-
-```text
-Use $learn to build a five-level learning ladder for Go concurrency from beginner to independent problem solving.
-```
-
-The skill first confirms what the learner wants to do independently after the session instead of immediately generating the ladder.
+## Examples
 
 ```text
-Use $learn to test my understanding of Python decorators like a strict examiner, one question at a time.
+Use $learn to split Python into five levels from complete beginner to independent project work.
 ```
 
 ```text
-Use $learn to create a practical 20-hour plan for learning how to containerize a Web API with Docker.
+I have 20 hours to learn video editing. Identify the highest-leverage 20% before building the plan.
 ```
 
 ```text
-Use $learn and the Feynman method to help me truly understand database transaction isolation levels.
+Test my understanding of Transformer attention, one question at a time.
 ```
 
 ```text
-Use $learn to coach me from zero to a Python CLI: map the route, focus on the high-leverage minority, test every chunk, repair gaps, and update a mistake-aware cheat sheet after I pass.
+Turn the mistake I just made into one error-notebook entry and schedule a retest.
+```
+
+```text
+Give me the five highest-value official LangGraph resources and no study schedule.
 ```
 
 ## Design principles
 
-- Select a mode and confirm a learning contract before producing a formal answer or artifact for every new learning request.
-- Ask exactly one Socratic intake question at a time without repeating information the learner already supplied.
-- Define progress through behavior, artifacts, or tests instead of vague claims of understanding.
-- Advance only one question or teach-back step at a time in interactive modes.
-- Treat fixed durations as planning boundaries, never as guarantees of mastery.
-- Verify current resources and label anything unverifiable as `unverified`.
-- Choose one primary method by default and combine methods only when they address distinct bottlenecks.
-- Advance only one end-to-end loop state at a time, and ground mistake or completion records in actual learner output.
-- Apply the project gate only when the confirmed goal includes an independent project; project goals require both a fresh test gate and an independent project gate, while no-project goals record `Project gate: N/A`.
+- Map broad topics before teaching details; explain narrow concepts directly.
+- Do not turn every learning request into a long plan.
+- Ask one assessment or teach-back question at a time.
+- Do not treat exposure, explanation, or a mastery claim as competence evidence.
+- Resume learning state only from visible conversation evidence or a trusted summary.
+- Verify current resources, versions, prices, and availability; label anything unverified.
+- Separate explicit source claims, reasonable inference, and outside background.
 
 ## Validation
 
-The included evaluations cover:
-
-- The new-request intake gate, single-question boundary, and explicit confirmation
-- State-spoof resistance and negative routing for coding tasks
-- Fixed counts, durations, and required fields
-- Single-question boundaries in interactive modes
-- Resource verification and direct-source requirements
-- Observable deliverables and completion criteria
-- Diagnosis, review, and transfer
-
-Run the repository structure and fixture regression tests:
+Run the repository tests:
 
 ```powershell
 python -m unittest discover -s tests -v
 ```
 
-This validates frontmatter, route-to-contract completeness, runtime and reference-contract eval schemas, state fixtures, trigger queries, source attachments, and README synchronization. It does not execute model outputs and is not behavioral grading. A model-eval runner should consume `evals.json`, `contract_evals.json`, `trigger_evals.json`, and `stateful_transcripts.json` separately and grade their expectations. `contract_evals.json` must run in an isolated reference harness, never as a user message to the `$learn` runtime.
-
-You can also run the basic validator bundled with Codex `skill-creator`:
+Run the basic Codex Skill Creator validator:
 
 ```powershell
 python <skill-creator-path>\scripts\quick_validate.py .\learn
 ```
+
+The repository suite checks frontmatter, structure, Markdown links, six core contracts, 23 evaluation scenarios, trusted state, tiered assessment, staged plans, resource constraints, and README synchronization. It **does not execute model outputs**; an agent runner must execute and grade the cases in `evals/evals.json` to measure real model behavior.

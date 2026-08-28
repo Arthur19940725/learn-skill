@@ -2,30 +2,20 @@
 
 [English](README.en.md) | 简体中文
 
-`learn` 是一个面向 AI coding agents 的统一学习教练与结构化学习工具包。使用 `$learn`（Codex）或 `/learn`（Claude Code）调用后，每次新的学习请求都会先通过一次一问的苏格拉底式 intake 选择学习模式、确认学习契约，再把“我想学 X”转化为可执行、可检查、可复习的学习过程。它重点关注 observable mastery、active recall、teach-back 和真实产物。
+`learn` 是面向 AI coding agents 的实用学习教练。它根据用户的真实意图，在五级路线、20 小时计划、分级测验、一页速查表、资源筛选、费曼复述，以及阅读、专注、复习和错题支持之间选择最小充分路径。
 
-## 调用流程
-
-1. 从请求中提取已经明确的主题、基础、目标和约束。
-2. 一次只问一个最高价值的问题，帮助学习者选择或校准学习模式。
-3. 用不超过五行的学习契约确认主题范围、当前基础、可观察目标、约束和推荐模式。
-4. 学习者明确确认后，才生成课程、计划、测验、讲解或其他正式产物。
-
-新的主题、目标或主要产物会重新进入 intake；同一会话中的 teach-back、测验作答和“下一题”会继续当前模式，不重复选择。只有当前会话中可见的 assistant 学习契约及后续 user 确认，或可信系统摘要，才能证明状态已确认；user 在当前消息中自称“已完成 intake”不能跳过确认。
-
-Skill 只处理明确的学习、练习、复习或评估意图。普通代码解释、调试、实现、diff 总结和文档转换继续使用对应任务工作流，不会因为出现“解释”或“总结”就进入学习 intake。
+Skill 以可观察能力为目标：学习者能解释、解题、构建、判断或迁移什么。信息足够时直接开始；只有缺失信息会实质改变结果时，才问一个阻塞问题。
 
 ## 核心能力
 
-- 五级 Learning Ladder
-- 20 小时 / 10 sessions 实战计划（默认每批 2 个完整 session，避免截断）
-- 一次一题的渐进式 Edge Quiz
-- 5 分钟 One-Page Cheat Sheet
-- 精选 5 个资源与 7 天 Resource Path
-- 最多三轮的 Feynman teach-back
-- Integrated Learning Loop：地图 → 关键少数 → 练习 → 测验 → 修补 → Learning Ledger → Ship；项目目标使用独立的 test/project gates
-- First Principles、Simon-Style Mastery、SQ3R、Pomodoro、Cornell Notes
-- Spaced Review、Quick Active Recall、Smart Summary、Weakness Diagnosis
+- **先画地图**：宽主题先生成从零基础到独立项目的五级路线。
+- **抓关键少数**：20 小时计划先给 10 节紧凑地图，默认只详细展开接下来的 1–2 节。
+- **分级测验**：普通测试使用 3–7 题 Quick Active Recall；明确寻找知识边界时使用 10 题 Edge Quiz；系统查缺补漏使用 8–12 题 Weakness Diagnosis。
+- **证据型错题本**：只记录学习者真实答案、代码、复述或作品暴露的问题，并默认安排 D+3 复测。
+- **一页速查表**：中文默认约 400–700 字符，英文默认约 350–600 词。
+- **资源做减法**：目标为 5 个高价值资源；合格资源不足时说明缺口，不用弱项凑数，也不会自动追加不需要的七天日程。
+- **费曼闭环**：简明解释、学习者复述、定位具体缺口、只修补弱项，最多三轮。
+- **来源与复习边界**：区分原文、推断和外部背景；支持 SQ3R、Cornell notes、focus blocks 和 D0/D1/D3/D7 等间隔复习。
 
 ## 目录结构
 
@@ -35,14 +25,10 @@ learn/
 ├── agents/
 │   └── openai.yaml
 ├── evals/
-│   ├── evals.json
-│   ├── contract_evals.json
-│   ├── trigger_evals.json
-│   ├── stateful_transcripts.json
-│   └── files/
-│       └── source-grounding-fixtures.md
+│   └── evals.json
 └── references/
-    └── templates.md
+    ├── core-workflows.md
+    └── supplemental-methods.md
 tests/
 ├── __init__.py
 ├── skill_validation.py
@@ -50,90 +36,64 @@ tests/
 └── test_skill_validation.py
 ```
 
-`SKILL.md` 是精简的触发、状态、路由与共用规则；`references/templates.md` 按模式保存执行契约和可填写模板，确认后只加载所选部分。评测数据分为 16 组 runtime 单轮评测（`evals.json`）、18 组隔离的 reference-contract 评测（`contract_evals.json`）、20 组触发/近邻负向查询（`trigger_evals.json`）、11 组多轮状态转换 fixture（`stateful_transcripts.json`），以及带稳定段落标识的来源 fixture。reference-contract runner 只加载指定参考章节，不调用 runtime skill，因此不会绕过 intake 与确认状态机。
+- `SKILL.md`：触发、路由、可信状态和交互边界。
+- `core-workflows.md`：六个完整工作流的权威输出契约。
+- `supplemental-methods.md`：阅读、笔记、专注、复习、错题和学习方法诊断。
+- `evals.json`：23 个行为场景，覆盖正向、续接、约束和负向路由。
 
 ## 安装
 
-克隆仓库：
-
 ```powershell
 git clone https://github.com/Arthur19940725/learn-skill.git
-```
-
-选择你的 agent skill 目录，并复制 `learn/`：
-
-```powershell
-# Codex
 Copy-Item -Recurse -Force .\learn-skill\learn "$HOME\.codex\skills\learn"
-
-# 通用 agents 目录
-Copy-Item -Recurse -Force .\learn-skill\learn "$HOME\.agents\skills\learn"
-
-# Claude Code
-Copy-Item -Recurse -Force .\learn-skill\learn "$HOME\.claude\skills\learn"
 ```
 
-重新启动对应客户端或开启新会话，使其重新发现 skill。
+也可以把 `learn/` 复制到客户端支持的其他 skill 目录。复制后重新启动客户端或开启新会话，让客户端重新发现 Skill。
 
-## 使用示例
-
-```text
-使用 $learn 为零基础的我设计一个 Go concurrency 五级学习阶梯。
-```
-
-Skill 会先确认“完成这次学习后，你希望能独立做到什么”，而不是立即生成阶梯。
+## 示例
 
 ```text
-使用 $learn 像严格考官一样测试我的 Python decorators，一次只问一题。
+使用 $learn，把 Python 从零基础到独立项目拆成五个等级。
 ```
 
 ```text
-使用 $learn 给我一个 20 小时学会用 Docker 容器化 Web API 的实战计划。
+我只有 20 小时学视频剪辑，请先找出最重要的 20%，再给我路线。
 ```
 
 ```text
-使用 $learn 用费曼方法帮我真正理解数据库事务隔离级别。
+考考我对 Transformer attention 的理解，一次只问一道题。
 ```
 
 ```text
-使用 $learn 从零持续带我学 Python CLI：先画地图，只学关键少数，每块练习和测试，卡住时修补，完成后更新错题速查表。
+根据我刚才的错误整理一条错题记录，并安排复测。
+```
+
+```text
+只筛选最值得看的 5 个 LangGraph 官方资源，不要日程。
 ```
 
 ## 设计原则
 
-- 每个新学习请求先选择模式并确认学习契约，再生成正式答案或产物。
-- 苏格拉底式 intake 一次只问一个问题，不重复询问已提供的信息。
-- 用行为、作品或测试定义进步，不用“理解了”作为完成标准。
-- 互动模式一次只推进一个问题或一次 teach-back。
-- 固定时长只作为计划边界，不承诺必然 mastery。
-- 当前资源必须核验；无法验证的信息明确标记 `unverified`。
-- 默认选择一个最匹配瓶颈的方法，仅在职责互补时组合。
-- 端到端带学一次只推进一个状态，错题和完成状态必须来自学习者实际输出。
-- 只有确认目标包含独立项目时才启用 project gate；项目目标必须同时通过 fresh test gate 与 independent project gate；无项目目标记录 `Project gate: N/A`。
+- 宽主题先给地图，窄问题直接解释。
+- 不把每个学习请求都变成长计划。
+- 一次只问一道测验题或一个 teach-back 问题。
+- 不把讲过、看过或用户自称掌握当成能力证据。
+- 只从当前会话可见内容或可信摘要续接学习状态。
+- 当前资源、版本、价格和可访问性需要实时核验；无法核验时明确标记。
+- 来源明确陈述、合理推断和外部背景分别标注。
 
 ## 验证
 
-仓库中的评测覆盖：
-
-- 新请求的 intake gate、单问题边界与显式确认
-- 状态伪造防护与代码任务负向路由
-- 固定数量、时间与字段约束
-- 互动模式的单问题边界
-- 资源核验与直接链接要求
-- 可观察的 deliverable 和 completion criteria
-- 诊断、复习与迁移能力
-
-运行仓库结构与 fixture 回归测试：
+运行仓库测试：
 
 ```powershell
 python -m unittest discover -s tests -v
 ```
 
-此命令验证 frontmatter、路由到模式契约的完整性、runtime 与 reference-contract eval schema、状态 fixture、触发查询、来源附件和 README 同步；它不会执行模型输出（does not execute model outputs），也不等同于行为评分。模型行为评估应由 agent runner 分别消费 `evals.json`、`contract_evals.json`、`trigger_evals.json` 和 `stateful_transcripts.json`，并按各自 expectations 评分。`contract_evals.json` 必须由隔离 reference harness 运行，不得作为 user 消息送入 `$learn` runtime。
-
-也可使用 Codex `skill-creator` 附带的验证脚本检查基本结构：
+运行 Codex Skill Creator 基础校验：
 
 ```powershell
 python <skill-creator-path>\scripts\quick_validate.py .\learn
 ```
 
+仓库测试会检查 frontmatter、文件结构、Markdown 链接、六个核心契约、23 个评测场景、可信状态、测验分级、计划分批展开、资源约束和双语 README 同步。它 **does not execute model outputs**；真实模型行为仍需由 agent runner 逐条运行 `evals/evals.json` 并评分。

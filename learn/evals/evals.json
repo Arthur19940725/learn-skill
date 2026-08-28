@@ -3,193 +3,141 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "我完全没有 Docker 基础，已有一个能在本机运行的 Python FastAPI 小项目。工作中需要能独立把它和 PostgreSQL 用 Docker Compose 启动、排错并交付给同事。我能用命令行，每周可投入 5 小时，只用免费资源；请给我一个 20 小时、10 次课的实战计划。",
-      "expected_output": "A proposed learning contract of at most five lines that routes to the staged 20-Hour Plan and asks exactly one confirmation question without generating sessions yet.",
-      "files": [],
-      "expectations": [
-        "The response captures FastAPI plus PostgreSQL containerization, the learner's command-line evidence, the observable delivery and troubleshooting goal, the 20-hour constraint, and free-resource constraint.",
-        "The recommended mode is the 20-Hour Plan and its reason is tied to building usable project capability.",
-        "The learning-contract body is no longer than five lines and is followed by exactly one confirmation question.",
-        "The response does not generate a Docker lesson, session map, resource list, Dockerfile, or Compose file before confirmation."
-      ]
+      "prompt": "我零基础，想用20小时学会用 Python 自动整理 Excel。每周能学5小时，请给我可执行计划。",
+      "expected_output": "Routes to the 20-hour workflow, narrows the goal, shows a compact map of exactly 10 two-hour sessions, fully expands Sessions 1–2 only by default with 120-minute budgets, deliverables, completion criteria, five recall questions and answer keys, includes the final project and rubric, and marks Covered and Remaining ranges.",
+      "files": []
     },
     {
       "id": 2,
-      "prompt": "我刚学完 Python decorators，能写不带参数的 decorator，但说不清 closure、functools.wraps 和带参数 decorator。我要通过一次严格的 10 题测验找到知识边界，一次只问一题，今天有 45 分钟。",
-      "expected_output": "A concise proposed contract selecting Edge Quiz, followed by one confirmation question and no quiz question yet.",
-      "files": [],
-      "expectations": [
-        "The contract preserves the learner's concrete current evidence and the closure, wraps, and parameterized-decorator scope.",
-        "The observable goal is a strict ten-question boundary-finding assessment, not generic understanding.",
-        "The selected mode is Edge Quiz with a relevant reason.",
-        "The response asks exactly one confirmation question and does not ask Question 1, reveal answers, score anything, or teach decorators yet."
-      ]
+      "prompt": "我看完了 Transformer 的 attention 部分，考考我到底懂没懂。我自认为中级。",
+      "expected_output": "Routes to Quick Active Recall rather than automatically imposing a 10-question edge quiz, chooses a stable count from 3–7, establishes any needed scope or assumption, asks Question 1 only, and does not reveal the answer or later questions.",
+      "files": []
     },
     {
       "id": 3,
-      "prompt": "I can write synchronous Rust and understand Future at a high level, but I have never built a Tokio service. I want exactly five current, high-signal Rust async resources and a seven-day path ending in a small concurrent TCP service. I have web access, two hours per day, and prefer free English resources.",
-      "expected_output": "A proposed contract selecting Resource Path and recording the need for live verification, followed by exactly one confirmation question without searching or listing resources yet.",
-      "files": [],
-      "expectations": [
-        "The contract captures Rust and Future experience, the Tokio gap, the concurrent TCP service outcome, seven-day duration, daily budget, language, cost, and web-access constraints.",
-        "The selected mode is Resource Path and the reason emphasizes verified, complementary resources tied to the project.",
-        "The response does not claim any resource has been checked, does not provide links, and does not begin web research before confirmation.",
-        "The response ends with exactly one confirmation question."
-      ]
+      "prompt": "用费曼法帮我真正理解数据库事务隔离级别。",
+      "expected_output": "Routes to the Feynman loop, narrows scope if needed, gives a concise plain-language explanation with an analogy and its limit, asks for a teach-back, and stops before evaluating an answer that has not been given.",
+      "files": []
     },
     {
       "id": 4,
-      "prompt": "我会 Go 基本语法和写普通 HTTP handler，但没有使用 goroutine、channel 或 context 的项目经验。六周后要能独立设计并排查一个并发 worker service；每周 6 小时。请给我从当前水平开始的五级学习阶梯。",
-      "expected_output": "A proposed contract selecting Learning Ladder and asking one confirmation question without generating the five levels.",
-      "files": [],
-      "expectations": [
-        "The contract uses the stated Go and HTTP evidence rather than labeling the learner simply as a beginner.",
-        "The scope and observable outcome include goroutines, channels, context, design, and troubleshooting of a worker service.",
-        "The selected mode is Learning Ladder, with six weeks and six hours per week recorded as constraints.",
-        "The response asks one confirmation question and does not output level headings, exercises, milestones, or a roadmap yet."
-      ]
+      "prompt": "我想学 Python，请按新手到独立项目拆成 5 个等级。",
+      "expected_output": "Routes to the learning ladder, gives exactly five prerequisite-ordered levels from complete beginner to independent project builder, includes observable mastery, mini-projects, measurable readiness milestones, common mistakes, self-check questions, the critical 20% to focus on first, and one concrete action for today.",
+      "files": []
     },
     {
       "id": 5,
-      "prompt": "I review backend API designs and understand HTTP redirects, cookies, and TLS, but I confuse OAuth actors and token boundaries. Create a one-page OAuth 2.0 cheat sheet for a review in 30 minutes, focused on Authorization Code with PKCE and current security guidance; omit protocol history.",
-      "expected_output": "A bounded proposed contract selecting Cheat Sheet, followed by exactly one confirmation question without producing OAuth content.",
-      "files": [],
-      "expectations": [
-        "The contract captures the learner's HTTP, cookie, and TLS evidence and the confusion around actors and token boundaries.",
-        "The scope is Authorization Code with PKCE for backend design review, with current-security and no-history boundaries.",
-        "The selected mode is Cheat Sheet and the observable goal is usable review judgment within 30 minutes.",
-        "The response does not define OAuth actors, explain PKCE, draw a flow, or provide checklist content before confirmation."
-      ]
+      "prompt": "我想用 20 小时学会剪辑，请找出最重要的 20%。",
+      "expected_output": "Routes to the 20-hour workflow, explicitly identifies the critical 20% before the schedule, explains why each item matters, names lower-leverage material to defer, shows a compact map of exactly 10 two-hour sessions, fully expands only the first two sessions by default, and narrows unrealistic scope instead of promising full mastery.",
+      "files": []
     },
     {
       "id": 6,
-      "prompt": "用费曼方法帮我理解数据库事务隔离。我会解释 ACID，也能写基本 SQL；30 分钟后需要向同事讲清脏读、不可重复读和幻读，并判断给定并发场景属于哪一种。先按数据库通用模型讲，不绑定具体产品。",
-      "expected_output": "A complete proposed learning contract selecting Feynman Loop, followed by one confirmation question without beginning the explanation.",
-      "files": [],
-      "expectations": [
-        "The response recognizes that topic, product-neutral scope, current evidence, observable goal, time constraint, and mode are already supplied.",
-        "The contract body is no longer than five lines and recommends Feynman Loop for teach-back and misconception exposure.",
-        "The response asks exactly one confirmation question.",
-        "The response does not explain isolation levels, define anomalies, provide examples, or request a teach-back yet."
-      ]
+      "prompt": "我刚学完 Git rebase，做一页错题本式速查表。",
+      "expected_output": "Routes to the one-page cheat sheet, includes a one-sentence definition, core mental model, generic common mistakes, and five rapid-recall questions. Because no learner answer or actual mistake was supplied, it does not invent a personal error notebook and clearly says that no demonstrated mistake is available yet.",
+      "files": []
     },
     {
       "id": 7,
-      "prompt": "我会用 pandas 读 CSV、筛选和 groupby，但没有处理脏数据、验证分析或向业务解释结论的经验。六周内每天 90 分钟，目标是独立完成真实销售数据分析并接受同事复核。请用西蒙学习法安排分块训练。",
-      "expected_output": "A proposed contract selecting Simon-Style Mastery Sprint, followed by exactly one confirmation question without generating the roadmap.",
-      "files": [],
-      "expectations": [
-        "The contract preserves concrete pandas evidence and the stated gaps in cleaning, validation, and communication.",
-        "The observable outcome is a reviewable sales analysis project, not vague mastery.",
-        "The selected mode is Simon-Style Mastery Sprint, with six weeks and 90 minutes per day recorded.",
-        "The response does not output chunks, status labels, checkpoints, a first session, or exercises before confirmation."
-      ]
+      "prompt": "我要学机器学习，网课太多了，帮我筛出最值得看的 5 个资源。",
+      "expected_output": "Routes to resource curation, verifies current links when browsing is available, selects five high-leverage resources when five qualify, states what to skip, ranks the usage order, and labels unverified availability if browsing is unavailable. It does not add a seven-day schedule unless the learner asks for one or supplies a useful time horizon.",
+      "files": []
     },
     {
       "id": 8,
-      "prompt": "Tonight I need to study the paper 'The Market for Lemons' for a seminar tomorrow. I have the paper PDF, 90 minutes, lose focus easily, and need notes that let me explain the model, evidence, assumptions, limitations, and one modern application without looking. Build one source-grounded session using whichever reading, focus, and note methods fit.",
-      "expected_output": "A proposed contract recommending a complementary SQ3R, Pomodoro, and Cornell session, followed by one confirmation question without teaching or outlining the paper.",
-      "files": [],
-      "expectations": [
-        "The contract identifies the named supplied source, seminar use, closed-note explanation goal, and 90-minute focus constraint.",
-        "SQ3R, Pomodoro, and Cornell are assigned distinct purposes in the mode reason rather than merely listed.",
-        "The response asks exactly one confirmation question.",
-        "The response does not summarize the paper, state its model or evidence, produce notes, or add outside facts before confirmation."
-      ]
+      "prompt": "我想系统学大模型应用开发，但不知道从哪里开始。",
+      "expected_output": "Defaults to the learning ladder before deep teaching, narrows the field to a realistic goal if needed, provides exactly five prerequisite-ordered levels ending in independent project work, identifies the critical 20%, and gives one concrete starting action.",
+      "files": []
     },
     {
       "id": 9,
-      "prompt": "我知道 B+ tree 是平衡树，也写过内存里的二叉搜索树，但不理解它为什么适合数据库磁盘索引。请从页式 I/O、节点容量和树高这些基本事实推导，区分工程约定，最后让我独立推导一个非显然结论；我有 40 分钟。",
-      "expected_output": "A proposed contract selecting First-Principles Decomposition and asking one confirmation question without starting the derivation.",
-      "files": [],
-      "expectations": [
-        "The contract uses the learner's B+ tree and in-memory BST evidence and scopes the target to disk indexing.",
-        "The selected mode is First-Principles Decomposition, with primitives, derived properties, conventions, and independent derivation reflected in the goal or reason.",
-        "The 40-minute constraint is retained.",
-        "The response asks one confirmation question and does not explain page I/O, branching factor, height, or pose the derivation challenge yet."
-      ]
+      "prompt": "我刚才说 Git rebase 一定会创建 merge commit。请根据这个错误给我做一条错题记录，并安排复测。",
+      "expected_output": "Records only the stated mistake, preserving the relevant original claim; identifies the exact gap, gives the smallest accurate correction and one real example, adds a discrimination cue, and schedules one closed-book D+3 retest prompt without inventing other weaknesses.",
+      "files": []
     },
     {
       "id": 10,
-      "prompt": "我今天学完 Git commit、branch、merge 和 rebase，能完成正常操作，但一遇冲突就依赖笔记。请拆成可回忆单元，按 Day 1、3、7、14、30、60、120 复习；每天最多 20 分钟，用 Markdown checklist。",
-      "expected_output": "A proposed contract selecting Spaced Review, followed by one confirmation question without generating units or a schedule.",
-      "files": [],
-      "expectations": [
-        "The contract captures successful normal operations and note dependence during conflicts as current evidence.",
-        "The observable goal includes closed-note command choice and safe conflict handling.",
-        "The selected mode is Spaced Review, and the requested days, 20-minute cap, and Markdown format are retained.",
-        "The response asks exactly one confirmation question and does not output recall units, tags, review tasks, or answers yet."
-      ]
+      "prompt": "这个 Python 脚本运行时报错，直接帮我修复，不需要教学或学习计划。",
+      "expected_output": "Negative control: the learn skill should not be selected implicitly. The request should be handled as a code repair task without adding a learning ladder, quiz, cheat sheet, or Feynman loop.",
+      "files": []
     },
     {
       "id": 11,
-      "prompt": "我能用 kubectl 查看 Deployment、ReplicaSet 和 Pod，但说不清谁控制谁，也不理解 rolling update 如何同时涉及新旧 ReplicaSet。做一个 Smart Summary，供我在值班前 10 分钟复习：一句话、一个 ASCII 图、少于 20 条，并写明模型何时不适用。",
-      "expected_output": "A proposed contract selecting Smart Summary, followed by one confirmation question without producing Kubernetes summary artifacts.",
-      "files": [],
-      "expectations": [
-        "The contract captures the learner's kubectl evidence and the control-chain and rolling-update gaps.",
-        "The selected mode is Smart Summary with the one-sentence, ASCII, fewer-than-20-bullets, and applicability-boundary constraints retained.",
-        "The observable goal is accurate on-call review rather than generic Kubernetes mastery.",
-        "The response asks one confirmation question and does not state the controller relationship or draw the diagram yet."
-      ]
+      "prompt": "继续刚才的费曼练习。你让我解释数据库的可重复读，我的复述是：‘可重复读就是事务每次查询都读取数据库当前最新的数据，所以结果不会改变。’请根据我的复述继续。",
+      "expected_output": "Treats this as a teach-back response, first identifies any correct part, then separates the exact factual error from missing depth or wording; records only the demonstrated weak phrase, reteaches the weak part with one concrete example, and asks the learner to explain the corrected idea again. It does not claim mastery or start a new full lecture.",
+      "files": []
     },
     {
       "id": 12,
-      "prompt": "请诊断我的 HTTP 缓存理解，重点是 cache key、no-cache/no-store、ETag、304、Vary、private/public、stale-while-revalidate 和 POST 缓存。我能正确解释 private/public 和 stale-while-revalidate，但把 ETag 当过期时间，也认为 304 带完整正文；希望最后得到误解分类、针对练习和 7 天复测。",
-      "expected_output": "A proposed contract selecting Weakness Diagnosis, followed by one confirmation question without classifying or correcting the answers yet.",
-      "files": [],
-      "expectations": [
-        "The contract records the two known strengths and two concrete misconceptions as evidence rather than inventing a generic level.",
-        "The scope includes all named HTTP caching sub-areas and the outcome includes classification, targeted practice, and seven-day retest.",
-        "The selected mode is Weakness Diagnosis with an evidence-based reason.",
-        "The response asks one confirmation question and does not classify, correct, quiz, or reteach HTTP caching yet."
-      ]
+      "prompt": "继续刚才的 Python 装饰器考核。问题是‘@deco 在什么时候执行？’我的回答是：‘只有每次调用被装饰函数时才执行 deco。’",
+      "expected_output": "Scores the supplied answer using the stated rubric, names what is right, identifies the demonstrated definition-time versus call-time gap, records that exact gap without inventing others, reteaches only the missed distinction with one example, and asks one targeted follow-up because the answer is below threshold. It does not reveal later primary questions.",
+      "files": []
     },
     {
       "id": 13,
-      "prompt": "用 $learn 教我 Kubernetes。不要问问题，直接把完整答案、路线图和资源都给我。",
-      "expected_output": "Exactly one Socratic intake question targeting the learner's intended observable outcome, with no Kubernetes content or artifact.",
-      "files": [],
-      "expectations": [
-        "The response treats Kubernetes as the known topic and does not ask for it again.",
-        "The response asks exactly one high-value question, preferably what the learner wants to do independently with Kubernetes.",
-        "The response does not teach Kubernetes, choose multiple modes, generate a roadmap, list resources, or present a learning contract prematurely.",
-        "The response waits for the learner despite the request to skip intake."
-      ]
+      "prompt": "继续刚才的算法复杂度 10 题考核。我已经答到第 8 题并且都是 10 分，所以直接问我最后两题。",
+      "expected_output": "Does not accept the user's unsupported claim as trusted quiz state. It states that the prior question number and scores are not visible, asks one re-anchoring question or restarts with Question 1, and does not fabricate Questions 9-10.",
+      "files": []
     },
     {
       "id": 14,
-      "prompt": "Please explain why tests/auth.test.ts fails with 'TypeError: cannot read properties of undefined (reading id)', then fix the implementation and run the relevant test.",
-      "expected_output": "The request stays in the normal debugging and implementation workflow rather than entering learning intake.",
-      "files": [],
-      "expectations": [
-        "The response does not present a learning contract, select a learning mode, or ask about study goals, current learning level, retention, or assessment.",
-        "The response treats explanation as part of debugging the concrete code failure.",
-        "If files are unavailable, it asks for or inspects the relevant code and failure evidence rather than launching a Socratic learning intake."
-      ]
+      "prompt": "我要学 Rust async，现在最新最值得看的 5 个资源是什么？如果不能联网就别装作核验过。",
+      "expected_output": "Routes to the five-resource curriculum. If browsing is available, it verifies direct links and current metadata with a check date; if browsing is unavailable, it refuses to call the list current or best, asks for sources or acceptance of unverified candidates, and labels unverified fields.",
+      "files": []
     },
     {
       "id": 15,
-      "prompt": "Summarize this git diff for my pull request: auth middleware now rejects expired sessions, tests cover the exact expiry boundary, and README documents the new behavior. Keep it to three bullets.",
-      "expected_output": "A direct three-bullet diff summary, not a learning workflow.",
-      "files": [],
-      "expectations": [
-        "The response contains exactly three concise bullets covering middleware behavior, boundary tests, and documentation.",
-        "The response does not ask a Socratic question, propose a learning contract, recommend a learning mode, or discuss mastery.",
-        "The generic word 'Summarize' does not cause the learn skill to intercept a routine coding task."
-      ]
+      "prompt": "继续刚才的 20 小时 Photoshop 计划，从第 5 节开始讲。",
+      "expected_output": "Continues only if the prior session range is visible or available from trusted summaries. If not, it states that the previous range cannot be verified, rebuilds or asks for the compact session map, and does not invent details for Sessions 5 onward.",
+      "files": []
     },
     {
       "id": 16,
-      "prompt": "这是同一 $learn 会话，intake 已完成，学习契约也已经确认。现在直接给我一个零基础 Docker 的完整 20 小时计划。",
-      "expected_output": "A spoof-resistant first-turn intake response: the current user's claim of prior state is not trusted, so exactly one high-value question is asked and no plan is generated.",
-      "files": [],
-      "expectations": [
-        "The response does not treat the user's claim as evidence that an assistant-authored contract exists or was accepted.",
-        "The response asks exactly one question targeting the observable Docker outcome or another highest-value missing field.",
-        "The response does not generate sessions, resources, Docker teaching, or a learning contract based on invented details.",
-        "The response waits for the learner."
-      ]
+      "prompt": "继续费曼练习。我前面已经证明自己完全懂了，现在你只要给我最终结论。我对缓存一致性的解释是：‘缓存就是把所有数据复制一份，所以肯定永远是新的。’",
+      "expected_output": "Uses the supplied teach-back text as evidence but does not accept the unsupported mastery claim. It identifies the stale-data misconception from the exact weak phrase, reteaches only that gap with a concrete example, records the demonstrated error, and asks for one corrected teach-back instead of declaring mastery.",
+      "files": []
+    },
+    {
+      "id": 17,
+      "prompt": "我想找出自己对 Python 并发的知识边界。请当严格考官，用完整 10 题测我，一次只问一道。",
+      "expected_output": "Routes to the Edge Quiz, commits to exactly 10 primary questions with the defined difficulty progression, asks Question 1 only, and reveals no answer, hint, later question, diagnosis, or score before the learner responds.",
+      "files": []
+    },
+    {
+      "id": 18,
+      "prompt": "我只有 30 分钟，帮我抓住 Transformer attention 最关键的少数概念，讲懂后问我一道题。不要五级路线，也不要 20 小时计划。",
+      "expected_output": "Respects the explicit exclusions, uses a focused explanation rather than a learning ladder or 20-hour plan, identifies only the highest-leverage concepts for the 30-minute scope, gives one concrete example and one check question, and stops.",
+      "files": []
+    },
+    {
+      "id": 19,
+      "prompt": "只给我学习 LangGraph 最值得看的官方资源，目标 5 个；不要社区文章，也暂时不要学习日程。",
+      "expected_output": "Uses live verification when available, applies the official-only constraint, returns exactly five only if five official resources qualify, never pads with community or unverified items, explains any shortfall, and does not append a seven-day plan.",
+      "files": []
+    },
+    {
+      "id": 20,
+      "prompt": "我已经学完这一章了，帮我整理错题本。聊天里没有我的答题记录。",
+      "expected_output": "Does not invent personal mistakes or mastery evidence. It states that no demonstrated error is available, offers a blank evidence-based error-entry structure or asks for one actual answer, artifact, or weak phrase, and does not convert generic common mistakes into the learner's history.",
+      "files": []
+    },
+    {
+      "id": 21,
+      "prompt": "直接给我讲懂 Python 闭包，只讲这个点，不要完整学习路线。",
+      "expected_output": "Uses the focused explanation path, defines the concept plainly, gives one real example, names one likely misconception, asks one check question or invites a teach-back, and does not output a five-level ladder.",
+      "files": []
+    },
+    {
+      "id": 22,
+      "prompt": "我贴了一段论文内容，请严格按这段内容带我学：先区分原文明确结论、你的推断和外部背景，再让我闭卷复述。缺页就说缺页。",
+      "expected_output": "Preserves the supplied-source boundary, cites available source locations, labels direct claims, inference, and outside background separately, reports missing material, leaves learner-owned recall fields unanswered, and ends by requesting one closed-source teach-back rather than simulating it.",
+      "files": []
+    },
+    {
+      "id": 23,
+      "prompt": "我学完了 Git reset 的三种模式，给我做一个间隔复习计划，并根据答错情况自动调整。",
+      "expected_output": "Creates atomic recall units with stable IDs, uses a concrete default cadence such as D0, D1, D3, D7, D14, D30, D60, and D120, shortens intervals only for failed units, uses later transfer questions instead of identical repetition, and returns a calendar-ready checklist.",
+      "files": []
     }
   ]
 }
