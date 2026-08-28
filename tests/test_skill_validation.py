@@ -63,9 +63,9 @@ class FrontmatterValidationTests(unittest.TestCase):
         name = "a" * 64
         description = "d" * 1024
         metadata, _ = parse_frontmatter(
-            f"---\nname: {name}\ndescription: |\n  {description}\n---\nBody"
+            f"---\nname: {name}\ndisable-model-invocation: true\ndescription: |\n  {description}\n---\nBody"
         )
-        self.assertEqual(metadata, {"name": name, "description": description})
+        self.assertIs(metadata["disable-model-invocation"], True)
 
     def test_rejects_metadata_over_length_limits(self) -> None:
         documents = (
@@ -74,6 +74,22 @@ class FrontmatterValidationTests(unittest.TestCase):
         )
         for document in documents:
             with self.subTest(document=document), self.assertRaises(ValueError):
+                parse_frontmatter(document)
+
+    def test_optional_invocation_flag_may_be_omitted(self) -> None:
+        metadata, _ = parse_frontmatter(
+            "---\nname: learn\ndescription: |\n  test\n---\nBody"
+        )
+        self.assertNotIn("disable-model-invocation", metadata)
+
+    def test_invocation_flag_accepts_only_true(self) -> None:
+        for value in ("false", '"true"', "yes", "on", "1", ""):
+            document = (
+                "---\nname: learn\n"
+                f"disable-model-invocation: {value}\n"
+                "description: |\n  test\n---\nBody"
+            )
+            with self.subTest(value=value), self.assertRaises(ValueError):
                 parse_frontmatter(document)
 
     def test_rejects_duplicate_and_malformed_fields(self) -> None:

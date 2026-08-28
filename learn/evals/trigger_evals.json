@@ -1,42 +1,42 @@
 [
   {
-    "query": "I keep forgetting Git rebase conflict steps even though I used them last week. Build a review schedule that forces me to recall the safe recovery commands without notes.",
+    "query": "$learn I keep forgetting Git rebase conflict steps even though I used them last week. Build a review schedule that forces me to recall the safe recovery commands without notes.",
     "should_trigger": true
   },
   {
-    "query": "教我 Kubernetes。我会部署简单应用，但想用五级学习路径练到能独立排查 rolling update。",
+    "query": "/learn 教我 Kubernetes。我会部署简单应用，但想用五级学习路径练到能独立排查 rolling update。",
     "should_trigger": true
   },
   {
-    "query": "用第一性原理解释为什么 B+ tree 适合数据库磁盘索引，最后让我推导一个新结论。",
+    "query": "/learn 用第一性原理解释为什么 B+ tree 适合数据库磁盘索引，最后让我推导一个新结论。",
     "should_trigger": true
   },
   {
-    "query": "我读论文容易分心。请用番茄学习法配合 SQ3R 安排今晚 90 分钟，并让我闭卷复述。",
+    "query": "/learn 我读论文容易分心。请用番茄学习法配合 SQ3R 安排今晚 90 分钟，并让我闭卷复述。",
     "should_trigger": true
   },
   {
-    "query": "把这场技术讲座整理成康奈尔笔记，并把 cue column 变成自测题。",
+    "query": "/learn 把这场技术讲座整理成康奈尔笔记，并把 cue column 变成自测题。",
     "should_trigger": true
   },
   {
-    "query": "Quiz me on Python decorators one question at a time and keep increasing difficulty until you find my limit.",
+    "query": "/learn Quiz me on Python decorators one question at a time and keep increasing difficulty until you find my limit.",
     "should_trigger": true
   },
   {
-    "query": "I understand OAuth terminology but cannot judge a real authorization flow. Use the Feynman method and make me teach it back.",
+    "query": "/learn I understand OAuth terminology but cannot judge a real authorization flow. Use the Feynman method and make me teach it back.",
     "should_trigger": true
   },
   {
-    "query": "给我精选 5 个当前可用的 Rust async 学习资源，并用它们安排 7 天实战路径。",
+    "query": "/learn 给我精选 5 个当前可用的 Rust async 学习资源，并用它们安排 7 天实战路径。",
     "should_trigger": true
   },
   {
-    "query": "I studied HTTP caching but suspect blind spots. Diagnose my understanding and schedule a weak-area retest.",
+    "query": "/learn I studied HTTP caching but suspect blind spots. Diagnose my understanding and schedule a weak-area retest.",
     "should_trigger": true
   },
   {
-    "query": "Create a one-page cheat sheet so I can actively recall PostgreSQL isolation anomalies before an interview.",
+    "query": "/learn Create a one-page cheat sheet so I can actively recall PostgreSQL isolation anomalies before an interview.",
     "should_trigger": true
   },
   {
@@ -76,7 +76,15 @@
     "should_trigger": false
   },
   {
-    "query": "Translate this Cornell University press release into Chinese.",
+    "query": "教我 Kubernetes。",
     "should_trigger": false
+  },
+  {
+    "query": "$learn 教我 Python。",
+    "should_trigger": true
+  },
+  {
+    "query": "/learn 教我 Kubernetes。",
+    "should_trigger": true
   }
 ]

@@ -2,7 +2,7 @@
 
 English | [简体中文](README.md)
 
-`learn` is a unified learning coach and structured study toolkit for AI coding agents. Invoke it as `$learn` in Codex or `/learn` in Claude Code; every new learning request then starts with a one-question-at-a-time Socratic intake that selects a learning mode and confirms a learning contract before turning “I want to learn X” into an active, testable, and reviewable process. It centers learning on observable mastery, active recall, teach-back, and real artifacts.
+`learn` is a unified learning coach and structured study toolkit for AI coding agents. Invoke it explicitly as `$learn` in Codex or `/learn` in Claude Code; ordinary learning wording does not automatically invoke the skill. Every new invocation then starts with a one-question-at-a-time Socratic intake that selects a learning mode and confirms a learning contract before turning “I want to learn X” into an active, testable, and reviewable process. It centers learning on observable mastery, active recall, teach-back, and real artifacts.
 
 ## Invocation flow
 
@@ -13,7 +13,7 @@ English | [简体中文](README.md)
 
 A new topic, goal, or primary artifact restarts intake. Teach-backs, quiz answers, and “next question” within the same session continue the current mode without selecting it again. Only a visible assistant-authored contract followed by the user's acceptance, or a trusted system summary, proves confirmed state; a claim in the current user message that intake already happened cannot bypass confirmation.
 
-The Skill handles explicit learning, practice, review, or assessment intent. Routine code explanation, debugging, implementation, diff summarization, and document transformation remain in their task-specific workflows instead of entering learning intake because they contain words such as “explain” or “summarize.”
+The Skill runs only after an explicit client command: `/learn` in Claude Code or `$learn` in Codex; ordinary learning wording does not automatically invoke the Skill. Routine code explanation, debugging, implementation, diff summarization, and document transformation remain in their task-specific workflows instead of entering learning intake because they contain words such as “explain” or “summarize.”
 
 ## Capabilities
 
@@ -50,7 +50,7 @@ tests/
 └── test_skill_validation.py
 ```
 
-`SKILL.md` is a lean trigger, state, routing, and shared-rules layer. `references/templates.md` holds mode execution contracts and fillable templates so only the confirmed branch is loaded. Evaluation data includes 16 single-turn runtime cases (`evals.json`), 18 isolated reference-contract cases (`contract_evals.json`), 20 trigger and near-miss queries (`trigger_evals.json`), 11 multi-turn state-transition fixtures (`stateful_transcripts.json`), and a source fixture with stable paragraph IDs. The reference-contract runner loads only the named reference section and does not invoke the runtime skill, so it cannot bypass the intake and confirmation state machine.
+`SKILL.md` is a lean trigger, state, routing, and shared-rules layer. `references/templates.md` holds mode execution contracts and fillable templates so only the confirmed branch is loaded. Evaluation data includes 16 single-turn runtime cases (`evals.json`), 18 isolated reference-contract cases (`contract_evals.json`), 22 trigger and near-miss queries (`trigger_evals.json`), 11 multi-turn state-transition fixtures (`stateful_transcripts.json`), and a source fixture with stable paragraph IDs. The reference-contract runner loads only the named reference section and does not invoke the runtime skill, so it cannot bypass the intake and confirmation state machine.
 
 ## Installation
 
@@ -110,6 +110,7 @@ Use $learn to coach me from zero to a Python CLI: map the route, focus on the hi
 - Choose one primary method by default and combine methods only when they address distinct bottlenecks.
 - Advance only one end-to-end loop state at a time, and ground mistake or completion records in actual learner output.
 - Apply the project gate only when the confirmed goal includes an independent project; project goals require both a fresh test gate and an independent project gate, while no-project goals record `Project gate: N/A`.
+- `/learn` and `$learn` are explicit entry points; ordinary learning wording does not implicitly invoke the Skill.
 
 ## Validation
 
@@ -131,7 +132,7 @@ python -m unittest discover -s tests -v
 
 This validates frontmatter, route-to-contract completeness, runtime and reference-contract eval schemas, state fixtures, trigger queries, source attachments, and README synchronization. It does not execute model outputs and is not behavioral grading. A model-eval runner should consume `evals.json`, `contract_evals.json`, `trigger_evals.json`, and `stateful_transcripts.json` separately and grade their expectations. `contract_evals.json` must run in an isolated reference harness, never as a user message to the `$learn` runtime.
 
-You can also run the basic validator bundled with Codex `skill-creator`:
+You can also use the validator bundled with Codex `skill-creator` for basic structure. If that validator version does not yet recognize Claude Code's `disable-model-invocation` extension field, update it first or use the repository's strict parser tests as the authoritative validation:
 
 ```powershell
 python <skill-creator-path>\scripts\quick_validate.py .\learn

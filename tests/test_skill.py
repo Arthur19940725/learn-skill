@@ -4,6 +4,8 @@ import re
 import unittest
 from pathlib import Path
 
+import yaml
+
 from tests.skill_validation import (
     MAX_DESCRIPTION_LENGTH,
     MAX_NAME_LENGTH,
@@ -54,6 +56,7 @@ class SkillStructureTests(unittest.TestCase):
         cls.trigger_evals = load_json_strict(TRIGGER_EVALS_PATH)
         cls.stateful_evals = load_json_strict(STATEFUL_EVALS_PATH)
         cls.openai_text = read_text(OPENAI_PATH)
+        cls.openai_config = yaml.safe_load(cls.openai_text)
 
     def test_frontmatter_matches_agent_skills_limits(self) -> None:
         name = self.metadata["name"]
@@ -64,7 +67,8 @@ class SkillStructureTests(unittest.TestCase):
         self.assertLessEqual(len(name), MAX_NAME_LENGTH)
         self.assertTrue(description)
         self.assertLessEqual(len(description), MAX_DESCRIPTION_LENGTH)
-        self.assertTrue(description.startswith("This skill should be used when"))
+        self.assertTrue(description.startswith("This skill should be used only after"))
+        self.assertTrue(self.metadata["disable-model-invocation"])
 
     def test_skill_is_a_lean_router(self) -> None:
         self.assertLess(len(self.skill_text.splitlines()), 250)
@@ -74,7 +78,12 @@ class SkillStructureTests(unittest.TestCase):
         self.assertIn("$learn", self.metadata["description"])
         self.assertIn("/learn", self.metadata["description"])
         self.assertIn("$learn", self.openai_text)
-        self.assertIn("Routine code explanation", self.metadata["description"])
+        self.assertEqual(
+            self.openai_config["policy"]["allow_implicit_invocation"], False
+        )
+        self.assertIs(type(self.openai_config["policy"]["allow_implicit_invocation"]), bool)
+        self.assertIn("disable-model-invocation: true", self.skill_text)
+        self.assertIn("ordinary explanations", self.metadata["description"])
 
     def test_all_routed_modes_have_direct_reference_sections(self) -> None:
         routed_modes = {
@@ -213,8 +222,9 @@ class SkillStructureTests(unittest.TestCase):
             self.assertNotIn("Feynman", serialized)
 
     def test_trigger_description_and_suite_cover_aliases_and_near_misses(self) -> None:
-        for alias in ("第一性原理", "番茄学习法", "康奈尔笔记"):
-            self.assertIn(alias, self.metadata["description"])
+        self.assertIn("第一性原理", self.skill_text)
+        self.assertIn("Pomodoro", self.skill_text)
+        self.assertIn("Cornell", self.skill_text)
 
         trigger_evals = self.trigger_evals
         validate_trigger_evals(trigger_evals)
@@ -223,6 +233,24 @@ class SkillStructureTests(unittest.TestCase):
         self.assertTrue(any(not case["should_trigger"] for case in trigger_evals))
         self.assertTrue(
             all(set(case) == {"query", "should_trigger"} for case in trigger_evals)
+        )
+        explicit_command = re.compile(r"(?:^|\s)(?:/learn|\$learn)(?:\s|$)")
+        positive_queries = [
+            case["query"] for case in trigger_evals if case["should_trigger"]
+        ]
+        self.assertTrue(any(query.startswith("/learn") for query in positive_queries))
+        self.assertTrue(any(query.startswith("$learn") for query in positive_queries))
+        for case in trigger_evals:
+            with self.subTest(query=case["query"]):
+                if case["should_trigger"]:
+                    self.assertRegex(case["query"], explicit_command)
+                else:
+                    self.assertNotRegex(case["query"], explicit_command)
+        self.assertTrue(
+            any(
+                case["query"] == "教我 Kubernetes。" and not case["should_trigger"]
+                for case in trigger_evals
+            )
         )
 
     def test_stateful_transcript_suite_covers_core_transitions(self) -> None:
@@ -301,7 +329,7 @@ class SkillStructureTests(unittest.TestCase):
             text = read_text(path)
             self.assertRegex(text, r"16[^\n]*evals\.json")
             self.assertRegex(text, r"18[^\n]*contract_evals\.json")
-            self.assertRegex(text, r"20[^\n]*trigger_evals\.json")
+            self.assertRegex(text, r"22[^\n]*trigger_evals\.json")
             self.assertRegex(text, r"11[^\n]*stateful_transcripts\.json")
             self.assertIn("does not execute model", text.lower(), path.name)
 
