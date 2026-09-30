@@ -111,6 +111,7 @@ Use $learn to coach me from zero to a Python CLI: map the route, focus on the hi
 - Advance only one end-to-end loop state at a time, and ground mistake or completion records in actual learner output.
 - Apply the project gate only when the confirmed goal includes an independent project; project goals require both a fresh test gate and an independent project gate, while no-project goals record `Project gate: N/A`.
 - `/learn` and `$learn` are explicit entry points; ordinary learning wording does not implicitly invoke the Skill.
+- Tuned for Opus-class models: key rules carry their reason instead of emphatic wording, reply length is calibrated per conversation state, and the runtime prompt has no duplicated self-check list (the model already self-verifies; repeated checks only add tokens).
 
 ## Validation
 

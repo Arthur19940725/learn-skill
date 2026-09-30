@@ -73,6 +73,8 @@ For every level, include:
 6. **常见错误及纠正方法**
 7. **晋级前自检问题**
 
+Keep each field to one to three lines: the ladder is a route map, not the lessons themselves.
+
 Increase difficulty from vocabulary and intuition, through common tasks, to diagnosis, independent delivery, trade-offs, and edge cases. End with missing prerequisites, evidence-based starting level, and one action possible today. Define milestones through behavior or artifacts.
 
 ## 20-Hour Plan

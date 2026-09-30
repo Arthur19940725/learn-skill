@@ -10,7 +10,8 @@
         "The response captures FastAPI plus PostgreSQL containerization, the learner's command-line evidence, the observable delivery and troubleshooting goal, the 20-hour constraint, and free-resource constraint.",
         "The recommended mode is the 20-Hour Plan and its reason is tied to building usable project capability.",
         "The learning-contract body is no longer than five lines and is followed by exactly one confirmation question.",
-        "The response does not generate a Docker lesson, session map, resource list, Dockerfile, or Compose file before confirmation."
+        "The response does not generate a Docker lesson, session map, resource list, Dockerfile, or Compose file before confirmation.",
+        "Outside the contract body and confirmation question, the response adds no restatement of the request, process preview, or content teaser."
       ]
     },
     {
@@ -154,7 +155,8 @@
         "The response treats Kubernetes as the known topic and does not ask for it again.",
         "The response asks exactly one high-value question, preferably what the learner wants to do independently with Kubernetes.",
         "The response does not teach Kubernetes, choose multiple modes, generate a roadmap, list resources, or present a learning contract prematurely.",
-        "The response waits for the learner despite the request to skip intake."
+        "The response waits for the learner despite the request to skip intake.",
+        "Besides the question, the response contains at most one short sentence, such as why this question comes first; it does not restate the request or preview the process."
       ]
     },
     {

@@ -85,6 +85,19 @@ class SkillStructureTests(unittest.TestCase):
         self.assertIn("disable-model-invocation: true", self.skill_text)
         self.assertIn("ordinary explanations", self.metadata["description"])
 
+    def test_runtime_rules_are_tuned_for_opus_class_models(self) -> None:
+        # Opus-class models are verbose by default, self-verify without being
+        # told, and over-apply emphatic wording; the runtime prompt must
+        # calibrate length and explain rules instead of re-checking them.
+        self.assertIn("## 回复长度", self.skill_text)
+        self.assertIn("<example>", self.skill_text)
+        self.assertIn("非互动练习题", self.skill_text)
+        self.assertIn("照契约输出", self.skill_text)
+        self.assertIn("不搜索", self.skill_text)
+        self.assertGreaterEqual(self.skill_body.count("原因："), 4)
+        self.assertNotRegex(self.skill_body, r"\b(?:CRITICAL|IMPORTANT|MUST|NEVER|ALWAYS)\b")
+        self.assertNotRegex(self.skill_text, r"返回前确认|double-check|re-verify")
+
     def test_all_routed_modes_have_direct_reference_sections(self) -> None:
         routed_modes = {
             mode.strip()

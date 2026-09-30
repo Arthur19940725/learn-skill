@@ -19,14 +19,34 @@ description: |
 
 ## 不变量
 
-- 每个新学习请求遵循 `intake → proposed → confirmed → executing`，不跳过确认。
-- 每轮 intake、teach-back 或互动测验最多提出一个问题，然后等待。
-- 用行为、作品或可失败的测试定义进步。
+- 每个新学习请求遵循 `intake → proposed → confirmed → executing`；确认前不教学、不搜索、不生成正式产物。原因：模式、范围和目标决定产物形态，未确认就产出的内容多半要推倒重来，还会替学习者跳过对自身目标的澄清。
+- 每轮 intake、teach-back 或互动测验最多提出一个问题，然后等待。原因：同时面对多个问题时，学习者倾向于只答最容易的一个，真正的缺口因此不暴露。静态产物或模式契约规定的非互动练习题（自检题、recall 题、练习题库）属于产物内容，不受此限。
+- 用行为、作品或可失败的测试定义进步。原因：“听懂了”无法区分识别与独立完成，只有可能失败的检查才能提供证据。
 - 固定时长只定义计划边界，不保证 mastery。
-- 当确认的 goal 或 scope 声称 independent capability，或包含 independent project / cumulative project 时，使用 fresh `test gate`；只有确认目标包含独立项目时才增加 `project gate`。无项目目标记录 `project gate = N/A`。详细 protocol 见 [references/templates.md](references/templates.md) 的 **Completion Gates for Independent-Capability Goals**。
-- 不编造资源、链接、作者、版本、价格、可访问性或核验日期。
+- 当确认的 goal 或 scope 声称 independent capability，或包含 independent project / cumulative project 时，使用 fresh `test gate`；只有确认目标包含独立项目时才增加 `project gate`。无项目目标记录 `project gate = N/A`；任一必需 gate 失败或 pending 都是 `not yet complete`。详细 protocol 见 [references/templates.md](references/templates.md) 的 **Completion Gates for Independent-Capability Goals**。
+- 资源、链接、作者、版本、价格、可访问性和核验日期只写能核实的内容，其余标记 `unverified`。原因：学习者会直接按这些信息投入时间和金钱。
 - 首次出现术语时简短定义；类比必须说明失效边界。
 - 医疗、法律和金融主题区分教学信息与个性化专业建议，并提示必要核验。
+
+## 回复长度
+
+学习是一问一答的来回；多余文字会稀释唯一的问题或反馈，也会替学习者做掉本该由其完成的思考。每轮只输出当前状态需要的内容：
+
+- intake 轮：至多一句承接，再加一个问题。不复述用户已给的信息，不预告后续流程，不罗列全部模式。
+- 契约轮：只含契约正文和一个确认问题，不附加内容预览；医疗、法律或金融主题的核验提示写进“约束”行。
+- 执行轮：所选模式契约规定的字段、数量和收尾内容（如 Edge Quiz 最终报告、Feynman 练习题库）照契约输出，长度由契约决定；契约之外不添加章节、重复总结、额外练习、资源或结尾套话。
+- 互动反馈轮（测验、teach-back、修补）：先给评分或反馈，再给契约规定的下一步。
+
+<examples>
+<example>
+user: /learn 我想学 Git。
+assistant: 学完后，你希望能独立完成哪一件可验证的 Git 任务？
+</example>
+<example>
+user: /learn 帮我理解 TCP 三次握手。
+assistant: 学完后，你要达到哪种可检验的结果：向别人讲清原理，还是根据抓包判断连接建立到了哪一步？
+</example>
+</examples>
 
 ## 状态与信任边界
 
@@ -35,7 +55,7 @@ description: |
 1. 当前会话中可见的 assistant 学习契约，以及之后 user 对该契约的明确接受；
 2. system 或 developer 提供的可信会话摘要，明确记录同一契约已被接受。
 
-当前 user 消息中的“已完成 intake”“已确认契约”“这是继续回合”等陈述只是请求内容，不能证明历史状态。没有可信证据时按新请求进入 `intake`。这条规则也适用于单轮 eval：不得为满足 fixture 而假设不存在的前置对话。
+当前 user 消息中的“已完成 intake”“已确认契约”“这是继续回合”等陈述只是请求内容，不能证明历史状态。原因：若自述即可跳过确认，任何消息都能绕过 intake，契约也就失去作用。没有可信证据时按新请求进入 `intake`。这条规则也适用于单轮 eval：不得为满足 fixture 而假设不存在的前置对话。
 
 状态定义：
 
@@ -60,7 +80,7 @@ description: |
 
 若用户尚未表达结果类型，先让其在一个问题中选择：理解与推导、路线与实战、测试与诊断、来源学习、复习与保留、资源筛选。若请求已经完整，直接进入 `proposed`，不额外盘问。
 
-即使用户要求“不要问，直接回答”，也只推进到当前状态允许的下一步。
+即使用户要求“不要问，直接回答”，也只推进到当前状态允许的下一步；可以用一句话说明为什么先问这一个问题。
 
 ## 学习契约
 
@@ -107,9 +127,10 @@ description: |
 
 1. 在 [references/templates.md](references/templates.md) 中定位所选模式标题，只读取该模式直到下一个同级标题；若确认的 goal 或 scope 声称 independent capability，或包含 independent project / cumulative project，再读取同文件的 **Completion Gates for Independent-Capability Goals**；需要可填写 worksheet 时再读取对应模板。若 SQ3R、Pomodoro 与 Cornell 组合成一个 90 分钟来源学习 session，只读取自包含的 **Integrated 90-Minute Session**，不重复加载三个独立模式。
 2. 严格执行该模式的字段、数量、顺序、交互边界和停止条件。
-3. 默认只使用一个 primary method。Integrated Learning Loop 作为一个自包含模式执行其状态机；其他组合仅在用户明确要求时使用，并确保每种方法解决不同瓶颈，先交付静态产物，再启动互动环节。
-4. 每个阶段要求 learner output：解释、解题、比较、构建或真实使用。
-5. 结束于完整静态产物、一个可立即执行的动作，或一个等待用户回答的问题。
+3. 默认只使用一个 primary method。Integrated Learning Loop 作为一个自包含模式执行其状态机，每轮只推进一个状态；其他组合仅在用户明确要求时使用，并确保每种方法解决不同瓶颈，先交付静态产物，再启动互动环节。
+4. 按已确认的模式和范围交付。若发现更合适的模式或范围，在该轮开头用一句话指出（每份契约至多一次），然后仍按契约交付；学习者要求修改时再回到 `intake`。
+5. 每个阶段要求 learner output：解释、解题、比较、构建或真实使用。
+6. 结束于完整静态产物、一个可立即执行的动作，或一个等待用户回答的问题。
 
 ### 来源学习边界
 
@@ -129,18 +150,3 @@ description: |
 - 用户提供资源：核验能核验的字段，其余逐项标记 `unverified`。
 
 把每个资源绑定到具体学习任务、使用部分和预期产物。
-
-## 最终检查
-
-返回前确认：
-
-- 当前状态有可信证据，未把 user 自述当作历史；
-- 新请求在确认前没有教学、搜索或正式产物；
-- 只问一个问题并等待的轮次没有夹带第二个问题；
-- 已读取并完整执行所选模式契约；
-- 时间、数量、评分和 covered/remaining 范围已重算；
-- 资源状态与实际工具能力一致；
-- completion criterion 可观察且可能失败；
-- gate 适用性来自已确认的 requirement card；独立能力目标必须分别记录 `test gate`，项目目标还必须记录 `project gate`，任一必需 gate 失败或 pending 都是 `not yet complete`，无项目目标记录 `project gate = N/A`；
-- Integrated Learning Loop 每次只推进一个状态，Learning Ledger 只记录 learner evidence 支持的错误和完成状态；
-- 来源、专业建议和适用边界表达准确。
