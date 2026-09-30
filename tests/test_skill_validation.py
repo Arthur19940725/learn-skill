@@ -92,6 +92,19 @@ class FrontmatterValidationTests(unittest.TestCase):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 parse_frontmatter(document)
 
+    def test_model_accepts_claude_code_aliases_and_full_ids(self) -> None:
+        for value in ("opus", "sonnet", "inherit", "opus[1m]", "claude-opus-5-5"):
+            document = f"---\nname: learn\nmodel: {value}\ndescription: |\n  test\n---\nBody"
+            with self.subTest(value=value):
+                metadata, _ = parse_frontmatter(document)
+                self.assertEqual(metadata["model"], value)
+
+    def test_model_rejects_unknown_or_quoted_values(self) -> None:
+        for value in ("", '"opus"', "Opus", "gpt-5", "opus ", "claude-"):
+            document = f"---\nname: learn\nmodel: {value}\ndescription: |\n  test\n---\nBody"
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                parse_frontmatter(document)
+
     def test_rejects_duplicate_and_malformed_fields(self) -> None:
         invalid_documents = (
             "---\nname: learn\nname: other\ndescription: |\n  test\n---\nBody",
