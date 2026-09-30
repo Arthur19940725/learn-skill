@@ -50,7 +50,7 @@ tests/
 └── test_skill_validation.py
 ```
 
-`SKILL.md` 是精简的触发、状态、路由与共用规则；`references/templates.md` 按模式保存执行契约和可填写模板，确认后只加载所选部分。评测数据分为 16 组 runtime 单轮评测（`evals.json`）、18 组隔离的 reference-contract 评测（`contract_evals.json`）、22 组触发/近邻负向查询（`trigger_evals.json`）、11 组多轮状态转换 fixture（`stateful_transcripts.json`），以及带稳定段落标识的来源 fixture。reference-contract runner 只加载指定参考章节，不调用 runtime skill，因此不会绕过 intake 与确认状态机。
+`SKILL.md` 是精简的触发、状态、路由与共用规则；`references/templates.md` 按模式保存执行契约和可填写模板，确认后只加载所选部分。评测数据分为 16 组 runtime 单轮评测（`evals.json`）、18 组隔离的 reference-contract 评测（`contract_evals.json`）、22 组触发/近邻负向查询（`trigger_evals.json`）、12 组多轮状态转换 fixture（`stateful_transcripts.json`），以及带稳定段落标识的来源 fixture。reference-contract runner 只加载指定参考章节，不调用 runtime skill，因此不会绕过 intake 与确认状态机。
 
 ## 安装
 
@@ -74,6 +74,8 @@ Copy-Item -Recurse -Force .\learn-skill\learn "$HOME\.claude\skills\learn"
 ```
 
 重新启动对应客户端或开启新会话，使其重新发现 skill。
+
+`SKILL.md` 声明了 `model: opus`：在 Claude Code 中，调用 `/learn` 的那一轮使用最新 Opus（Anthropic API 下为 Opus 5.5）。按 Claude Code 文档，skill 的 `model` 覆盖只持续到当前轮结束，下一条消息起恢复会话模型；要让确认、教学和测验各轮都运行在 Opus 上，请先执行 `/model opus`。该字段是 Claude Code 扩展。
 
 ## 使用示例
 
@@ -135,7 +137,7 @@ python -m unittest discover -s tests -v
 
 此命令验证 frontmatter、路由到模式契约的完整性、runtime 与 reference-contract eval schema、状态 fixture、触发查询、来源附件和 README 同步；它不会执行模型输出（does not execute model outputs），也不等同于行为评分。模型行为评估应由 agent runner 分别消费 `evals.json`、`contract_evals.json`、`trigger_evals.json` 和 `stateful_transcripts.json`，并按各自 expectations 评分。`contract_evals.json` 必须由隔离 reference harness 运行，不得作为 user 消息送入 `$learn` runtime。
 
-也可使用 Codex `skill-creator` 附带的验证脚本检查基本结构；若脚本版本尚不认识 Claude Code 的 `disable-model-invocation` 扩展字段，应先更新脚本，或以仓库测试中的严格 parser 为准：
+也可使用 Codex `skill-creator` 附带的验证脚本检查基本结构；若脚本版本尚不认识 Claude Code 的 `disable-model-invocation` 或 `model` 扩展字段，应先更新脚本，或以仓库测试中的严格 parser 为准：
 
 ```powershell
 python <skill-creator-path>\scripts\quick_validate.py .\learn

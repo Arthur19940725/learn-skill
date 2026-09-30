@@ -7,7 +7,24 @@ from typing import Any
 
 FRONTMATTER_BOUNDARY = "---"
 REQUIRED_FRONTMATTER_FIELDS = {"name", "description"}
-ALLOWED_FRONTMATTER_FIELDS = REQUIRED_FRONTMATTER_FIELDS | {"disable-model-invocation"}
+ALLOWED_FRONTMATTER_FIELDS = REQUIRED_FRONTMATTER_FIELDS | {
+    "disable-model-invocation",
+    "model",
+}
+# Values Claude Code's `/model` accepts, plus `inherit` for skills.
+MODEL_ALIASES = {
+    "inherit",
+    "default",
+    "best",
+    "fable",
+    "opus",
+    "sonnet",
+    "haiku",
+    "opusplan",
+    "opus[1m]",
+    "sonnet[1m]",
+}
+MODEL_ID_PATTERN = re.compile(r"claude-[a-z0-9]+(?:-[a-z0-9]+)*")
 BEHAVIOR_EVAL_FIELDS = {
     "id",
     "prompt",
@@ -74,6 +91,17 @@ def parse_frontmatter(text: str) -> tuple[dict[str, Any], str]:
             if raw_value != "true":
                 raise ValueError("disable-model-invocation must be the unquoted scalar true")
             metadata[key] = True
+            index += 1
+            continue
+
+        if key == "model":
+            if raw_value not in MODEL_ALIASES and not (
+                raw_value and MODEL_ID_PATTERN.fullmatch(raw_value)
+            ):
+                raise ValueError(
+                    "model must be a Claude Code model alias or a full claude-* model ID"
+                )
+            metadata[key] = raw_value
             index += 1
             continue
 

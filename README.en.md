@@ -50,7 +50,7 @@ tests/
 └── test_skill_validation.py
 ```
 
-`SKILL.md` is a lean trigger, state, routing, and shared-rules layer. `references/templates.md` holds mode execution contracts and fillable templates so only the confirmed branch is loaded. Evaluation data includes 16 single-turn runtime cases (`evals.json`), 18 isolated reference-contract cases (`contract_evals.json`), 22 trigger and near-miss queries (`trigger_evals.json`), 11 multi-turn state-transition fixtures (`stateful_transcripts.json`), and a source fixture with stable paragraph IDs. The reference-contract runner loads only the named reference section and does not invoke the runtime skill, so it cannot bypass the intake and confirmation state machine.
+`SKILL.md` is a lean trigger, state, routing, and shared-rules layer. `references/templates.md` holds mode execution contracts and fillable templates so only the confirmed branch is loaded. Evaluation data includes 16 single-turn runtime cases (`evals.json`), 18 isolated reference-contract cases (`contract_evals.json`), 22 trigger and near-miss queries (`trigger_evals.json`), 12 multi-turn state-transition fixtures (`stateful_transcripts.json`), and a source fixture with stable paragraph IDs. The reference-contract runner loads only the named reference section and does not invoke the runtime skill, so it cannot bypass the intake and confirmation state machine.
 
 ## Installation
 
@@ -74,6 +74,8 @@ Copy-Item -Recurse -Force .\learn-skill\learn "$HOME\.claude\skills\learn"
 ```
 
 Restart the client or open a new session so it can rediscover the skill.
+
+`SKILL.md` declares `model: opus`: in Claude Code, the turn that invokes `/learn` runs on the latest Opus (Opus 5.5 on the Anthropic API). Per the Claude Code docs, a skill's `model` override lasts only until the end of the current turn, and the session model resumes with your next message. To keep the confirmation, teaching, and quiz turns on Opus as well, run `/model opus` first. The field is a Claude Code extension.
 
 ## Example prompts
 
@@ -133,7 +135,7 @@ python -m unittest discover -s tests -v
 
 This validates frontmatter, route-to-contract completeness, runtime and reference-contract eval schemas, state fixtures, trigger queries, source attachments, and README synchronization. It does not execute model outputs and is not behavioral grading. A model-eval runner should consume `evals.json`, `contract_evals.json`, `trigger_evals.json`, and `stateful_transcripts.json` separately and grade their expectations. `contract_evals.json` must run in an isolated reference harness, never as a user message to the `$learn` runtime.
 
-You can also use the validator bundled with Codex `skill-creator` for basic structure. If that validator version does not yet recognize Claude Code's `disable-model-invocation` extension field, update it first or use the repository's strict parser tests as the authoritative validation:
+You can also use the validator bundled with Codex `skill-creator` for basic structure. If that validator version does not yet recognize Claude Code's `disable-model-invocation` or `model` extension fields, update it first or use the repository's strict parser tests as the authoritative validation:
 
 ```powershell
 python <skill-creator-path>\scripts\quick_validate.py .\learn
